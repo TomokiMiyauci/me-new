@@ -1,2 +1,43 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "jsxImportSourceTypes": "@types/react",
+    "types": ["vite/client", "@vitejs/plugin-rsc/types"]
+  },
+  "tasks": {
+    "dev": "vite",
+    "build": "vite build --manifest",
+    "preview": "deno serve -P=preview src/server.ts"
+  },
+  "permissions": {
+    "preview": {
+      "read": ["dist"],
+      "env": true
+    }
+  },
+  "imports": {
+    "@miyauci/material-react": "jsr:@miyauci/material-react@^1.0.0-beta.24",
+    "@std/http": "jsr:@std/http@^1.0.21",
+    "@std/path": "jsr:@std/path@^1.1.2",
+    "sanity_rsc": "./src/lib/sanity_rsc/mod.ts",
+    "@/": "./src/",
+    "~/": "./"
+  },
+  "nodeModulesDir": "auto",
+  "exclude": [
+    "dist"
+  ],
+  "deploy": {
+    "exclude": [
+      "**/node_modules"
+    ],
+    "entrypoint": "src/server.ts"
+  },
+  "workspace": [
+    "src/lib/vite_node_builtin_scheme",
+    "src/lib/vite_node_env",
+    "src/lib/react_router",
+    "src/lib/router"
+  ]
 }
