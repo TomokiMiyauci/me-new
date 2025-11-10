@@ -17,6 +17,11 @@
   "[css]": {
     "editor.tabSize": 2
   },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2
+  },
   "files.associations": {
     "*.md.mustache": "markdown"
   },
