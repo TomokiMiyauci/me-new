@@ -14,9 +14,13 @@
     "preview": {
       "read": ["dist"],
       "env": true
+    },
+    "deploy": {
+      "env": true
     }
   },
   "imports": {
+    "@deno/deployctl": "jsr:@deno/deployctl@^1.13.1",
     "@miyauci/material-react": "jsr:@miyauci/material-react@^1.0.0-beta.24",
     "@std/http": "jsr:@std/http@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.2",

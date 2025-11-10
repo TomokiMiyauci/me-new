@@ -1,17 +1,32 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@deno/deployctl@^1.13.1": "1.13.1",
+    "jsr:@denosaurs/tty@0.2.1": "0.2.1",
+    "jsr:@denosaurs/tty@~0.2.1": "0.2.1",
+    "jsr:@denosaurs/wait@0.2.2": "0.2.2",
     "jsr:@miyauci/material-react@^1.0.0-beta.24": "1.0.0-beta.24",
+    "jsr:@std/assert@0.217": "0.217.0",
+    "jsr:@std/async@0.217": "0.217.0",
     "jsr:@std/cli@^1.0.23": "1.0.23",
+    "jsr:@std/dotenv@0.217": "0.217.0",
+    "jsr:@std/encoding@0.217": "0.217.0",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
+    "jsr:@std/flags@0.217": "0.217.0",
+    "jsr:@std/fmt@0.217": "0.217.0",
+    "jsr:@std/fmt@1": "1.0.8",
     "jsr:@std/fmt@^1.0.8": "1.0.8",
     "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@^1.0.5": "1.0.5",
     "jsr:@std/http@^1.0.21": "1.0.21",
     "jsr:@std/internal@^1.0.10": "1.0.12",
+    "jsr:@std/jsonc@0.217": "0.217.0",
     "jsr:@std/media-types@^1.1.0": "1.1.0",
     "jsr:@std/net@^1.0.6": "1.0.6",
+    "jsr:@std/path@0.217": "0.217.0",
     "jsr:@std/path@^1.1.2": "1.1.2",
+    "jsr:@std/semver@0.217": "0.217.0",
+    "jsr:@std/streams@0.217": "0.217.0",
     "jsr:@std/streams@^1.0.13": "1.0.13",
     "npm:@deno/vite-plugin@^1.0.5": "1.0.5_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0",
     "npm:@sanity/code-input@^6.0.3": "6.0.3_react@19.2.0_react-dom@19.2.0__react@19.2.0_sanity@4.14.2__react@19.2.0__react-dom@19.2.0___react@19.2.0__styled-components@6.1.19___react@19.2.0___react-dom@19.2.0____react@19.2.0__@dnd-kit+core@6.3.1___react@19.2.0___react-dom@19.2.0____react@19.2.0__@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__rxjs@7.8.2__@portabletext+editor@2.20.0___@portabletext+sanity-bridge@1.2.1____@sanity+schema@4.14.2_____@types+react@19.2.2____@sanity+types@4.14.2_____@types+react@19.2.2____@types+react@19.2.2___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___react@19.2.0___rxjs@7.8.2___@types+react@19.2.2___xstate@5.24.0___slate@0.118.1___react-dom@19.2.0____react@19.2.0___slate-dom@0.118.1____slate@0.118.1__react-is@19.2.0__@sanity+client@7.12.1__@sanity+icons@3.7.4___react@19.2.0__vite@7.2.2___@types+node@24.2.0___picomatch@4.0.3___jiti@2.6.1__xstate@5.24.0__esbuild@0.25.12__jsdom@26.1.0__i18next@23.16.8__@types+node@24.2.0__use-sync-external-store@1.6.0___react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_@codemirror+language@6.11.3_@codemirror+state@6.5.2_@codemirror+view@6.38.6_@codemirror+autocomplete@6.19.1_@codemirror+search@6.5.11_@types+react@19.2.2_@types+node@24.2.0",
@@ -23,6 +38,7 @@
     "npm:@vitejs/plugin-react@latest": "5.1.0_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@babel+core@7.28.5_@types+node@24.2.0",
     "npm:@vitejs/plugin-rsc@latest": "0.5.1_react@19.2.0_react-dom@19.2.0__react@19.2.0_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0",
     "npm:github-slugid@^1.0.1": "1.0.1",
+    "npm:keychain@1.5.0": "1.5.0",
     "npm:react-dom@^19.2.0": "19.2.0_react@19.2.0",
     "npm:react@^19.1.1": "19.2.0",
     "npm:react@^19.2.0": "19.2.0",
@@ -34,17 +50,65 @@
     "npm:vite@^7.2.2": "7.2.2_@types+node@24.2.0_picomatch@4.0.3_jiti@2.6.1"
   },
   "jsr": {
+    "@deno/deployctl@1.13.1": {
+      "integrity": "84245138a17546f184aebcc2dd49061b3437b8819be54195ab144e7b4e86be2a",
+      "dependencies": [
+        "jsr:@denosaurs/tty@0.2.1",
+        "jsr:@denosaurs/wait",
+        "jsr:@std/async",
+        "jsr:@std/dotenv",
+        "jsr:@std/encoding@0.217",
+        "jsr:@std/flags",
+        "jsr:@std/fmt@0.217",
+        "jsr:@std/jsonc",
+        "jsr:@std/path@0.217",
+        "jsr:@std/semver",
+        "jsr:@std/streams@0.217",
+        "npm:keychain"
+      ]
+    },
+    "@denosaurs/tty@0.2.1": {
+      "integrity": "f1fc651cc9021c90bf230a45c6eb893c26a54fae6a855e9cd26aad0083d772dd"
+    },
+    "@denosaurs/wait@0.2.2": {
+      "integrity": "5ec0a7e72c57a96c9fdb2f4a52e2ce3b1ad010acc59fefe6f88054a9e27bc33d",
+      "dependencies": [
+        "jsr:@denosaurs/tty@~0.2.1",
+        "jsr:@std/fmt@1"
+      ]
+    },
     "@miyauci/material-react@1.0.0-beta.24": {
       "integrity": "5cda179b9f9d1347c181d93ed365b0d4ea89e5e7c2254ec6a8cdd141be101279",
       "dependencies": [
         "npm:react@^19.1.1"
       ]
     },
+    "@std/assert@0.217.0": {
+      "integrity": "c98e279362ca6982d5285c3b89517b757c1e3477ee9f14eb2fdf80a45aaa9642"
+    },
+    "@std/async@0.217.0": {
+      "integrity": "14dac94f59595e39e519de379c47170d8bbedea253824c4b167108aa943ddb69"
+    },
     "@std/cli@1.0.23": {
       "integrity": "bf95b7a9425ba2af1ae5a6359daf58c508f2decf711a76ed2993cd352498ccca"
     },
+    "@std/dotenv@0.217.0": {
+      "integrity": "e65cbbf669f482c320b2f94d0a2fc536f1fcd06afdcfa4fde358129a18d1d428"
+    },
+    "@std/encoding@0.217.0": {
+      "integrity": "b03e8ff94c98d6b6a02c02c5cf8e5d203400155516248964fc4559abc04669dc"
+    },
     "@std/encoding@1.0.10": {
       "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
+    },
+    "@std/flags@0.217.0": {
+      "integrity": "2d67502692d76cfe37fba1c4a92d0a5fe0a6f9601900fd7c510936b0e4e0242e",
+      "dependencies": [
+        "jsr:@std/assert"
+      ]
+    },
+    "@std/fmt@0.217.0": {
+      "integrity": "cb99f82500b8da20202fedfa8bb94dd0222e81f0494ed9087de20ee3d8a39a8d"
     },
     "@std/fmt@1.0.8": {
       "integrity": "71e1fc498787e4434d213647a6e43e794af4fd393ef8f52062246e06f7e372b7"
@@ -59,18 +123,24 @@
       "integrity": "abb5c747651ee6e3ea6139858fd9b1810d2c97f53a5e6722f3b6d27a6d263edc",
       "dependencies": [
         "jsr:@std/cli",
-        "jsr:@std/encoding",
-        "jsr:@std/fmt",
+        "jsr:@std/encoding@^1.0.10",
+        "jsr:@std/fmt@^1.0.8",
         "jsr:@std/fs",
         "jsr:@std/html",
         "jsr:@std/media-types",
         "jsr:@std/net",
-        "jsr:@std/path",
-        "jsr:@std/streams"
+        "jsr:@std/path@^1.1.2",
+        "jsr:@std/streams@^1.0.13"
       ]
     },
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
+    },
+    "@std/jsonc@0.217.0": {
+      "integrity": "125c47f36ef8160e1b4fd5bff096e8f0ea3f49bea197de5b182eb130bb8a527c",
+      "dependencies": [
+        "jsr:@std/assert"
+      ]
     },
     "@std/media-types@1.1.0": {
       "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
@@ -78,11 +148,23 @@
     "@std/net@1.0.6": {
       "integrity": "110735f93e95bb9feb95790a8b1d1bf69ec0dc74f3f97a00a76ea5efea25500c"
     },
+    "@std/path@0.217.0": {
+      "integrity": "1217cc25534bca9a2f672d7fe7c6f356e4027df400c0e85c0ef3e4343bc67d11",
+      "dependencies": [
+        "jsr:@std/assert"
+      ]
+    },
     "@std/path@1.1.2": {
       "integrity": "c0b13b97dfe06546d5e16bf3966b1cadf92e1cc83e56ba5476ad8b498d9e3038",
       "dependencies": [
         "jsr:@std/internal"
       ]
+    },
+    "@std/semver@0.217.0": {
+      "integrity": "c1ba42cdcaacf610f1a62ec2256ab29765a73fede65120214c3acb9c85ed3d35"
+    },
+    "@std/streams@0.217.0": {
+      "integrity": "b4a6de703d6aa59c4777f89fc002e82b8401dada44d1e6f7e916664c1e6cfd36"
     },
     "@std/streams@1.0.13": {
       "integrity": "772d208cd0d3e5dac7c1d9e6cdb25842846d136eea4a41a62e44ed4ab0c8dd9e"
@@ -5020,6 +5102,9 @@
     "jsonify@0.0.1": {
       "integrity": "sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg=="
     },
+    "keychain@1.5.0": {
+      "integrity": "sha512-liyp4r+93RI7EB2jhwaRd4MWfdgHH6shuldkaPMkELCJjMFvOOVXuTvw1pGqFfhsrgA6OqfykWWPQgBjQakVag=="
+    },
     "kind-of@6.0.3": {
       "integrity": "sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw=="
     },
@@ -7528,6 +7613,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@deno/deployctl@^1.13.1",
       "jsr:@miyauci/material-react@^1.0.0-beta.24",
       "jsr:@std/http@^1.0.21",
       "jsr:@std/path@^1.1.2"
