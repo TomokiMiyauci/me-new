@@ -38,6 +38,7 @@
     "src/lib/vite_node_builtin_scheme",
     "src/lib/vite_node_env",
     "src/lib/react_router",
-    "src/lib/router"
+    "src/lib/router",
+    "src/lib/sanity_rsc"
   ]
 }
