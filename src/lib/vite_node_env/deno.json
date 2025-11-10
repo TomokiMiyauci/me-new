@@ -1,0 +1,9 @@
+{
+  "name": "vite-node-env",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "imports": {
+    "vite": "npm:vite@^7.2.2"
+  }
+}
