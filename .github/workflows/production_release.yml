@@ -1,0 +1,24 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.release.prerelease }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - name: Build
+        run: deno task build
+      
+      - name: Deploy
+        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }} --prod
+        env:
+          DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
+          
