@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: me-staging.deno.dev
+      url: https://me-staging.deno.dev
     permissions:
       contents: read
 
