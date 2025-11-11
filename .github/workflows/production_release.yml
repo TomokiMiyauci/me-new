@@ -1,21 +1,14 @@
-name: Pull Request
-
-on: 
-  push:
-    branches: main
-  pull_request:
-    branches: 
-      - main
+on:
+  release:
+    types: [published]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-
+    if: ${{ !github.event.release.prerelease }}
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
       - uses: denoland/setup-deno@v2
         with:
@@ -25,7 +18,7 @@ jobs:
         run: deno task build
       
       - name: Deploy
-        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }} --prod
         env:
           DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
           
