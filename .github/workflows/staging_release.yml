@@ -6,7 +6,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: staging
+    environment:
+      name: staging
+      url: me-staging.deno.dev
     permissions:
       contents: read
 
