@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/TomokiMiyauci/my-blog/compare/v1.0.0...1.1.0) (2025-11-11)
+
+
+### Features
+
+* change tag format ([0ae1ca5](https://github.com/TomokiMiyauci/my-blog/commit/0ae1ca522eff6462c2945510cf26047aa8111af5))
+
 # 1.0.0 (2025-11-11)
 
 
