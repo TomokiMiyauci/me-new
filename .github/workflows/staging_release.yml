@@ -1,12 +1,12 @@
 on: 
-  pull_request:
+  push:
     branches: 
       - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: development
+    environment: staging
     permissions:
       contents: read
 
@@ -21,7 +21,7 @@ jobs:
         run: deno task build
       
       - name: Deploy
-        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }} --prod
         env:
-          DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
+          DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
           
