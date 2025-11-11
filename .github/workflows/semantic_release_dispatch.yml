@@ -22,8 +22,6 @@ jobs:
         #  persist-credentials: false
 
       - uses: cycjimmy/semantic-release-action@v5
-        with:
-          dry_run: true
         env:
         #   GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
