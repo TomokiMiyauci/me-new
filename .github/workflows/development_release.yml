@@ -19,9 +19,12 @@ jobs:
 
       - name: Build
         run: deno task build
+        env:
+          PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
       
       - name: Deploy
         run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
         env:
-          DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
+          DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
           
