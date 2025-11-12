@@ -3,7 +3,7 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "@/sanity/schema_types/mod.ts";
-import { DATASET, PROJECT_ID } from "@/env.ts";
+import { SANITY_DATASET, SANITY_ID } from "@/env.ts";
 import {
   internationalizedArray,
   type Language,
@@ -21,8 +21,8 @@ const languages = toLanguages(localeMap);
 
 export default defineConfig({
   basePath: "/admin",
-  projectId: PROJECT_ID,
-  dataset: DATASET,
+  projectId: SANITY_ID,
+  dataset: SANITY_DATASET,
 
   plugins: [
     structureTool(),

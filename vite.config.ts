@@ -8,6 +8,7 @@ import { nodeEnv } from "vite-node-env";
 
 export default defineConfig({
   server: { port: 8000 },
+  envPrefix: "PUBLIC_",
   plugins: [
     rsc({
       // `entries` option is only a shorthand for specifying each `rollupOptions.input` below
