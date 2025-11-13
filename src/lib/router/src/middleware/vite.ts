@@ -1,21 +1,17 @@
-import type { MiddlewareObject } from "../types.ts";
+import type { Middleware, MiddlewareObject } from "../types.ts";
 import type { ViteDevServer } from "vite";
-import { toFetchResponse, toReqRes } from "fetch-to-node";
+import { fromConnect } from "../utils.ts";
 
 export class Vite implements MiddlewareObject {
-  constructor(public vite: ViteDevServer) {}
+  #middleware: Middleware;
+  constructor(vite: ViteDevServer) {
+    this.#middleware = fromConnect(vite.middlewares.bind(vite));
+  }
 
-  handle(request: Request): Response | Promise<Response> {
-    const { req, res } = toReqRes(request);
-
-    Object.defineProperty(req, "socket", {
-      get() {
-        return {};
-      },
-    });
-
-    this.vite.middlewares(req, res);
-
-    return toFetchResponse(res);
+  handle(
+    request: Request,
+    next: () => Promise<Response>,
+  ): Response | Promise<Response> {
+    return this.#middleware(request, next);
   }
 }
