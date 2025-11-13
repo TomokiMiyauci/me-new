@@ -6,11 +6,19 @@
     "types": ["vite/client", "@vitejs/plugin-rsc/types"]
   },
   "tasks": {
-    "dev": "vite",
+    "dev": "deno serve -P=dev --allow-net src/server.ts dev",
     "build": "vite build --manifest",
     "preview": "deno serve -P=preview src/server.ts"
   },
   "permissions": {
+    "dev": {
+      "read": true,
+      "env": true,
+      "sys": true,
+      "ffi": true,
+      "run": true,
+      "write": ["."]
+    },
     "preview": {
       "read": ["dist"],
       "env": true
@@ -22,6 +30,7 @@
   "imports": {
     "@deno/deployctl": "jsr:@deno/deployctl@^1.13.1",
     "@miyauci/material-react": "jsr:@miyauci/material-react@^1.0.0-beta.24",
+    "@std/cli": "jsr:@std/cli@^1.0.23",
     "@std/http": "jsr:@std/http@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.2",
     "sanity_rsc": "./src/lib/sanity_rsc/mod.ts",
