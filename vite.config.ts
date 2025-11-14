@@ -111,7 +111,7 @@ export default defineConfig({
       build: {
         rollupOptions: {
           input: {
-            main: "./src/framework/server.ts",
+            main: "./src/framework/entry.server.ts",
           },
           "plugins": [{
             transform: (code) => {
