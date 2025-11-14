@@ -1,0 +1,11 @@
+{
+  "name": "vite-plugin-manifest",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "imports": {
+    "magic-string": "npm:magic-string@^0.30.21",
+    "strip-literal": "npm:strip-literal@^3.1.0",
+    "vite": "npm:vite@^7.2.2"
+  }
+}

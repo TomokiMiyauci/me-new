@@ -5,6 +5,8 @@ import { defineConfig } from "vite";
 import { cjsInterop } from "vite-plugin-cjs-interop";
 import { nodeScheme } from "vite-node-scheme";
 import { nodeEnv } from "vite-node-env";
+import rscAssets from "vite-plugin-rsc-assets-manifest";
+import { manifest, outDirResolve } from "vite-plugin-manifest";
 
 export default defineConfig({
   server: { port: 8000 },
@@ -34,6 +36,19 @@ export default defineConfig({
       ],
     }),
     nodeScheme(),
+    {
+      name: "builder",
+      buildApp: async (builder) => {
+        const envs = Object.values(builder.environments);
+
+        for (const env of envs) {
+          if (!env.isBuilt) await builder.build(env);
+        }
+      },
+    },
+    rscAssets,
+    manifest,
+    outDirResolve,
   ],
 
   resolve: {
@@ -89,6 +104,28 @@ export default defineConfig({
             index: "./src/framework/entry.browser.tsx",
           },
         },
+      },
+    },
+
+    server: {
+      build: {
+        rollupOptions: {
+          input: {
+            main: "./src/server.ts",
+          },
+          "plugins": [{
+            transform: (code) => {
+              return code.replace(
+                `Deno.args.includes("dev")`,
+                JSON.stringify(false),
+              );
+            },
+            name: "optimize-deno-args-dev",
+          }],
+          external: ["@std/http", "@std/path", "router"],
+        },
+        outDir: "dist/server",
+        ssr: true,
       },
     },
   },

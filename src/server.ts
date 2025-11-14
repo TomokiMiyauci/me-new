@@ -1,10 +1,8 @@
 import { Vite } from "./lib/router/src/middleware/vite.ts";
 import { Router } from "router";
-import { parseArgs } from "@std/cli/parse-args";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
-import "@std/dotenv/load";
 
 const dsn = Deno.env.get("SENTRY_DSN");
 const environment = Deno.env.get("SENTRY_ENV");
@@ -12,23 +10,26 @@ const environment = Deno.env.get("SENTRY_ENV");
 init({ dsn, environment });
 
 const router = new Router();
-const args = parseArgs(Deno.args);
-const dev = args._.includes("dev");
 
-if (dev) {
+if (Deno.args.includes("dev")) {
+  await import("@std/dotenv/load");
+
   const { createServer } = await import("vite");
+
   const server = await createServer({ server: { middlewareMode: true } });
   router.use(new Vite(server));
 } else {
-  const { default: handle } = await import("~/dist/rsc/index.js");
-  const { default: rscManifest } = await import(
-    "~/dist/rsc/__vite_rsc_assets_manifest.js"
+  const { default: handle } = await import.meta.viteRsc.loadModule(
+    "rsc",
+    "index",
   );
-  const { default: clientManifest } = await import(
-    "~/dist/client/.vite/manifest.json",
-    { with: { type: "json" } }
+  const { default: rscManifest } = await import.meta.viteRsc.loadManifest(
+    "rsc",
   );
-  const distRoot = fromFileUrl(import.meta.resolve("~/dist/client"));
+  const clientManifest = await import.meta.vite.loadManifest(
+    "client",
+  );
+  const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
   router.use(new ViteRscAssets(clientManifest, rscManifest, distRoot));
   router.use(handle);
 }
