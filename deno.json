@@ -3,7 +3,12 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "jsxImportSourceTypes": "@types/react",
-    "types": ["vite/client", "@vitejs/plugin-rsc/types"]
+    "types": [
+      "vite/client",
+      "@vitejs/plugin-rsc/types",
+      "vite-plugin-rsc-assets-manifest/types",
+      "vite-plugin-manifest/types"
+    ]
   },
   "tasks": {
     "dev": "deno serve -P=dev --allow-net src/server.ts dev",

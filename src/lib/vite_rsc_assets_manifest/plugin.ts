@@ -6,12 +6,12 @@ import { stripLiteral } from "strip-literal";
 export const rscAssets: Plugin = {
   name: "rsc:load-assets-manifest",
   transform(code) {
-    if (!code.includes("import.meta.viteRsc.loadManifest")) return;
+    if (!code.includes("import.meta.vite.rsc.loadManifest")) return;
 
     const s = new MagicString(code);
     for (
       const match of stripLiteral(code).matchAll(
-        /import\.meta\.viteRsc\.loadManifest\(([\s\S]*?)\)/dg,
+        /import\.meta\.vite\.rsc.\loadManifest\(([\s\S]*?)\)/dg,
       )
     ) {
       const [argStart, argEnd] = match.indices![1]!;
@@ -59,7 +59,9 @@ export const rscAssets: Plugin = {
           ),
         ),
       );
-      const replacement = `(import(${JSON.stringify(importPath)}))`;
+      const replacement = `(import(${
+        JSON.stringify(importPath)
+      }).then((mod) => mod.default))`;
       const [start, end] = match.indices![0]!;
       s.overwrite(start, end, replacement);
     }

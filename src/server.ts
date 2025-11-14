@@ -23,9 +23,7 @@ if (Deno.args.includes("dev")) {
     "rsc",
     "index",
   );
-  const { default: rscManifest } = await import.meta.viteRsc.loadManifest(
-    "rsc",
-  );
+  const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
   const clientManifest = await import.meta.vite.loadManifest(
     "client",
   );
