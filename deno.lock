@@ -10,6 +10,7 @@
     "jsr:@std/async@0.217": "0.217.0",
     "jsr:@std/cli@^1.0.23": "1.0.23",
     "jsr:@std/dotenv@0.217": "0.217.0",
+    "jsr:@std/dotenv@~0.225.5": "0.225.5",
     "jsr:@std/encoding@0.217": "0.217.0",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/flags@0.217": "0.217.0",
@@ -21,6 +22,7 @@
     "jsr:@std/http@^1.0.21": "1.0.21",
     "jsr:@std/internal@^1.0.10": "1.0.12",
     "jsr:@std/internal@^1.0.12": "1.0.12",
+    "jsr:@std/json@0.217": "0.217.0",
     "jsr:@std/jsonc@0.217": "0.217.0",
     "jsr:@std/media-types@^1.1.0": "1.1.0",
     "jsr:@std/net@^1.0.6": "1.0.6",
@@ -33,6 +35,7 @@
     "npm:@sanity/code-input@^6.0.3": "6.0.3_react@19.2.0_react-dom@19.2.0__react@19.2.0_sanity@4.14.2__react@19.2.0__react-dom@19.2.0___react@19.2.0__styled-components@6.1.19___react@19.2.0___react-dom@19.2.0____react@19.2.0__@dnd-kit+core@6.3.1___react@19.2.0___react-dom@19.2.0____react@19.2.0__@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__rxjs@7.8.2__@portabletext+editor@2.20.0___@portabletext+sanity-bridge@1.2.1____@sanity+schema@4.14.2_____@types+react@19.2.2____@sanity+types@4.14.2_____@types+react@19.2.2____@types+react@19.2.2___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___react@19.2.0___rxjs@7.8.2___@types+react@19.2.2___xstate@5.24.0___slate@0.118.1___react-dom@19.2.0____react@19.2.0___slate-dom@0.118.1____slate@0.118.1__react-is@19.2.0__@sanity+client@7.12.1__@sanity+icons@3.7.4___react@19.2.0__vite@7.2.2___@types+node@24.2.0___picomatch@4.0.3___jiti@2.6.1__xstate@5.24.0__esbuild@0.25.12__jsdom@26.1.0__i18next@23.16.8__@types+node@24.2.0__use-sync-external-store@1.6.0___react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_@codemirror+language@6.11.3_@codemirror+state@6.5.2_@codemirror+view@6.38.6_@codemirror+autocomplete@6.19.1_@codemirror+search@6.5.11_@types+react@19.2.2_@types+node@24.2.0",
     "npm:@sanity/document-internationalization@^4.1.0": "4.1.0_react@19.2.0_sanity@4.14.2__react@19.2.0__react-dom@19.2.0___react@19.2.0__styled-components@6.1.19___react@19.2.0___react-dom@19.2.0____react@19.2.0__@dnd-kit+core@6.3.1___react@19.2.0___react-dom@19.2.0____react@19.2.0__@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__rxjs@7.8.2__@portabletext+editor@2.20.0___@portabletext+sanity-bridge@1.2.1____@sanity+schema@4.14.2_____@types+react@19.2.2____@sanity+types@4.14.2_____@types+react@19.2.2____@types+react@19.2.2___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___react@19.2.0___rxjs@7.8.2___@types+react@19.2.2___xstate@5.24.0___slate@0.118.1___react-dom@19.2.0____react@19.2.0___slate-dom@0.118.1____slate@0.118.1__react-is@19.2.0__@sanity+client@7.12.1__@sanity+icons@3.7.4___react@19.2.0__vite@7.2.2___@types+node@24.2.0___picomatch@4.0.3___jiti@2.6.1__xstate@5.24.0__esbuild@0.25.12__jsdom@26.1.0__i18next@23.16.8__@types+node@24.2.0__use-sync-external-store@1.6.0___react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_react-dom@19.2.0__react@19.2.0_@types+react@19.2.2_@types+node@24.2.0",
     "npm:@sanity/vision@^4.14.0": "4.14.2_react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_react-dom@19.2.0__react@19.2.0_@codemirror+state@6.5.2_@codemirror+view@6.38.6_rxjs@7.8.2_@codemirror+autocomplete@6.19.1_@codemirror+language@6.11.3_@codemirror+search@6.5.11",
+    "npm:@sentry/deno@*": "10.25.0",
     "npm:@sentry/deno@^10.25.0": "10.25.0",
     "npm:@types/node@*": "24.2.0",
     "npm:@types/react-dom@^19.2.2": "19.2.2_@types+react@19.2.2",
@@ -59,7 +62,7 @@
         "jsr:@denosaurs/tty@0.2.1",
         "jsr:@denosaurs/wait",
         "jsr:@std/async",
-        "jsr:@std/dotenv",
+        "jsr:@std/dotenv@0.217",
         "jsr:@std/encoding@0.217",
         "jsr:@std/flags",
         "jsr:@std/fmt@0.217",
@@ -100,6 +103,9 @@
     },
     "@std/dotenv@0.217.0": {
       "integrity": "e65cbbf669f482c320b2f94d0a2fc536f1fcd06afdcfa4fde358129a18d1d428"
+    },
+    "@std/dotenv@0.225.5": {
+      "integrity": "9ce6f9d0ec3311f74a32535aa1b8c62ed88b1ab91b7f0815797d77a6f60c922f"
     },
     "@std/encoding@0.217.0": {
       "integrity": "b03e8ff94c98d6b6a02c02c5cf8e5d203400155516248964fc4559abc04669dc"
@@ -142,10 +148,14 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
+    "@std/json@0.217.0": {
+      "integrity": "173f1156d23d11095b6ff7df6266c80e8f83afcd9a6af1731ec301f485806986"
+    },
     "@std/jsonc@0.217.0": {
       "integrity": "125c47f36ef8160e1b4fd5bff096e8f0ea3f49bea197de5b182eb130bb8a527c",
       "dependencies": [
-        "jsr:@std/assert"
+        "jsr:@std/assert",
+        "jsr:@std/json"
       ]
     },
     "@std/media-types@1.1.0": {
@@ -7638,6 +7648,7 @@
       "jsr:@deno/deployctl@^1.13.1",
       "jsr:@miyauci/material-react@^1.0.0-beta.24",
       "jsr:@std/cli@^1.0.23",
+      "jsr:@std/dotenv@~0.225.5",
       "jsr:@std/http@^1.0.21",
       "jsr:@std/path@^1.1.2"
     ],

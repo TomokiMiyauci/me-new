@@ -31,6 +31,7 @@
     "@deno/deployctl": "jsr:@deno/deployctl@^1.13.1",
     "@miyauci/material-react": "jsr:@miyauci/material-react@^1.0.0-beta.24",
     "@std/cli": "jsr:@std/cli@^1.0.23",
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.5",
     "@std/http": "jsr:@std/http@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.2",
     "sanity_rsc": "./src/lib/sanity_rsc/mod.ts",

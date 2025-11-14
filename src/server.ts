@@ -3,6 +3,13 @@ import { Router } from "router";
 import { parseArgs } from "@std/cli/parse-args";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
+import { init } from "@sentry/deno";
+import "@std/dotenv/load";
+
+const dsn = Deno.env.get("SENTRY_DSN");
+const environment = Deno.env.get("SENTRY_ENV");
+
+init({ dsn, environment });
 
 const router = new Router();
 const args = parseArgs(Deno.args);
