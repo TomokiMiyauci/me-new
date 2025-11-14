@@ -11,9 +11,9 @@
     ]
   },
   "tasks": {
-    "dev": "deno serve -P=dev --allow-net src/server.ts dev",
+    "dev": "deno serve -P=dev --allow-net src/framework/server.ts dev",
     "build": "vite build --manifest",
-    "preview": "deno serve -P=preview src/server.ts"
+    "preview": "deno serve -P=preview dist/server/main.js"
   },
   "permissions": {
     "dev": {

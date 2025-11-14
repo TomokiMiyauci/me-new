@@ -1,8 +1,9 @@
-import { Vite } from "./lib/router/src/middleware/vite.ts";
+import { Vite } from "../lib/router/src/middleware/vite.ts";
 import { Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
+import type * as rsc from "./entry.rsc.tsx";
 
 const dsn = Deno.env.get("SENTRY_DSN");
 const environment = Deno.env.get("SENTRY_ENV");
@@ -19,7 +20,7 @@ if (Deno.args.includes("dev")) {
   const server = await createServer({ server: { middlewareMode: true } });
   router.use(new Vite(server));
 } else {
-  const { default: handle } = await import.meta.viteRsc.loadModule(
+  const { default: handle } = await import.meta.viteRsc.loadModule<typeof rsc>(
     "rsc",
     "index",
   );
