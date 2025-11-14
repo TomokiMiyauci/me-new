@@ -11,7 +11,7 @@
     ]
   },
   "tasks": {
-    "dev": "deno serve -P=dev --allow-net src/framework/server.ts dev",
+    "dev": "deno serve -P=dev --allow-net src/framework/entry.server.ts dev",
     "build": "vite build --manifest",
     "preview": "deno serve -P=preview dist/server/main.js"
   },
@@ -51,7 +51,7 @@
     "exclude": [
       "**/node_modules"
     ],
-    "entrypoint": "src/server.ts"
+    "entrypoint": "dist/server/main.js"
   },
   "workspace": [
     "src/lib/vite_node_builtin_scheme",
