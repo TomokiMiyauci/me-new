@@ -74,6 +74,7 @@ export const rscAssets: Plugin = {
   },
 };
 
+// deno-lint-ignore no-explicit-any
 export function evalValue<T = any>(rawValue: string): T {
   const fn = new Function(`
     var console, exports, global, module, process, require
