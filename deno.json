@@ -3,12 +3,17 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "jsxImportSourceTypes": "@types/react",
-    "types": ["vite/client", "@vitejs/plugin-rsc/types"]
+    "types": [
+      "vite/client",
+      "@vitejs/plugin-rsc/types",
+      "vite-plugin-rsc-assets-manifest/types",
+      "vite-plugin-manifest/types"
+    ]
   },
   "tasks": {
-    "dev": "deno serve -P=dev --allow-net src/server.ts dev",
+    "dev": "deno serve -P=dev --allow-net src/framework/entry.server.ts dev",
     "build": "vite build --manifest",
-    "preview": "deno serve -P=preview src/server.ts"
+    "preview": "deno serve -P=preview dist/server/main.js"
   },
   "permissions": {
     "dev": {
@@ -46,13 +51,15 @@
     "exclude": [
       "**/node_modules"
     ],
-    "entrypoint": "src/server.ts"
+    "entrypoint": "dist/server/main.js"
   },
   "workspace": [
     "src/lib/vite_node_builtin_scheme",
     "src/lib/vite_node_env",
     "src/lib/react_router",
     "src/lib/router",
-    "src/lib/sanity_rsc"
+    "src/lib/sanity_rsc",
+    "src/lib/vite_rsc_assets_manifest",
+    "src/lib/vite_plugin_import_meta"
   ]
 }
