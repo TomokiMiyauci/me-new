@@ -43,10 +43,10 @@ jobs:
             return { runId: successfulRun.id, found: true };
 
       - name: debug
-        run: echo ${{ steps.get-successful-run.outputs.result.found }}
+        run: echo ${{ steps.get-successful-run.outputs.result }}
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           run-id: ${{ steps.get-successful-run.outputs.result.runId }}
           path: dist
