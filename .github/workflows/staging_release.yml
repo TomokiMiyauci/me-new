@@ -10,7 +10,7 @@ jobs:
       name: staging
       url: https://me-staging.deno.dev
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v5
