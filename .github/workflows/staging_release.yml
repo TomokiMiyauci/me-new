@@ -34,14 +34,13 @@ jobs:
             });
 
             const successfulRun = data.workflow_runs.find(run => run.conclusion === 'success');
-            console.log(successfulRun);
 
             if (!successfulRun) return;
 
             return successfulRun.id;
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v5
         with:
           run-id: ${{ steps.get-successful-run.outputs.result }}
           path: dist
