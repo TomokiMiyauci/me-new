@@ -25,10 +25,10 @@ jobs:
       #     path: dist
       #     if-no-files-found: error
         
-      - name: Deploy
-        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
-        env:
-          DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      # - name: Deploy
+      #   run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+      #   env:
+      #     DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
       - name: Zip the dist directory
         run: zip -r dist.zip dist
