@@ -1,0 +1,6 @@
+{
+  "name": "deno-env",
+  "exports": {
+    ".": "./mod.ts"
+  }
+}

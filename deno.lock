@@ -32,11 +32,14 @@
     "jsr:@std/streams@0.217": "0.217.0",
     "jsr:@std/streams@^1.0.13": "1.0.13",
     "npm:@deno/vite-plugin@^1.0.5": "1.0.5_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0",
+    "npm:@rollup/plugin-inject@^5.0.5": "5.0.5",
     "npm:@sanity/code-input@^6.0.3": "6.0.3_react@19.2.0_react-dom@19.2.0__react@19.2.0_sanity@4.14.2__react@19.2.0__react-dom@19.2.0___react@19.2.0__styled-components@6.1.19___react@19.2.0___react-dom@19.2.0____react@19.2.0__@dnd-kit+core@6.3.1___react@19.2.0___react-dom@19.2.0____react@19.2.0__@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__rxjs@7.8.2__@portabletext+editor@2.20.0___@portabletext+sanity-bridge@1.2.1____@sanity+schema@4.14.2_____@types+react@19.2.2____@sanity+types@4.14.2_____@types+react@19.2.2____@types+react@19.2.2___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___react@19.2.0___rxjs@7.8.2___@types+react@19.2.2___xstate@5.24.0___slate@0.118.1___react-dom@19.2.0____react@19.2.0___slate-dom@0.118.1____slate@0.118.1__react-is@19.2.0__@sanity+client@7.12.1__@sanity+icons@3.7.4___react@19.2.0__vite@7.2.2___@types+node@24.2.0___picomatch@4.0.3___jiti@2.6.1__xstate@5.24.0__esbuild@0.25.12__jsdom@26.1.0__i18next@23.16.8__@types+node@24.2.0__use-sync-external-store@1.6.0___react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_@codemirror+language@6.11.3_@codemirror+state@6.5.2_@codemirror+view@6.38.6_@codemirror+autocomplete@6.19.1_@codemirror+search@6.5.11_@types+react@19.2.2_@types+node@24.2.0",
     "npm:@sanity/document-internationalization@^4.1.0": "4.1.0_react@19.2.0_sanity@4.14.2__react@19.2.0__react-dom@19.2.0___react@19.2.0__styled-components@6.1.19___react@19.2.0___react-dom@19.2.0____react@19.2.0__@dnd-kit+core@6.3.1___react@19.2.0___react-dom@19.2.0____react@19.2.0__@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__rxjs@7.8.2__@portabletext+editor@2.20.0___@portabletext+sanity-bridge@1.2.1____@sanity+schema@4.14.2_____@types+react@19.2.2____@sanity+types@4.14.2_____@types+react@19.2.2____@types+react@19.2.2___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___react@19.2.0___rxjs@7.8.2___@types+react@19.2.2___xstate@5.24.0___slate@0.118.1___react-dom@19.2.0____react@19.2.0___slate-dom@0.118.1____slate@0.118.1__react-is@19.2.0__@sanity+client@7.12.1__@sanity+icons@3.7.4___react@19.2.0__vite@7.2.2___@types+node@24.2.0___picomatch@4.0.3___jiti@2.6.1__xstate@5.24.0__esbuild@0.25.12__jsdom@26.1.0__i18next@23.16.8__@types+node@24.2.0__use-sync-external-store@1.6.0___react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_react-dom@19.2.0__react@19.2.0_@types+react@19.2.2_@types+node@24.2.0",
     "npm:@sanity/vision@^4.14.0": "4.14.2_react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_react-dom@19.2.0__react@19.2.0_@codemirror+state@6.5.2_@codemirror+view@6.38.6_rxjs@7.8.2_@codemirror+autocomplete@6.19.1_@codemirror+language@6.11.3_@codemirror+search@6.5.11",
+    "npm:@sentry/core@^10.25.0": "10.25.0",
     "npm:@sentry/deno@*": "10.25.0",
     "npm:@sentry/deno@^10.25.0": "10.25.0",
+    "npm:@sentry/react@^10.25.0": "10.25.0_react@19.2.0",
     "npm:@types/node@*": "24.2.0",
     "npm:@types/react-dom@^19.2.2": "19.2.2_@types+react@19.2.2",
     "npm:@types/react@^19.2.2": "19.2.2",
@@ -2342,6 +2345,22 @@
     "@rolldown/pluginutils@1.0.0-beta.43": {
       "integrity": "sha512-5Uxg7fQUCmfhax7FJke2+8B6cqgeUJUD9o2uXIKXhD+mG0mL6NObmVoi9wXEU1tY89mZKgAYA6fTbftx3q2ZPQ=="
     },
+    "@rollup/plugin-inject@5.0.5": {
+      "integrity": "sha512-2+DEJbNBoPROPkgTDNe8/1YXWcqxbN5DTjASVIOx8HS+pITXushyNiBV56RB08zuptzz8gT3YfkqriTBVycepg==",
+      "dependencies": [
+        "@rollup/pluginutils",
+        "estree-walker@2.0.2",
+        "magic-string"
+      ]
+    },
+    "@rollup/pluginutils@5.3.0": {
+      "integrity": "sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==",
+      "dependencies": [
+        "@types/estree",
+        "estree-walker@2.0.2",
+        "picomatch@4.0.3"
+      ]
+    },
     "@rollup/rollup-android-arm-eabi@4.53.1": {
       "integrity": "sha512-bxZtughE4VNVJlL1RdoSE545kc4JxL7op57KKoi59/gwuU5rV6jLWFXXc8jwgFoT6vtj+ZjO+Z2C5nrY0Cl6wA==",
       "os": ["android"],
@@ -3045,10 +3064,22 @@
         "@sanity/types@4.14.2_@types+react@19.2.2"
       ]
     },
+    "@sentry-internal/browser-utils@10.25.0": {
+      "integrity": "sha512-wzg1ITZxrRtQouHPCgpt3tl1GiNAWFVy2RYK2KstFEhpYBAOUn9BAdP7KU9UyHBFKqbAvV4oGtAT8H2/Y4+leA==",
+      "dependencies": [
+        "@sentry/core@10.25.0"
+      ]
+    },
     "@sentry-internal/browser-utils@8.55.0": {
       "integrity": "sha512-ROgqtQfpH/82AQIpESPqPQe0UyWywKJsmVIqi3c5Fh+zkds5LUxnssTj3yNd1x+kxaPDVB023jAP+3ibNgeNDw==",
       "dependencies": [
         "@sentry/core@8.55.0"
+      ]
+    },
+    "@sentry-internal/feedback@10.25.0": {
+      "integrity": "sha512-qlbT4tOd+WRyKpLdsbi26rkynGBoVabnY8/9rFnTxZ0WIUG5EFhJFqEeRLMyv+uk0uRFF3H0I9+u+qP/BKxIcQ==",
+      "dependencies": [
+        "@sentry/core@10.25.0"
       ]
     },
     "@sentry-internal/feedback@8.55.0": {
@@ -3057,27 +3088,51 @@
         "@sentry/core@8.55.0"
       ]
     },
+    "@sentry-internal/replay-canvas@10.25.0": {
+      "integrity": "sha512-zuj5jVNswZ/aA1nPPbU+VIFkQG0695lbyIfS1Skq+5o2FdRIS3MGnBXw1abI9h4pft8GLQWcKiBxISM7UpSz6w==",
+      "dependencies": [
+        "@sentry-internal/replay@10.25.0",
+        "@sentry/core@10.25.0"
+      ]
+    },
     "@sentry-internal/replay-canvas@8.55.0": {
       "integrity": "sha512-nIkfgRWk1091zHdu4NbocQsxZF1rv1f7bbp3tTIlZYbrH62XVZosx5iHAuZG0Zc48AETLE7K4AX9VGjvQj8i9w==",
       "dependencies": [
-        "@sentry-internal/replay",
+        "@sentry-internal/replay@8.55.0",
         "@sentry/core@8.55.0"
+      ]
+    },
+    "@sentry-internal/replay@10.25.0": {
+      "integrity": "sha512-V/kKQn9T46HBTiP0bIThmpVr94K4vXwYM3/EHVpGSq4P9RynX06cgps8GLHq94+A0kX/DbK9igEMZmIuzS1q3A==",
+      "dependencies": [
+        "@sentry-internal/browser-utils@10.25.0",
+        "@sentry/core@10.25.0"
       ]
     },
     "@sentry-internal/replay@8.55.0": {
       "integrity": "sha512-roCDEGkORwolxBn8xAKedybY+Jlefq3xYmgN2fr3BTnsXjSYOPC7D1/mYqINBat99nDtvgFvNfRcZPiwwZ1hSw==",
       "dependencies": [
-        "@sentry-internal/browser-utils",
+        "@sentry-internal/browser-utils@8.55.0",
         "@sentry/core@8.55.0"
+      ]
+    },
+    "@sentry/browser@10.25.0": {
+      "integrity": "sha512-UgSVT3RTM3vsK914TPuHVJQsjq5ooXVmjMtsWP3Ep+6f7N+1UVX4ZXsyyj5lDOcWdc79FgproD+MrEf9Cj6uBg==",
+      "dependencies": [
+        "@sentry-internal/browser-utils@10.25.0",
+        "@sentry-internal/feedback@10.25.0",
+        "@sentry-internal/replay@10.25.0",
+        "@sentry-internal/replay-canvas@10.25.0",
+        "@sentry/core@10.25.0"
       ]
     },
     "@sentry/browser@8.55.0": {
       "integrity": "sha512-1A31mCEWCjaMxJt6qGUK+aDnLDcK6AwLAZnqpSchNysGni1pSn1RWSmk9TBF8qyTds5FH8B31H480uxMPUJ7Cw==",
       "dependencies": [
-        "@sentry-internal/browser-utils",
-        "@sentry-internal/feedback",
-        "@sentry-internal/replay",
-        "@sentry-internal/replay-canvas",
+        "@sentry-internal/browser-utils@8.55.0",
+        "@sentry-internal/feedback@8.55.0",
+        "@sentry-internal/replay@8.55.0",
+        "@sentry-internal/replay-canvas@8.55.0",
         "@sentry/core@8.55.0"
       ]
     },
@@ -3094,10 +3149,19 @@
         "@sentry/core@10.25.0"
       ]
     },
+    "@sentry/react@10.25.0_react@19.2.0": {
+      "integrity": "sha512-LBQHgyPAFzuy99mEJF8ZF2AOxxJiGAmtu10eQhglhFgfJsU7JJVsee0h+vTSmvHMDtFrIwhZi3i1X5snZ/kzoA==",
+      "dependencies": [
+        "@sentry/browser@10.25.0",
+        "@sentry/core@10.25.0",
+        "hoist-non-react-statics",
+        "react"
+      ]
+    },
     "@sentry/react@8.55.0_react@19.2.0": {
       "integrity": "sha512-/qNBvFLpvSa/Rmia0jpKfJdy16d4YZaAnH/TuKLAtm0BWlsPQzbXCU4h8C5Hsst0Do0zG613MEtEmWpWrVOqWA==",
       "dependencies": [
-        "@sentry/browser",
+        "@sentry/browser@8.55.0",
         "@sentry/core@8.55.0",
         "hoist-non-react-statics",
         "react"
@@ -3331,7 +3395,7 @@
       "dependencies": [
         "@remix-run/node-fetch-server",
         "es-module-lexer",
-        "estree-walker",
+        "estree-walker@3.0.3",
         "magic-string",
         "periscopic",
         "react",
@@ -4241,6 +4305,9 @@
     },
     "estraverse@5.3.0": {
       "integrity": "sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA=="
+    },
+    "estree-walker@2.0.2": {
+      "integrity": "sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w=="
     },
     "estree-walker@3.0.3": {
       "integrity": "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==",
@@ -6435,7 +6502,7 @@
         "@sanity/ui@3.1.11_react@19.2.0_react-dom@19.2.0__react@19.2.0_react-is@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0",
         "@sanity/util@4.14.2_@types+react@19.2.2",
         "@sanity/uuid",
-        "@sentry/react",
+        "@sentry/react@8.55.0_react@19.2.0",
         "@tanstack/react-table",
         "@tanstack/react-virtual",
         "@types/react-is",
@@ -6588,7 +6655,7 @@
         "@sanity/ui@3.1.11_react@19.2.0_react-dom@19.2.0__react@19.2.0_react-is@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0",
         "@sanity/util@4.14.2_@types+react@19.2.2",
         "@sanity/uuid",
-        "@sentry/react",
+        "@sentry/react@8.55.0_react@19.2.0",
         "@tanstack/react-table",
         "@tanstack/react-virtual",
         "@types/react-is",
@@ -7365,7 +7432,7 @@
     "vite-plugin-cjs-interop@2.3.0_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0": {
       "integrity": "sha512-gNeh8anoG4QrdQf4LNcoQZTVEdqrrAdwjDDyNc4bHLi0u6XSXaaOiJiuKwwY38KWfYZdQsmoytBOHCRf+0gHjQ==",
       "dependencies": [
-        "estree-walker",
+        "estree-walker@3.0.3",
         "magic-string",
         "minimatch@10.1.1",
         "oxc-parser",
@@ -7657,10 +7724,13 @@
     "packageJson": {
       "dependencies": [
         "npm:@deno/vite-plugin@^1.0.5",
+        "npm:@rollup/plugin-inject@^5.0.5",
         "npm:@sanity/code-input@^6.0.3",
         "npm:@sanity/document-internationalization@^4.1.0",
         "npm:@sanity/vision@^4.14.0",
+        "npm:@sentry/core@^10.25.0",
         "npm:@sentry/deno@^10.25.0",
+        "npm:@sentry/react@^10.25.0",
         "npm:@types/react-dom@^19.2.2",
         "npm:@types/react@^19.2.2",
         "npm:@vitejs/plugin-react@latest",

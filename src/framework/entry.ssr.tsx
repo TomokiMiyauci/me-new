@@ -4,6 +4,9 @@ import type { ReactFormState } from "react-dom/client";
 import { renderToReadableStream } from "react-dom/server.edge";
 import { injectRSCPayload } from "rsc-html-stream/server";
 import type { RscPayload } from "./types.ts";
+import { source } from "@/services/source.ts";
+import { PUBLIC } from "@/env.ts";
+import { HTMLInjectionStream } from "html-stream";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
@@ -14,7 +17,7 @@ export interface RenderHTMLOptions {
 export async function renderHTML(
   rscStream: ReadableStream<Uint8Array>,
   options: RenderHTMLOptions,
-): Promise<ReadableStream<Uint8Array>> {
+): Promise<ReadableStream<BufferSource>> {
   // // duplicate one RSC stream into two.
   // // - one for SSR (ReactClient.createFromReadableStream below)
   // // - another for browser hydration payload by injecting <script>...FLIGHT_DATA...</script>.
@@ -26,7 +29,7 @@ export async function renderHTML(
     .loadBootstrapScriptContent("index");
   const { nonce, formState, nojs } = options;
 
-  const stream = await renderToReadableStream(
+  const stream: ReadableStream<BufferSource> = await renderToReadableStream(
     <SsrRoot payload={payload} />,
     {
       bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
@@ -39,9 +42,13 @@ export async function renderHTML(
 
   // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
   // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
-  return stream.pipeThrough(
-    injectRSCPayload(rscStream2, { nonce }),
-  );
+  return stream
+    .pipeThrough(new TextDecoderStream())
+    .pipeThrough(
+      new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
+    )
+    .pipeThrough(new TextEncoderStream())
+    .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
 }
 
 interface SsrRootProps {
