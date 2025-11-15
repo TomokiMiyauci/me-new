@@ -41,12 +41,14 @@ jobs:
 
             return { runId: successfulRun.id, found: true };
 
+      - name: debug
+        run: echo ${{ steps.get-successful-run.outputs.found }}
+
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
           run-id: ${{ steps.get-successful-run.outputs.runId }}
           path: dist
-        if: steps.get-successful-run.outputs.found == 'true'
         continue-on-error: true
       
       - name: Deploy
