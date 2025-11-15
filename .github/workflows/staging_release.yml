@@ -19,11 +19,34 @@ jobs:
         with:
           cache: true
 
-      - name: Build
-        run: deno task build
-        env:
-          PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
-          PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+      - name: Get most recent successful run
+        id: get-successful-run
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'development_release.yml',
+              status: 'completed',
+            });
+
+            const successfulRun = data.workflow_runs.find(run => run.conclusion === 'success');
+
+            if (!successfulRun) {
+              return { runId: null, found: false };
+            }
+
+            return { runId: successfulRun.id, found: true };
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.get-successful-run.outputs.runId }}
+          path: dist
+        if: steps.get-successful-run.outputs.found == 'true'
+        continue-on-error: true
       
       - name: Deploy
         run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }} --prod
