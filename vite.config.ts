@@ -1,12 +1,23 @@
 import rsc from "@vitejs/plugin-rsc";
 import react from "@vitejs/plugin-react";
 import deno from "@deno/vite-plugin";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import { cjsInterop } from "vite-plugin-cjs-interop";
 import { nodeScheme } from "vite-node-scheme";
 import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
+
+const buildEnvironment = {
+  name: "build-env",
+  buildApp: async (builder) => {
+    const envs = Object.values(builder.environments);
+
+    for (const env of envs) {
+      if (!env.isBuilt) await builder.build(env);
+    }
+  },
+} satisfies Plugin;
 
 export default defineConfig({
   server: { port: 8000 },
@@ -36,16 +47,7 @@ export default defineConfig({
       ],
     }),
     nodeScheme(),
-    {
-      name: "builder",
-      buildApp: async (builder) => {
-        const envs = Object.values(builder.environments);
-
-        for (const env of envs) {
-          if (!env.isBuilt) await builder.build(env);
-        }
-      },
-    },
+    buildEnvironment,
     rscAssets,
     manifest,
     outDirResolve,
