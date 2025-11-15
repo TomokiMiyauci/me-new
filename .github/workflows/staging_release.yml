@@ -42,6 +42,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v5
         with:
+          name: artifact
           run-id: ${{ steps.get-successful-run.outputs.result }}
           path: dist
       
