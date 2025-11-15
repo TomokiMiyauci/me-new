@@ -17,6 +17,8 @@ import {
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
 import type { RscPayload } from "./types.ts";
+import { init, reactErrorHandler } from "@sentry/react";
+import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 
 async function main(): Promise<void> {
   // stash `setPayload` function to trigger re-rendering
@@ -80,6 +82,14 @@ async function main(): Promise<void> {
   );
   hydrateRoot(document, browserRoot, {
     formState: initialPayload.formState,
+    // Callback called when an error is thrown and not caught by an ErrorBoundary.
+    onUncaughtError: reactErrorHandler((error, errorInfo) => {
+      console.error("Uncaught error", error, errorInfo.componentStack);
+    }),
+    // Callback called when React catches an error in an ErrorBoundary.
+    onCaughtError: reactErrorHandler(),
+    // Callback called when React automatically recovers from errors.
+    onRecoverableError: reactErrorHandler(),
   });
 
   // implement server HMR by trigering re-fetch/render of RSC upon server code change
@@ -138,4 +148,5 @@ function listenNavigation(onNavigation: () => void): VoidFunction {
   };
 }
 
+init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
 main();

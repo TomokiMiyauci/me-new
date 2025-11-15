@@ -1,0 +1,6 @@
+{
+  "name": "html-stream",
+  "exports": {
+    ".": "./mod.ts"
+  }
+}

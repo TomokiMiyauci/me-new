@@ -7,6 +7,7 @@ import { nodeScheme } from "vite-node-scheme";
 import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
+import inject from "@rollup/plugin-inject";
 
 const buildEnvironment = {
   name: "build-env",
@@ -21,7 +22,7 @@ const buildEnvironment = {
 
 export default defineConfig({
   server: { port: 8000 },
-  envPrefix: "PUBLIC_",
+  envDir: false,
   plugins: [
     rsc({
       // `entries` option is only a shorthand for specifying each `rollupOptions.input` below
@@ -51,6 +52,27 @@ export default defineConfig({
     rscAssets,
     manifest,
     outDirResolve,
+    {
+      // This is workaround for rsc plugin constraints
+      // client: {
+      //       build: {
+      //         rollupOptions: {
+      //           plugins: [inject(...)],
+      //         },
+      //       },
+      //     },
+      name: "apply-transform-client-only",
+      transform(...args) {
+        if (this.environment.name === "client") {
+          // deno-lint-ignore no-explicit-any
+          const { transform } = (inject as any)({
+            "Deno.env": "./src/framework/polyfills/deno_env.ts",
+          })!;
+
+          return transform.apply(this, args);
+        }
+      },
+    },
   ],
 
   resolve: {
