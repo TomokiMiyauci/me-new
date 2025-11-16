@@ -11,8 +11,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Build
-        uses: ./.github/workflows/build.yml
+      - uses: ./.github/workflows/build.yml
 
       - name: Deploy
         uses: ./.github/workflows/deploy.yml
