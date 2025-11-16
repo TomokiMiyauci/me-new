@@ -23,6 +23,9 @@ jobs:
           version: tags/stable
           file: dist.zip
 
+      - run: |
+          ls dist
+
       - name: Unzip dist
         run: unzip -o ./dist.zip -d ./dist
       
