@@ -1,11 +1,12 @@
-on:
-  release:
-    types: [published]
+on: 
+  push:
+    branches: 
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ !github.event.release.prerelease }}
+    # if: ${{ !github.event.release.prerelease }}
     permissions:
       contents: read
     environment: production
@@ -16,15 +17,17 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           cache: true
+        
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: stable
+          file: dist.zip
 
-      - name: Build
-        run: deno task build
-        env:
-          PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
-          PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+      - name: Unzip dist
+        run: unzip -o ./dist.zip -d ./dist
       
       - name: Deploy
-        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }} --prod
+        run: deno task deploy
         env:
-          DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
-          
+          PROJECT_ID: ${{ vars.PROJECT_NAME }}
+          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
