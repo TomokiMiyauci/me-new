@@ -6,9 +6,13 @@ on:
       - main
 
 jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
   deploy:
     runs-on: ubuntu-latest
     environment: development
+    needs: [build]
     permissions:
       contents: read
 
@@ -19,8 +23,11 @@ jobs:
         with:
           cache: true
 
-      - name: Build
-        run: deno task build
+      - name: Download artifact
+        uses: actions/download-artifact@v6
+        with:
+          path: dist
+          name: ${{ needs.build.outputs.artifact-name }}
       
       - name: Deploy
         run: deno task deploy:preview
