@@ -35,12 +35,12 @@ jobs:
         if: ${{ inputs.production == true }}
         run: deno task deploy
         env:
-          PROJECT_ID: ${{ vars.PROJECT_ID }}
+          PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
       - name: Deploy Preview
         if: ${{ inputs.production == false }}
         run: deno task deploy:preview
         env:
-          PROJECT_ID: ${{ vars.PROJECT_ID }}
+          PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
