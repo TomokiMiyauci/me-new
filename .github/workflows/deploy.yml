@@ -1,0 +1,36 @@
+on: 
+  workflow_call:
+    inputs:
+      production:
+        type: boolean
+        default: false
+      project_id:
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - name: Deploy Production
+        if: ${{ inputs.production == true }}
+        run: deno task deploy
+        env:
+          PROJECT_ID: ${{ inputs.project_id }}
+          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+
+      - name: Deploy Preview
+        if: ${{ inputs.production == false }}
+        run: deno task deploy:preview
+        env:
+          PROJECT_ID: ${{ inputs.project_id }}
+          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
