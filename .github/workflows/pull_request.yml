@@ -12,3 +12,4 @@ jobs:
     needs: build
     with:
       environment: development
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
