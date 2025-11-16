@@ -60,12 +60,9 @@ export const manifest: Plugin = {
           ),
         ),
       );
-      const replacement = `(() => {
-const meta = import.meta.resolve(${JSON.stringify(importPath)});
-      console.log(meta);
-      return fetch(meta).then((res) => res.json())
-}
-      )()`;
+      const replacement = `(fetch(import.meta.resolve(${
+        JSON.stringify(importPath)
+      })).then((res) => res.json()))`;
       console.log(replacement);
       const [start, end] = match.indices![0]!;
       s.overwrite(start, end, replacement);
