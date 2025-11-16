@@ -26,6 +26,9 @@ jobs:
         with:
           path: dist
           name: ${{ needs.build.outputs.artifact-name }}
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       
       - name: Deploy
         run: deno task deploy:preview
