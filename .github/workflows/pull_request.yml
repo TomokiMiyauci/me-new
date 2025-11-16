@@ -1,0 +1,42 @@
+on: 
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build
+        uses: ./.github/workflows/build.yml
+
+      - name: Deploy
+        uses: ./.github/workflows/deploy.yml
+        with:
+          project_id: ${{ vars.PROJECT_NAME }}
+        
+      # - uses: actions/upload-artifact@v5
+      #   with:
+      #     path: dist
+      #     if-no-files-found: error
+        
+      # - name: Deploy
+      #   run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+      #   env:
+      #     DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+
+    #   - name: Zip the dist directory
+    #     run: zip -r dist.zip dist
+
+    #   - uses: softprops/action-gh-release@v2
+    #     with:
+    #       files: dist.zip
+    #       tag_name: staging
+    #       draft: true
+    #       prerelease: true
