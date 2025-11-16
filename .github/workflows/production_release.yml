@@ -20,7 +20,7 @@ jobs:
         
       - uses: dsaltares/fetch-gh-release-asset@master
         with:
-          version: tags/stable
+          version: tag/stable
           file: dist.zip
 
       - name: Unzip dist
