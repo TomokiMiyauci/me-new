@@ -1,17 +1,30 @@
 on: 
+  push:
+    branches: main
   pull_request:
     branches: 
       - main
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
-
   deploy:
-    uses: ./.github/workflows/deploy.yml
-    needs: build
-    with:
-      environment: development
-      artifact-name: ${{ needs.build.outputs.artifact-name }}
-    secrets:
-      DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+    runs-on: ubuntu-latest
+    environment: development
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - name: Build
+        run: deno task build
+      
+      - name: Deploy
+        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+        env:
+          DENO_DEPLOY_TOKEN:  ${{ secrets.PROJECT_TOKEN }}
+          
