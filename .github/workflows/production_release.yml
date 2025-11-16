@@ -1,12 +1,11 @@
-on: 
-  push:
-    branches: 
-      - main
+on:
+  release:
+    types: [published]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # if: ${{ !github.event.release.prerelease }}
+    if: ${{ !github.event.release.prerelease }}
     permissions:
       contents: read
     environment: production
