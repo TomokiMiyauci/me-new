@@ -24,7 +24,7 @@ jobs:
           file: dist.zip
 
       - run: |
-          ls dist
+          ls
 
       - name: Unzip dist
         run: unzip -o ./dist.zip -d ./dist
