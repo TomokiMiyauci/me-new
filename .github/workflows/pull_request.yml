@@ -11,8 +11,6 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v5
-
       - name: Build
         uses: ./.github/workflows/build.yml
 
