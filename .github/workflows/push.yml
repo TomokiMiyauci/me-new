@@ -1,5 +1,5 @@
 on: 
-  pull_request:
+  push:
     branches: 
       - main
 
@@ -9,10 +9,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    environment: development
-    needs: [build]
+    environment: staging
+    needs: build
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v5
@@ -27,8 +27,18 @@ jobs:
           path: dist
           name: ${{ needs.build.outputs.artifact-name }}
 
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: dist/**/*
+          prerelease: true
+          draft: true
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          tag: stable
+          replacesArtifacts: true
+
       - name: Deploy
-        run: deno task deploy:preview
+        run: deno task deploy
         env:
           PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}

@@ -13,7 +13,9 @@
   "tasks": {
     "dev": "deno serve -P=dev --allow-net src/framework/entry.server.ts dev",
     "build": "vite build --manifest",
-    "preview": "deno serve -P=preview dist/server/main.js"
+    "preview": "deno serve -P=preview dist/server/main.js",
+    "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --pro:d",
+    "deploy:preview": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN"
   },
   "permissions": {
     "dev": {
@@ -29,7 +31,10 @@
       "env": true
     },
     "deploy": {
-      "env": true
+      "env": true,
+      "sys": true,
+      "read": true,
+      "net": true
     }
   },
   "imports": {

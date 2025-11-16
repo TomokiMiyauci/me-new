@@ -4,8 +4,14 @@ on:
       production:
         type: boolean
         default: false
-      project_id:
+      environment:
         type: string
+        required: true
+      artifact-name:
+        required: true
+        type: string
+    secrets:
+      DEPLOY_TOKEN:
         required: true
 
 jobs:
@@ -21,16 +27,24 @@ jobs:
         with:
           cache: true
 
+      - name: Download artifact
+        uses: actions/download-artifact@v6
+        with:
+          path: dist
+          name: ${{ inputs.artifact-name }}
+
+      - run: |
+          ls 
+          ls -l dist
+
       - name: Deploy Production
         if: ${{ inputs.production == true }}
         run: deno task deploy
         env:
-          PROJECT_ID: ${{ inputs.project_id }}
-          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          DENO_DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Deploy Preview
         if: ${{ inputs.production == false }}
-        run: deno task deploy:preview
+        run: deno run -A @deno/deployctl deploy -p=me-development
         env:
-          PROJECT_ID: ${{ inputs.project_id }}
-          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          DENO_DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
