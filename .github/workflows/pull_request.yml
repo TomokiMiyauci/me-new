@@ -13,3 +13,5 @@ jobs:
     with:
       environment: development
       artifact-name: ${{ needs.build.outputs.artifact-name }}
+    secrets:
+      DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}

@@ -10,6 +10,9 @@ on:
       artifact-name:
         required: true
         type: string
+    secrets:
+      DEPLOY_TOKEN:
+        required: true
 
 jobs:
   deploy:
@@ -35,10 +38,10 @@ jobs:
         run: deno task deploy
         env:
           PROJECT_ID: ${{ vars.PROJECT_NAME }}
-          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Deploy Preview
         if: ${{ inputs.production == false }}
         run: deno run -A @deno/deployctl deploy -p=me-development
         env:
-          DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          DENO_DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
