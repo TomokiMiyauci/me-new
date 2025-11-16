@@ -4,7 +4,7 @@ on:
       production:
         type: boolean
         default: false
-      project_id:
+      environment:
         type: string
         required: true
 
@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    environment: ${{ inputs.environment }}
 
     steps:
+      - uses: actions/checkout@v5
+
       - uses: denoland/setup-deno@v2
         with:
           cache: true
@@ -23,12 +26,12 @@ jobs:
         if: ${{ inputs.production == true }}
         run: deno task deploy
         env:
-          PROJECT_ID: ${{ inputs.project_id }}
+          PROJECT_ID: ${{ vars.PROJECT_ID }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
       - name: Deploy Preview
         if: ${{ inputs.production == false }}
         run: deno task deploy:preview
         env:
-          PROJECT_ID: ${{ inputs.project_id }}
+          PROJECT_ID: ${{ vars.PROJECT_ID }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}

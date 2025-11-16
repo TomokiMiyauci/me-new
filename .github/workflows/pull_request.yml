@@ -4,16 +4,11 @@ on:
       - main
 
 jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
   deploy:
-    runs-on: ubuntu-latest
-    environment: development
-    permissions:
-      contents: read
-
-    steps:
-      - uses: ./.github/workflows/build.yml
-
-      - name: Deploy
-        uses: ./.github/workflows/deploy.yml
-        with:
-          project_id: ${{ vars.PROJECT_NAME }}
+    uses: ./.github/workflows/deploy.yml
+    needs: build
+    with:
+      environment: development
