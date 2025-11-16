@@ -34,7 +34,6 @@ jobs:
         with:
           artifacts: dist.zip
           prerelease: true
-          draft: true
           artifactErrorsFailBuild: true
           allowUpdates: true
           tag: stable
