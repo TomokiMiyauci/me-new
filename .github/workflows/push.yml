@@ -27,9 +27,12 @@ jobs:
           path: dist
           name: ${{ needs.build.outputs.artifact-name }}
 
+      - name: Zip dist
+        run: zip -r dist.zip dist/
+
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: dist/**/*
+          artifacts: dist.zip
           prerelease: true
           draft: true
           artifactErrorsFailBuild: true
