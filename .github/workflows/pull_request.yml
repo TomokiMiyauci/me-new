@@ -24,6 +24,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v6
         with:
+          path: .
           name: ${{ needs.build.outputs.artifact-name }}
       
       - name: Deploy
