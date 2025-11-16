@@ -35,12 +35,12 @@ async function createAppMiddelwares(
     const { default: handle } = await import.meta.viteRsc.loadModule<
       typeof rsc
     >("rsc", "index");
-    const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
-    const clientManifest = await import.meta.vite.loadManifest(
-      "client",
-    );
-    const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
+    // const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
+    // const clientManifest = await import.meta.vite.loadManifest(
+    //   "client",
+    // );
+    // const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
 
-    return [new ViteRscAssets(clientManifest, rscManifest, distRoot), handle];
+    return [handle];
   }
 }
