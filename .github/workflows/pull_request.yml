@@ -23,7 +23,8 @@ jobs:
         run: deno task build
       
       - name: Deploy
-        run: deno run -A @deno/deployctl deploy -p=${{ vars.PROJECT_NAME }}
+        run: deno task deploy:preview
         env:
-          DENO_DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_ID: ${{ vars.PROJECT_NAME }}
+          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
           
