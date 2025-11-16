@@ -30,6 +30,8 @@ jobs:
       - name: Zip dist
         run: zip -r dist.zip dist/
 
+      - run: unzip -l dist.zip
+
       - uses: ncipollo/release-action@v1
         with:
           artifacts: dist.zip
