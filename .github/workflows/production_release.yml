@@ -23,11 +23,8 @@ jobs:
           version: tags/stable
           file: dist.zip
 
-      - run: |
-          unzip -l dist.zip
-
       - name: Unzip dist
-        run: unzip -o ./dist.zip -d ./dist
+        run: unzip ./dist.zip
       
       - name: Deploy
         run: deno task deploy
