@@ -1,3 +1,17 @@
+# [1.2.0](https://github.com/TomokiMiyauci/me-new/compare/1.1.0...1.2.0) (2025-11-17)
+
+
+### Features
+
+* add runtime config to project ([1109073](https://github.com/TomokiMiyauci/me-new/commit/11090731cbf987030b3dd4fffaa2666a3e878e5f))
+* add sentry to project ([db4082a](https://github.com/TomokiMiyauci/me-new/commit/db4082a2bf1037b649c11ef49b129624e799ad4e))
+* add vite plugin for reference of build artifact ([64d4dfe](https://github.com/TomokiMiyauci/me-new/commit/64d4dfeb1a9c32ff52dc4f25c38e1f505728976f))
+* change build env prefix, rename env ([f0a50af](https://github.com/TomokiMiyauci/me-new/commit/f0a50af62000497bd275ec919d538516faecf4d9))
+* change import meta namespace to vite from viteRsc ([3076354](https://github.com/TomokiMiyauci/me-new/commit/307635472de26d4c44126b4310a68dbce4bdf0ad))
+* export sanity studio ([2655fa0](https://github.com/TomokiMiyauci/me-new/commit/2655fa0518e649dba74b08a4800b01fce98b0f19))
+* **lib:** add deno env mock ([4559030](https://github.com/TomokiMiyauci/me-new/commit/4559030369a983cbcaeb45ecca1b7824a4f3458e))
+* use vite as middleware ([4365136](https://github.com/TomokiMiyauci/me-new/commit/43651360c1a703aa263ec06d994680c2acb2cc86))
+
 # [1.1.0](https://github.com/TomokiMiyauci/my-blog/compare/v1.0.0...1.1.0) (2025-11-11)
 
 
