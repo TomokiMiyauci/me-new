@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: ${{ vars.URL }}
+      url: ${{ steps.deploy.outputs.url }}
     permissions:
       id-token: write # This is required to allow the GitHub Action to authenticate with Deno Deploy.
       contents: read
@@ -23,6 +23,7 @@ jobs:
           name: ${{ needs.build.outputs.artifact-name }}
 
       - name: Deploy
+        id: deploy
         uses: denoland/deployctl@v1
         with:
           project: ${{ vars.PROJECT_NAME }}
@@ -33,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: production
-      url: ${{ vars.URL }}
+      url: ${{ steps.deploy.outputs.url }}
     permissions:
       id-token: write # This is required to allow the GitHub Action to authenticate with Deno Deploy.
       contents: read
@@ -44,6 +45,7 @@ jobs:
           name: ${{ needs.build.outputs.artifact-name }}
 
       - name: Deploy
+        id: deploy
         uses: denoland/deployctl@v1
         with:
           project: ${{ vars.PROJECT_NAME }}
