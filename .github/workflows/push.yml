@@ -56,3 +56,32 @@ jobs:
         env:
           PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+
+  publish:
+    needs: [build, deploy-production]
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    permissions:
+      contents: write
+    steps:
+      - name: Generate Token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v5
+        with:
+         fetch-depth: 0
+         persist-credentials: false
+      
+      - name: Download artifact
+        uses: actions/download-artifact@v6
+        with:
+          path: dist
+          name: ${{ needs.build.outputs.artifact-name }}
+          
+      - uses: cycjimmy/semantic-release-action@v5
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
