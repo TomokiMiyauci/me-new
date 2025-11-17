@@ -11,9 +11,9 @@
     ]
   },
   "tasks": {
-    "dev": "vite dev",
-    "build": "vite build --manifest",
-    "preview": "deno serve -P=preview --allow-net --env-file dist/server/main.js",
+    "dev": "deno run -P=dev --allow-net --env-file vite dev",
+    "build": "deno run -P=build vite build --manifest",
+    "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
     "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --prod",
     "deploy:preview": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN"
   },
@@ -25,6 +25,14 @@
       "ffi": true,
       "run": true,
       "write": ["."]
+    },
+    "build": {
+      "read": true,
+      "env": true,
+      "sys": true,
+      "ffi": true,
+      "run": true,
+      "write": true
     },
     "preview": {
       "read": ["dist"],
