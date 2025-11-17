@@ -63,7 +63,6 @@ export default defineConfig(({ command }) => ({
         "prop-types",
       ],
     }),
-    // nodeScheme(),
     buildEnvironment,
     rscAssets,
     manifest,
