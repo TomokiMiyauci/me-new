@@ -9,6 +9,7 @@ import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { nodeScheme } from "vite-node-scheme";
 
 const buildEnvironment = {
   name: "build-env",
@@ -58,6 +59,7 @@ export default defineConfig(({ command }) => ({
     },
     deno(),
     nodeEnv(),
+    nodeScheme(),
     cjsInterop({
       dependencies: [
         "prop-types",
@@ -98,8 +100,6 @@ export default defineConfig(({ command }) => ({
       globals: {
         Buffer: true, // for nanoid https://github.com/ai/nanoid/blob/9d574d2c9706f5cf82e2a043450c62664ea1fcf1/index.js#L17C12-L17C18
       },
-      // Whether to polyfill `node:` protocol imports.
-      protocolImports: true,
     }),
   ],
 
