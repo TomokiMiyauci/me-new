@@ -10,7 +10,9 @@ jobs:
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
-    environment: staging
+    environment:
+      name: staging
+      url: ${{ vars.URL }}
     permissions:
       contents: read
     steps:
@@ -35,7 +37,9 @@ jobs:
   deploy-production:
     needs: build
     runs-on: ubuntu-latest
-    environment: production
+    environment: 
+      name: production
+      url: ${{ vars.URL }}
     permissions:
       contents: read
     steps:
