@@ -1,17 +1,13 @@
-import { Vite } from "../lib/router/src/middleware/vite.ts";
 import { MiddlewareOrMiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
+import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import type * as rsc from "./entry.rsc.tsx";
 
 const isDev = Deno.args.includes("dev");
-if (isDev) await import("@std/dotenv/load");
 
-const dsn = Deno.env.get("SENTRY_DSN");
-const environment = Deno.env.get("SENTRY_ENV");
-
-init({ dsn, environment });
+init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
 
 const router = new Router();
 const middlewares = await createAppMiddelwares(isDev);
@@ -29,6 +25,8 @@ async function createAppMiddelwares(
     const { createServer } = await import("vite");
 
     const server = await createServer({ server: { middlewareMode: true } });
+
+    const { Vite } = await import("../lib/router/src/middleware/vite.ts");
 
     return [new Vite(server)];
   } else {
