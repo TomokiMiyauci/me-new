@@ -11,9 +11,9 @@
     ]
   },
   "tasks": {
-    "dev": "deno serve -P=dev --allow-net src/framework/entry.server.ts dev",
+    "dev": "deno serve -P=dev --env-file --allow-net src/framework/entry.server.ts dev",
     "build": "vite build --manifest",
-    "preview": "deno serve -P=preview dist/server/main.js",
+    "preview": "deno serve -P=preview --allow-net --env-file dist/server/main.js",
     "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --pro:d",
     "deploy:preview": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN"
   },
@@ -41,7 +41,6 @@
     "@deno/deployctl": "jsr:@deno/deployctl@^1.13.1",
     "@miyauci/material-react": "jsr:@miyauci/material-react@^1.0.0-beta.24",
     "@std/cli": "jsr:@std/cli@^1.0.23",
-    "@std/dotenv": "jsr:@std/dotenv@^0.225.5",
     "@std/http": "jsr:@std/http@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.2",
     "sanity_rsc": "./src/lib/sanity_rsc/mod.ts",

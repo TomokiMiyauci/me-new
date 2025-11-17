@@ -10,7 +10,6 @@
     "jsr:@std/async@0.217": "0.217.0",
     "jsr:@std/cli@^1.0.23": "1.0.23",
     "jsr:@std/dotenv@0.217": "0.217.0",
-    "jsr:@std/dotenv@~0.225.5": "0.225.5",
     "jsr:@std/encoding@0.217": "0.217.0",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/flags@0.217": "0.217.0",
@@ -66,7 +65,7 @@
         "jsr:@denosaurs/tty@0.2.1",
         "jsr:@denosaurs/wait",
         "jsr:@std/async",
-        "jsr:@std/dotenv@0.217",
+        "jsr:@std/dotenv",
         "jsr:@std/encoding@0.217",
         "jsr:@std/flags",
         "jsr:@std/fmt@0.217",
@@ -107,9 +106,6 @@
     },
     "@std/dotenv@0.217.0": {
       "integrity": "e65cbbf669f482c320b2f94d0a2fc536f1fcd06afdcfa4fde358129a18d1d428"
-    },
-    "@std/dotenv@0.225.5": {
-      "integrity": "9ce6f9d0ec3311f74a32535aa1b8c62ed88b1ab91b7f0815797d77a6f60c922f"
     },
     "@std/encoding@0.217.0": {
       "integrity": "b03e8ff94c98d6b6a02c02c5cf8e5d203400155516248964fc4559abc04669dc"
@@ -7716,7 +7712,6 @@
       "jsr:@deno/deployctl@^1.13.1",
       "jsr:@miyauci/material-react@^1.0.0-beta.24",
       "jsr:@std/cli@^1.0.23",
-      "jsr:@std/dotenv@~0.225.5",
       "jsr:@std/http@^1.0.21",
       "jsr:@std/path@^1.1.2"
     ],
