@@ -7,41 +7,38 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
 
-  deploy:
+  deploy-staging:
+    needs: build
     runs-on: ubuntu-latest
     environment: staging
-    needs: build
     permissions:
-      contents: write
-
+      contents: read
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: denoland/setup-deno@v2
-        with:
-          cache: true
-
       - name: Download artifact
         uses: actions/download-artifact@v6
         with:
           path: dist
           name: ${{ needs.build.outputs.artifact-name }}
 
-      - name: Zip dist
-        run: zip -r dist.zip dist/*
+      - name: Deploy
+        run: deno task deploy
+        env:
+          PROJECT_ID: ${{ vars.PROJECT_NAME }}
+          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
-      - uses: ncipollo/release-action@v1
+  deploy-production:
+    needs: [build, deploy-staging]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v6
         with:
-          artifacts: dist.zip
-          prerelease: true
-          artifactErrorsFailBuild: true
-          allowUpdates: true
-          tag: stable
-          replacesArtifacts: true
+          path: dist
+          name: ${{ needs.build.outputs.artifact-name }}
 
       - name: Deploy
         run: deno task deploy
         env:
           PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
-          
