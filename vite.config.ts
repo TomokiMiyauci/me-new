@@ -21,7 +21,7 @@ const buildEnvironment = {
   },
 } satisfies Plugin;
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   server: { port: 8000 },
   envDir: false,
   plugins: [
@@ -101,6 +101,8 @@ export default defineConfig({
       "npm:react@^19.1.1/jsx-runtime": "react/jsx-runtime",
     },
     noExternal: true,
+    // The tranform of cjs fails in dev.
+    external: command === "build" ? undefined : ["readable-stream"],
   },
   // specify entry point for each environment.
   // (currently the plugin assumes `rollupOptions.input.index` for some features.)
@@ -165,4 +167,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
