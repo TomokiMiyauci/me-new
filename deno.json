@@ -14,7 +14,7 @@
     "dev": "deno serve -P=dev --env-file --allow-net src/framework/entry.server.ts dev",
     "build": "vite build --manifest",
     "preview": "deno serve -P=preview --allow-net --env-file dist/server/main.js",
-    "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --pro:d",
+    "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --prod",
     "deploy:preview": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN"
   },
   "permissions": {
