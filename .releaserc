@@ -7,10 +7,12 @@
     [
       "@semantic-release/github",
       {
-        "assets": [{
-          "path": "dist",
-          "label": "artifact"
-        }]
+        "assets": [
+          {
+            "path": "dist.zip",
+            "label": "artifact"
+          }
+        ]
       }
     ],
     [

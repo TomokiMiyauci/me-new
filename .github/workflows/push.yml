@@ -81,6 +81,9 @@ jobs:
         with:
           path: dist
           name: ${{ needs.build.outputs.artifact-name }}
+
+      - name: Zip artifact
+        run: zip -r dist.zip dist/*
           
       - uses: cycjimmy/semantic-release-action@v5
         env:
