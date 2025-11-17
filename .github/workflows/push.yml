@@ -33,6 +33,9 @@ jobs:
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
   deploy-production:
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: true 
     needs: build
     runs-on: ubuntu-latest
     environment: production
