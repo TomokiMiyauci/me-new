@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/TomokiMiyauci/me-new/compare/1.2.0...1.3.0) (2025-11-17)
+
+
+### Features
+
+* add embeded sanity studio ([d17c23b](https://github.com/TomokiMiyauci/me-new/commit/d17c23bcaed8c23f4458bd604c963fbf2cb822ae))
+* add node polyfills and polyfill Buffer object ([12c4ead](https://github.com/TomokiMiyauci/me-new/commit/12c4ead7db997c1e0217e1a94d620f6799402ad1))
+
 # [1.2.0](https://github.com/TomokiMiyauci/me-new/compare/1.1.0...1.2.0) (2025-11-17)
 
 
