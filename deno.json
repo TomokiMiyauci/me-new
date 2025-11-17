@@ -11,7 +11,7 @@
     ]
   },
   "tasks": {
-    "dev": "deno serve -P=dev --env-file --allow-net src/framework/entry.server.ts dev",
+    "dev": "vite dev",
     "build": "vite build --manifest",
     "preview": "deno serve -P=preview --allow-net --env-file dist/server/main.js",
     "deploy": "deno run -P=deploy @deno/deployctl deploy -p=$PROJECT_ID --token=$DEPLOY_TOKEN --prod",

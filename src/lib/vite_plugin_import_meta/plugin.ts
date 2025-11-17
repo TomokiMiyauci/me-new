@@ -19,7 +19,7 @@ export const manifest: Plugin = {
       const environmentName = evalValue<string>(`${argCode}`);
 
       if (this.environment.mode !== "build") {
-        throw new Error("unimplemented");
+        // throw new Error("unimplemented");
       }
       const replacement = JSON.stringify(
         `__vite_load_manifest:${this.environment.name}:${environmentName}`,
@@ -92,7 +92,7 @@ export const outDirResolve: Plugin = {
       const environmentName = evalValue<string>(`${argCode}`);
 
       if (this.environment.mode !== "build") {
-        throw new Error("unimplemented");
+        // throw new Error("unimplemented");
       }
       const replacement = JSON.stringify(
         `__vite_out_dir_resolve:${this.environment.name}:${environmentName}`,

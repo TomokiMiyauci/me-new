@@ -1,0 +1,14 @@
+{
+  "tasks": {
+    "start": "deno serve -P=start --no-npm server/main.js"
+  },
+  "deploy": {
+    "entrypoint": "server/main.js"
+  },
+  "permissions": {
+    "start": {
+      "env": true,
+      "read": true
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import type { Handler, MiddlewareObject } from "../types.ts";
-import { serveFile } from "@std/http";
+import { serveFile } from "@std/http/file-server";
 import { isAbsolute, join } from "@std/path";
 
 export interface RscAssetsManifestLike {

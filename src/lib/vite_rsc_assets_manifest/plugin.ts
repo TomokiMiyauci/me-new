@@ -19,7 +19,7 @@ export const rscAssets: Plugin = {
       const environmentName = evalValue<string>(`${argCode}`);
 
       if (this.environment.mode !== "build") {
-        throw new Error("unimplemented");
+        // throw new Error("unimplemented");
       }
       const replacement = JSON.stringify(
         `__vite_rsc_load_assets_manifest:${this.environment.name}:${environmentName}`,

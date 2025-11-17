@@ -8,6 +8,7 @@ import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const buildEnvironment = {
   name: "build-env",
@@ -31,6 +32,10 @@ export default defineConfig({
       // by default, the plugin setup request handler based on `default export` of `rsc` environment `rollupOptions.input.index`.
       // This can be disabled when setting up own server handler e.g. `@cloudflare/vite-plugin`.
       // > serverHandler: false
+      serverHandler: {
+        entryName: "main",
+        environmentName: "server",
+      },
     }),
 
     // use any of react plugins https://github.com/vitejs/vite-plugin-react
@@ -40,6 +45,17 @@ export default defineConfig({
     // use https://github.com/antfu-collective/vite-plugin-inspect
     // to understand internal transforms required for RSC.
     // import("vite-plugin-inspect").then(m => m.default()),
+
+    // Patch for @deno/vite-plugin
+    // @deno/vite-plugin is not suported JSON module. The JSON module is used by @std/http.
+    {
+      name: "deno-json-patch-resolver",
+      resolveId(id) {
+        if (id === "./deno.json") {
+          return "./deno.json";
+        }
+      },
+    },
     deno(),
     nodeEnv(),
     cjsInterop({
@@ -73,12 +89,18 @@ export default defineConfig({
         }
       },
     },
+    viteStaticCopy({
+      targets: [
+        { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
+      ],
+    }),
   ],
 
   resolve: {
     alias: {
       "npm:react@^19.1.1/jsx-runtime": "react/jsx-runtime",
     },
+    noExternal: true,
   },
   // specify entry point for each environment.
   // (currently the plugin assumes `rollupOptions.input.index` for some features.)
@@ -107,10 +129,6 @@ export default defineConfig({
           input: {
             index: "./src/framework/entry.ssr.tsx",
           },
-          external: [
-            "sanity",
-            /^sanity\/.*$/,
-          ],
         },
       },
     },
@@ -137,19 +155,13 @@ export default defineConfig({
           input: {
             main: "./src/framework/entry.server.ts",
           },
-          "plugins": [{
-            transform: (code) => {
-              return code.replace(
-                `Deno.args.includes("dev")`,
-                JSON.stringify(false),
-              );
-            },
-            name: "optimize-deno-args-dev",
-          }],
-          external: ["@std/http", "@std/path", "router"],
         },
         outDir: "dist/server",
-        ssr: true,
+      },
+      define: {
+        // Patch for "@std/http".
+        // This module contains code that includes `import.meta.main`, which causes issues when bundled.
+        "import.meta.main": false,
       },
     },
   },

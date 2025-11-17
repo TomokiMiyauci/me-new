@@ -56,6 +56,7 @@
     "npm:sanity@^4.14.2": "4.14.2_react@19.2.0_react-dom@19.2.0__react@19.2.0_styled-components@6.1.19__react@19.2.0__react-dom@19.2.0___react@19.2.0_@dnd-kit+core@6.3.1__react@19.2.0__react-dom@19.2.0___react@19.2.0_@types+react@19.2.2_@sanity+types@4.14.2__@types+react@19.2.2_@sanity+schema@4.14.2__@types+react@19.2.2_rxjs@7.8.2_@portabletext+editor@2.20.0__@portabletext+sanity-bridge@1.2.1___@sanity+schema@4.14.2____@types+react@19.2.2___@sanity+types@4.14.2____@types+react@19.2.2___@types+react@19.2.2__@sanity+schema@4.14.2___@types+react@19.2.2__@sanity+types@4.14.2___@types+react@19.2.2__react@19.2.0__rxjs@7.8.2__@types+react@19.2.2__xstate@5.24.0__slate@0.118.1__react-dom@19.2.0___react@19.2.0__slate-dom@0.118.1___slate@0.118.1_react-is@19.2.0_@sanity+client@7.12.1_@sanity+icons@3.7.4__react@19.2.0_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_xstate@5.24.0_esbuild@0.25.12_jsdom@26.1.0_i18next@23.16.8_@types+node@24.2.0_use-sync-external-store@1.6.0__react@19.2.0",
     "npm:strip-literal@^3.1.0": "3.1.0",
     "npm:vite-plugin-cjs-interop@^2.3.0": "2.3.0_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0",
+    "npm:vite-plugin-static-copy@^3.1.4": "3.1.4_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0",
     "npm:vite@^7.2.2": "7.2.2_@types+node@24.2.0_picomatch@4.0.3_jiti@2.6.1"
   },
   "jsr": {
@@ -7434,6 +7435,16 @@
         "vite@7.2.2_@types+node@24.2.0_picomatch@4.0.3_jiti@2.6.1"
       ]
     },
+    "vite-plugin-static-copy@3.1.4_vite@7.2.2__@types+node@24.2.0__picomatch@4.0.3__jiti@2.6.1_@types+node@24.2.0": {
+      "integrity": "sha512-iCmr4GSw4eSnaB+G8zc2f4dxSuDjbkjwpuBLLGvQYR9IW7rnDzftnUjOH5p4RYR+d4GsiBqXRvzuFhs5bnzVyw==",
+      "dependencies": [
+        "chokidar",
+        "p-map@7.0.3",
+        "picocolors",
+        "tinyglobby",
+        "vite@7.2.2_@types+node@24.2.0_picomatch@4.0.3_jiti@2.6.1"
+      ]
+    },
     "vite-tsconfig-paths@5.1.4_vite@7.2.2__@types+node@24.2.0__jiti@2.6.1__picomatch@4.0.3_@types+node@24.2.0_jiti@2.6.1": {
       "integrity": "sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==",
       "dependencies": [
@@ -7736,6 +7747,7 @@
         "npm:rsc-html-stream@^0.0.7",
         "npm:sanity-plugin-internationalized-array@^3.2.0",
         "npm:vite-plugin-cjs-interop@^2.3.0",
+        "npm:vite-plugin-static-copy@^3.1.4",
         "npm:vite@^7.2.2"
       ]
     },
