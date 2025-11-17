@@ -66,7 +66,6 @@
     "entrypoint": "dist/server/main.js"
   },
   "workspace": [
-    "src/lib/vite_node_builtin_scheme",
     "src/lib/vite_node_env",
     "src/lib/react_router",
     "src/lib/router",

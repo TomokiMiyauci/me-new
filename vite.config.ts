@@ -3,12 +3,12 @@ import react from "@vitejs/plugin-react";
 import deno from "@deno/vite-plugin";
 import { defineConfig, type Plugin } from "vite";
 import { cjsInterop } from "vite-plugin-cjs-interop";
-import { nodeScheme } from "vite-node-scheme";
 import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 const buildEnvironment = {
   name: "build-env",
@@ -63,7 +63,7 @@ export default defineConfig(({ command }) => ({
         "prop-types",
       ],
     }),
-    nodeScheme(),
+    // nodeScheme(),
     buildEnvironment,
     rscAssets,
     manifest,
@@ -93,6 +93,14 @@ export default defineConfig(({ command }) => ({
       targets: [
         { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
       ],
+    }),
+    nodePolyfills({
+      // Whether to polyfill specific globals.
+      globals: {
+        Buffer: true, // for nanoid https://github.com/ai/nanoid/blob/9d574d2c9706f5cf82e2a043450c62664ea1fcf1/index.js#L17C12-L17C18
+      },
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
     }),
   ],
 
