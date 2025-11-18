@@ -1,6 +1,6 @@
-on: 
+on:
   pull_request:
-    branches: 
+    branches:
       - main
 
 jobs:
@@ -32,4 +32,3 @@ jobs:
         env:
           PROJECT_ID: ${{ vars.PROJECT_NAME }}
           DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
-          

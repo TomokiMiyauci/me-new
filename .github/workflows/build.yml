@@ -1,8 +1,8 @@
-on: 
+on:
   workflow_call:
     outputs:
       artifact-name:
-        description: 'The name of the built artifact'
+        description: "The name of the built artifact"
         value: ${{ jobs.build.outputs.artifact-name }}
 jobs:
   build:
@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     outputs:
-        artifact-name: ${{ steps.set-output.outputs.artifact-name }}
+      artifact-name: ${{ steps.set-output.outputs.artifact-name }}
     steps:
       - uses: actions/checkout@v5
 
@@ -20,7 +20,7 @@ jobs:
 
       - name: Build
         run: deno task build
-    
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
