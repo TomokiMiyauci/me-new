@@ -39,7 +39,7 @@ export default defineConfig(({ command }) => ({
       // > serverHandler: false
       serverHandler: {
         entryName: "main",
-        environmentName: "server",
+        environmentName: "rsc",
       },
     }),
 
@@ -126,9 +126,15 @@ export default defineConfig(({ command }) => ({
       build: {
         rollupOptions: {
           input: {
-            index: "./src/framework/entry.rsc.tsx",
+            main: "./src/framework/entry.server.tsx",
           },
         },
+        outDir: "dist/server",
+      },
+      define: {
+        // Patch for "@std/http".
+        // This module contains code that includes `import.meta.main`, which causes issues when bundled.
+        "import.meta.main": false,
       },
     },
 
@@ -159,22 +165,6 @@ export default defineConfig(({ command }) => ({
             index: "./src/framework/entry.browser.tsx",
           },
         },
-      },
-    },
-
-    server: {
-      build: {
-        rollupOptions: {
-          input: {
-            main: "./src/framework/entry.server.ts",
-          },
-        },
-        outDir: "dist/server",
-      },
-      define: {
-        // Patch for "@std/http".
-        // This module contains code that includes `import.meta.main`, which causes issues when bundled.
-        "import.meta.main": false,
       },
     },
   },

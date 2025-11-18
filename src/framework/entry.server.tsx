@@ -9,13 +9,18 @@ import {
 import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
 import type { RscPayload } from "./types.ts";
-import { Router } from "react-router";
+import { Router as ReactRouter } from "react-router";
 import routes, { NotFound } from "@/routes/routes.tsx";
+import { type MiddlewareObject, Router } from "router";
+import { fromFileUrl } from "@std/path";
+import { ViteRscAssets } from "router/vite-rsc";
+import { init } from "@sentry/deno";
+import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
 // own server handler e.g. `@cloudflare/vite-plugin`.
-export default async function handler(request: Request): Promise<Response> {
+async function handler(request: Request): Promise<Response> {
   // handle server function request
   const isAction = request.method === "POST";
 
@@ -56,12 +61,12 @@ export default async function handler(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const rscPayload = {
     root: (
-      <Router
+      <ReactRouter
         url={url}
         routes={routes}
         fallback={<NotFound onRender={() => setStatus(404)} />}
       >
-      </Router>
+      </ReactRouter>
     ),
     formState,
     returnValue,
@@ -120,3 +125,30 @@ function createRef<T>(init: T): [Ref<T>, (value: T) => void] {
 
   return [ref, setState];
 }
+
+init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
+
+const router = new Router();
+
+if (import.meta.env.PROD) router.use(await createAssetMiddleware());
+
+router.use(handler);
+
+async function createAssetMiddleware(): Promise<MiddlewareObject> {
+  const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
+  const clientManifest = await import.meta.vite.loadManifest(
+    "client",
+  );
+  const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
+  const middleware = new ViteRscAssets(clientManifest, rscManifest, distRoot);
+
+  return middleware;
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}
+
+export default {
+  fetch: router.fetch.bind(router),
+};
