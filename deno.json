@@ -87,7 +87,8 @@
     "src/lib/vite_rsc_assets_manifest",
     "src/lib/vite_plugin_import_meta",
     "src/lib/deno_env",
-    "src/lib/html_stream"
+    "src/lib/html_stream",
+    "src/lib/rsc_protocol"
   ],
   "lint": {
     "rules": {

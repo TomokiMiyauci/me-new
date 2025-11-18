@@ -1,0 +1,12 @@
+{
+  "name": "rsc-protocol",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "compilerOptions": {
+    "lib": [
+      "deno.window",
+      "dom"
+    ]
+  }
+}

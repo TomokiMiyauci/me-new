@@ -19,7 +19,7 @@ import { rscStream } from "rsc-html-stream/client";
 import type { RscPayload } from "./types.ts";
 import { init, reactErrorHandler } from "@sentry/react";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
-import { createRscRenderRequest } from "./client.ts";
+import { RscRequest } from "rsc-protocol";
 
 async function main(): Promise<void> {
   // stash `setPayload` function to trigger re-rendering
@@ -50,8 +50,8 @@ async function main(): Promise<void> {
 
   // re-fetch RSC and trigger re-rendering
   async function fetchRscPayload(): Promise<void> {
-    const renderRequest = createRscRenderRequest(globalThis.location.href);
-    const payload = await createFromFetch<RscPayload>(fetch(renderRequest));
+    const request = new RscRequest(globalThis.location.href);
+    const payload = await createFromFetch<RscPayload>(fetch(request));
     setPayload(payload);
   }
 
@@ -59,12 +59,12 @@ async function main(): Promise<void> {
   // on server function request after hydration.
   setServerCallback(async (id, args) => {
     const temporaryReferences = createTemporaryReferenceSet();
-    const renderRequest = createRscRenderRequest(globalThis.location.href, {
-      id,
+    const request = new RscRequest(globalThis.location.href, {
       body: await encodeReply(args, { temporaryReferences }),
+      action: { id },
     });
     const payload = await createFromFetch<RscPayload>(
-      fetch(renderRequest),
+      fetch(request),
       { temporaryReferences },
     );
     setPayload(payload);

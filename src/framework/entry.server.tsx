@@ -16,21 +16,21 @@ import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
-import { parseRenderRequest, RSC_MEDIA_TYPE } from "./client.ts";
+import { parseRequest, RscResponse } from "rsc-protocol";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
 // own server handler e.g. `@cloudflare/vite-plugin`.
 async function handler(request: Request): Promise<Response> {
-  const renderRequest = parseRenderRequest(request);
+  const result = parseRequest(request);
 
   let returnValue: ReturnValue | undefined;
   let formState: ReactFormState | undefined;
   let temporaryReferences: unknown | undefined;
   let actionStatus: number | undefined;
 
-  if (renderRequest.isAction === true) {
-    if (renderRequest.actionId) {
+  if (result.isAction) {
+    if (result.isRsc) {
       // action is called via `ReactClient.setServerCallback`.
       const contentType = request.headers.get("content-type");
       const body = contentType?.startsWith("multipart/form-data")
@@ -38,7 +38,7 @@ async function handler(request: Request): Promise<Response> {
         : await request.text();
       temporaryReferences = createTemporaryReferenceSet();
       const args = await decodeReply(body, { temporaryReferences });
-      const action = await loadServerAction(renderRequest.actionId);
+      const action = await loadServerAction(result.action.id);
       try {
         const data = await action.apply(null, args);
         returnValue = { ok: true, data };
@@ -83,12 +83,9 @@ async function handler(request: Request): Promise<Response> {
   // respond RSC stream without HTML rendering based on framework's convention.
   // here we use request header `content-type`.
   // additionally we allow `?__rsc` and `?__html` to easily view payload directly.
-  if (renderRequest.isRsc) {
-    return new Response(rscStream, {
-      headers: {
-        "content-type": `${RSC_MEDIA_TYPE};charset=utf-8`,
-        vary: "accept",
-      },
+  if (result.isRsc) {
+    return new RscResponse(rscStream, {
+      headers: result.headers,
       status: actionStatus,
     });
   }
@@ -107,11 +104,11 @@ async function handler(request: Request): Promise<Response> {
     nojs: import.meta.env.DEV && url.searchParams.has("__nojs"),
   });
 
+  const headers = new Headers(result.headers);
+  headers.set("congtent-type", "text/html");
+
   // respond html
-  return new Response(htmlStream, {
-    status: statusRef.current,
-    headers: { "content-type": "text/html", vary: "accept" },
-  });
+  return new Response(htmlStream, { status: statusRef.current, headers });
 }
 
 interface Ref<T> {
