@@ -11,6 +11,18 @@
     ]
   },
   "tasks": {
+    "lint": {
+      "command": "deno task \"lint:*\"",
+      "description": "Static check"
+    },
+    "lint:deno": {
+      "command": "deno lint",
+      "description": "Check by deno"
+    },
+    "lint:format": {
+      "command": "deno fmt --check",
+      "description": "Format check"
+    },
     "dev": "deno run -P=dev --allow-net --env-file vite dev",
     "build": "deno run -P=build vite build --manifest",
     "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
@@ -57,7 +69,8 @@
   },
   "nodeModulesDir": "auto",
   "exclude": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "deploy": {
     "exclude": [
@@ -75,5 +88,12 @@
     "src/lib/vite_plugin_import_meta",
     "src/lib/deno_env",
     "src/lib/html_stream"
-  ]
+  ],
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-slow-types"
+      ]
+    }
+  }
 }
