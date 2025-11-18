@@ -36,7 +36,7 @@
       "sys": true,
       "ffi": true,
       "run": true,
-      "write": ["."]
+      "write": true
     },
     "build": {
       "read": true,

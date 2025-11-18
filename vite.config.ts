@@ -8,8 +8,12 @@ import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
+import {
+  type ModuleNameWithoutNodePrefix,
+  nodePolyfills,
+} from "vite-plugin-node-polyfills";
 import { nodeScheme } from "vite-node-scheme";
+import { builtinModules } from "node:module";
 
 const buildEnvironment = {
   name: "build-env",
@@ -95,11 +99,11 @@ export default defineConfig(({ command }) => ({
         { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
       ],
     }),
+
+    // Polyfill for global symbols like Buffer.
     nodePolyfills({
-      // Whether to polyfill specific globals.
-      globals: {
-        Buffer: true, // for nanoid https://github.com/ai/nanoid/blob/9d574d2c9706f5cf82e2a043450c62664ea1fcf1/index.js#L17C12-L17C18
-      },
+      exclude: [...builtinModules] as ModuleNameWithoutNodePrefix[],
+      protocolImports: false,
     }),
   ],
 
