@@ -19,6 +19,7 @@ import { rscStream } from "rsc-html-stream/client";
 import type { RscPayload } from "./types.ts";
 import { init, reactErrorHandler } from "@sentry/react";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
+import { createRscRenderRequest } from "./client.ts";
 
 async function main(): Promise<void> {
   // stash `setPayload` function to trigger re-rendering
@@ -49,29 +50,28 @@ async function main(): Promise<void> {
 
   // re-fetch RSC and trigger re-rendering
   async function fetchRscPayload(): Promise<void> {
-    const payload = await createFromFetch<RscPayload>(
-      fetch(globalThis.location.href, {
-        headers: { accept: "text/x-component" },
-      }),
-    );
+    const renderRequest = createRscRenderRequest(globalThis.location.href);
+    const payload = await createFromFetch<RscPayload>(fetch(renderRequest));
     setPayload(payload);
   }
 
   // register a handler which will be internally called by React
   // on server function request after hydration.
   setServerCallback(async (id, args) => {
-    const url = new URL(globalThis.location.href);
     const temporaryReferences = createTemporaryReferenceSet();
+    const renderRequest = createRscRenderRequest(globalThis.location.href, {
+      id,
+      body: await encodeReply(args, { temporaryReferences }),
+    });
     const payload = await createFromFetch<RscPayload>(
-      fetch(url, {
-        method: "POST",
-        body: await encodeReply(args, { temporaryReferences }),
-        headers: { "x-rsc-action": id, accept: "text/x-component" },
-      }),
+      fetch(renderRequest),
       { temporaryReferences },
     );
     setPayload(payload);
-    return payload.returnValue;
+
+    const { ok, data } = payload.returnValue!;
+    if (!ok) throw data;
+    return data;
   });
 
   // hydration
