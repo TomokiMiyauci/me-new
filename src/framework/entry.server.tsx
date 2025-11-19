@@ -17,6 +17,8 @@ import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { parseRequest, RscResponse } from "rsc-protocol";
+import type { JSX } from "react";
+import { createRef } from "./utils.ts";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
@@ -64,13 +66,19 @@ async function handler(request: Request): Promise<Response> {
 
   const [statusRef, setStatus] = createRef(200);
 
+  function NotFoundShell(): JSX.Element {
+    setStatus(404);
+
+    return NotFound;
+  }
+
   const url = new URL(request.url);
   const rscPayload = {
     root: (
       <ReactRouter
         url={url}
         routes={routes}
-        fallback={<NotFound onRender={() => setStatus(404)} />}
+        fallback={<NotFoundShell />}
       >
       </ReactRouter>
     ),
@@ -102,6 +110,7 @@ async function handler(request: Request): Promise<Response> {
     formState,
     // allow quick simulation of javscript disabled browser
     nojs: import.meta.env.DEV && url.searchParams.has("__nojs"),
+    onError: () => setStatus(500),
   });
 
   const headers = new Headers(result.headers);
@@ -109,20 +118,6 @@ async function handler(request: Request): Promise<Response> {
 
   // respond html
   return new Response(htmlStream, { status: statusRef.current, headers });
-}
-
-interface Ref<T> {
-  current: T;
-}
-
-function createRef<T>(init: T): [Ref<T>, (value: T) => void] {
-  const ref = { current: init };
-
-  function setState(value: T): void {
-    ref.current = value;
-  }
-
-  return [ref, setState];
 }
 
 init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
@@ -144,10 +139,10 @@ async function createAssetMiddleware(): Promise<MiddlewareObject> {
   return middleware;
 }
 
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}
-
 export default {
   fetch: router.fetch.bind(router),
 };
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}
