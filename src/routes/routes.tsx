@@ -35,16 +35,8 @@ export default [
   },
 ] satisfies Route[];
 
-interface NotFoundProps {
-  onRender?: VoidFunction;
-}
-
-export const NotFound = (props: NotFoundProps) => {
-  props.onRender?.();
-
-  return (
-    <Layout>
-      <_NotFound />
-    </Layout>
-  );
-};
+export const NotFound = (
+  <Layout>
+    <_NotFound />
+  </Layout>
+);
