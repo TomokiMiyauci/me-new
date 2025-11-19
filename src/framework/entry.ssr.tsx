@@ -7,11 +7,13 @@ import type { RscPayload } from "./types.ts";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
+import { captureException } from "@sentry/deno";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
   nonce?: string;
   nojs?: boolean;
+  onError?: VoidFunction;
 }
 
 export async function renderHTML(
@@ -25,30 +27,44 @@ export async function renderHTML(
 
   // deserialize RSC stream back to React VDOM
   const payload = createFromReadableStream<RscPayload>(rscStream1);
+
   const bootstrapScriptContent = await import.meta.viteRsc
     .loadBootstrapScriptContent("index");
-  const { nonce, formState, nojs } = options;
+  const { nonce, formState, nojs, onError } = options;
 
-  const stream: ReadableStream<BufferSource> = await renderToReadableStream(
-    <SsrRoot payload={payload} />,
-    {
-      bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
-      formState,
-      nonce,
-    },
-  );
+  try {
+    const stream: ReadableStream<BufferSource> = await renderToReadableStream(
+      <SsrRoot payload={payload} />,
+      {
+        bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
+        formState,
+        nonce,
+        onError(err, errorInfo) {
+          captureException(err);
+          console.error("Uncaough error", err, errorInfo.componentStack);
+          onError?.();
+        },
+      },
+    );
 
-  if (nojs) return stream;
+    if (nojs) return stream;
 
-  // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
-  // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
-  return stream
-    .pipeThrough(new TextDecoderStream())
-    .pipeThrough(
-      new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
-    )
-    .pipeThrough(new TextEncoderStream())
-    .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
+    // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
+    // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
+    return stream
+      .pipeThrough(new TextDecoderStream())
+      .pipeThrough(
+        new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
+      )
+      .pipeThrough(new TextEncoderStream())
+      .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
+  } catch {
+    return renderToReadableStream(
+      <html>
+        <body>Something Wrong</body>
+      </html>,
+    );
+  }
 }
 
 interface SsrRootProps {
