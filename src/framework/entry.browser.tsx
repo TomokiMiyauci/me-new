@@ -79,7 +79,7 @@ async function main(): Promise<void> {
   // hydration
   const browserRoot = (
     <StrictMode>
-      <ErrorBoundary fallback={<ServerError />}>
+      <ErrorBoundary component={ServerError}>
         <BrowserRoot />
       </ErrorBoundary>
     </StrictMode>

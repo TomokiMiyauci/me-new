@@ -2,11 +2,12 @@
 import { Component, type ReactNode } from "react";
 
 export interface ErrorBoundaryProps {
-  fallback: ReactNode;
   children: ReactNode;
+  component: (props: ErrorBoundaryStates) => ReactNode;
 }
 
-export interface ErrorBoundaryStates {
+interface ErrorBoundaryStates {
+  error?: unknown;
   hasError: boolean;
 }
 
@@ -17,14 +18,14 @@ export default class ErrorBoundary
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(): ErrorBoundaryStates {
+  static getDerivedStateFromError(error: unknown): ErrorBoundaryStates {
     // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { error, hasError: true };
   }
 
   override render(): ReactNode {
     if (this.state.hasError) {
-      return this.props.fallback;
+      return this.props.component(this.state);
     }
 
     return this.props.children;

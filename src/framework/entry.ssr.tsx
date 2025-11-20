@@ -8,6 +8,7 @@ import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
 import { captureException } from "@sentry/deno";
+import { ServerError } from "@/routes/routes.tsx";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
@@ -58,12 +59,28 @@ export async function renderHTML(
       )
       .pipeThrough(new TextEncoderStream())
       .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
-  } catch {
-    return renderToReadableStream(
-      <html>
-        <body>Something Wrong</body>
-      </html>,
+  } catch (e) {
+    const stream = await renderToReadableStream(
+      <ServerError error={e} />,
+      {
+        bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
+        formState,
+        nonce,
+        onError(err, errorInfo) {
+          captureException(err);
+          console.error("Uncaough error", err, errorInfo.componentStack);
+          onError?.();
+        },
+      },
     );
+
+    return stream
+      .pipeThrough(new TextDecoderStream())
+      .pipeThrough(
+        new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
+      )
+      .pipeThrough(new TextEncoderStream())
+      .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
   }
 }
 

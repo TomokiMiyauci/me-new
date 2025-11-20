@@ -10,14 +10,14 @@ import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
 import type { ReturnValue, RscPayload } from "./types.ts";
 import { Router as ReactRouter } from "react-router";
-import routes, { NotFound, ServerError } from "@/routes/routes.tsx";
+import routes, { NotFound } from "@/routes/routes.tsx";
 import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { parseRequest, RscResponse } from "rsc-protocol";
-import { type JSX, Suspense } from "react";
+import { type JSX } from "react";
 import { createRef } from "./utils.ts";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
@@ -72,34 +72,16 @@ async function handler(request: Request): Promise<Response> {
     return NotFound;
   }
 
-  function ServerErrorShell() {
-    setStatus(500);
-
-    return <ServerError />;
-  }
-
-  function Shell() {
-    setStatus(200);
-
-    return (
+  const url = new URL(request.url);
+  const rscPayload = {
+    root: (
       <ReactRouter
         url={url}
         routes={routes}
         fallback={<NotFoundShell />}
       >
       </ReactRouter>
-    );
-  }
-
-  const Root = (
-    <Suspense fallback={<ServerErrorShell />}>
-      <Shell />
-    </Suspense>
-  );
-
-  const url = new URL(request.url);
-  const rscPayload = {
-    root: Root,
+    ),
     formState,
     returnValue,
   } satisfies RscPayload;

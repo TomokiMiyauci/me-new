@@ -42,8 +42,8 @@ export const NotFound = (
   </Layout>
 );
 
-export const ServerError = () => (
+export const ServerError = (props: any) => (
   <Layout>
-    <_ServerError></_ServerError>
+    <_ServerError {...props}></_ServerError>
   </Layout>
 );
