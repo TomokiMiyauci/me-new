@@ -1,7 +1,8 @@
 import { createFromReadableStream } from "@vitejs/plugin-rsc/ssr";
-import { type ReactNode, use } from "react";
+import { type JSX, type ReactNode, use } from "react";
 import type { ReactFormState } from "react-dom/client";
 import { renderToReadableStream } from "react-dom/server.edge";
+import type { RenderToReadableStreamOptions } from "react-dom/server";
 import { injectRSCPayload } from "rsc-html-stream/server";
 import type { RscPayload } from "./types.ts";
 import { source } from "@/services/source.ts";
@@ -32,56 +33,55 @@ export async function renderHTML(
   const bootstrapScriptContent = await import.meta.viteRsc
     .loadBootstrapScriptContent("index");
   const { nonce, formState, nojs, onError } = options;
+  const renderOptions = {
+    bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
+    formState,
+    nonce,
+    onError(err, errorInfo) {
+      captureException(err);
+      console.error("Uncaough error", err, errorInfo.componentStack);
+      onError?.();
+    },
+  } satisfies RenderToReadableStreamOptions;
 
-  try {
-    const stream: ReadableStream<BufferSource> = await renderToReadableStream(
-      <SsrRoot payload={payload} />,
-      {
-        bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
-        formState,
-        nonce,
-        onError(err, errorInfo) {
-          captureException(err);
-          console.error("Uncaough error", err, errorInfo.componentStack);
-          onError?.();
-        },
-      },
-    );
+  const stream: ReadableStream<BufferSource> = await renderToReadableStream(
+    <SsrRoot payload={payload} />,
+    renderOptions,
+  ).catch((e: unknown) => {
+    const jsx = fallback(e);
 
-    if (nojs) return stream;
+    return renderToReadableStream(jsx, renderOptions);
+  });
 
-    // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
-    // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
-    return stream
-      .pipeThrough(new TextDecoderStream())
-      .pipeThrough(
-        new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
-      )
-      .pipeThrough(new TextEncoderStream())
-      .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
-  } catch (e) {
-    const stream = await renderToReadableStream(
-      <ServerError error={e} />,
-      {
-        bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
-        formState,
-        nonce,
-        onError(err, errorInfo) {
-          captureException(err);
-          console.error("Uncaough error", err, errorInfo.componentStack);
-          onError?.();
-        },
-      },
-    );
+  if (nojs) return stream;
 
-    return stream
-      .pipeThrough(new TextDecoderStream())
-      .pipeThrough(
-        new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
-      )
-      .pipeThrough(new TextEncoderStream())
-      .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
+  // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
+  // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
+  return stream
+    .pipeThrough(new TextDecoderStream())
+    .pipeThrough(
+      new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
+    )
+    .pipeThrough(new TextEncoderStream())
+    .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
+}
+
+function fallback(e: unknown): JSX.Element {
+  if (e instanceof Error) {
+    return <ServerError error={e} reset={() => {}} />;
   }
+
+  return <DefaultHtml />;
+}
+
+function DefaultHtml(): JSX.Element {
+  return (
+    <html>
+      <body>
+        <h1>Internal Server Error</h1>
+      </body>
+    </html>
+  );
 }
 
 interface SsrRootProps {
