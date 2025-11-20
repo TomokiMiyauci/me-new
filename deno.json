@@ -88,7 +88,8 @@
     "src/lib/vite_plugin_import_meta",
     "src/lib/deno_env",
     "src/lib/html_stream",
-    "src/lib/rsc_protocol"
+    "src/lib/rsc_protocol",
+    "src/lib/error_boundary"
   ],
   "lint": {
     "rules": {

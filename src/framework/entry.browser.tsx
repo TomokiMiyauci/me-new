@@ -20,6 +20,8 @@ import type { RscPayload } from "./types.ts";
 import { init, reactErrorHandler } from "@sentry/react";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { RscRequest } from "rsc-protocol";
+import { ErrorBoundary } from "error-boundary";
+import { ServerError } from "@/routes/routes.tsx";
 
 async function main(): Promise<void> {
   // stash `setPayload` function to trigger re-rendering
@@ -77,7 +79,9 @@ async function main(): Promise<void> {
   // hydration
   const browserRoot = (
     <StrictMode>
-      <BrowserRoot />
+      <ErrorBoundary fallback={<ServerError />}>
+        <BrowserRoot />
+      </ErrorBoundary>
     </StrictMode>
   );
   hydrateRoot(document, browserRoot, {

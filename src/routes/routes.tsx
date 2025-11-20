@@ -7,6 +7,7 @@ const About = lazy(() => import("@/routes/(website)/about.tsx"));
 const Index = lazy(() => import("@/routes/(website)/index.tsx"));
 const Layout = lazy(() => import("@/routes/(website)/_layout.tsx"));
 const _NotFound = lazy(() => import("@/routes/(website)/_404.tsx"));
+const _ServerError = lazy(() => import("@/routes/(website)/_500.tsx"));
 
 export default [
   {
@@ -38,5 +39,11 @@ export default [
 export const NotFound = (
   <Layout>
     <_NotFound />
+  </Layout>
+);
+
+export const ServerError = () => (
+  <Layout>
+    <_ServerError></_ServerError>
   </Layout>
 );
