@@ -1,6 +1,7 @@
 import { Route } from "react-router";
-import { lazy } from "react";
+import { type JSX, lazy } from "react";
 import { type FallbackProps } from "error-boundary";
+import { isNotFoundError } from "react-app";
 
 const Admin = lazy(() => import("@/routes/(sanity)/admin.tsx"));
 const AdminLayout = lazy(() => import("@/routes/(sanity)/_layout.tsx"));
@@ -48,3 +49,13 @@ export const ServerError = (props: FallbackProps) => (
     <_ServerError {...props}></_ServerError>
   </Layout>
 );
+
+export function Fallback(props: FallbackProps): JSX.Element {
+  const { error, reset } = props;
+
+  if (isNotFoundError(error)) {
+    return NotFound;
+  }
+
+  return <ServerError error={error} reset={reset} />;
+}

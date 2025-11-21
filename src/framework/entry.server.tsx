@@ -10,15 +10,16 @@ import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
 import type { ReturnValue, RscPayload } from "./types.ts";
 import { Router as ReactRouter } from "react-router";
-import routes, { NotFound } from "@/routes/routes.tsx";
+import routes from "@/routes/routes.tsx";
 import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { parseRequest, RscResponse } from "rsc-protocol";
-import { type JSX } from "react";
 import { createRef } from "./utils.ts";
+import { isNotFoundError, notFound } from "react-app";
+import { captureException } from "@sentry/deno";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
@@ -47,6 +48,8 @@ async function handler(request: Request): Promise<Response> {
       } catch (e) {
         returnValue = { ok: false, data: e };
         actionStatus = 500;
+        captureException(e);
+        console.error("Uncatch error", e);
       }
     } else {
       // otherwise server function is called via `<form action={...}>`
@@ -66,12 +69,6 @@ async function handler(request: Request): Promise<Response> {
 
   const [statusRef, setStatus] = createRef(200);
 
-  function NotFoundShell(): JSX.Element {
-    setStatus(404);
-
-    return NotFound;
-  }
-
   const url = new URL(request.url);
   const rscPayload = {
     root: (
@@ -85,7 +82,18 @@ async function handler(request: Request): Promise<Response> {
     formState,
     returnValue,
   } satisfies RscPayload;
-  const rscOptions = { temporaryReferences };
+  const rscOptions = {
+    temporaryReferences,
+    onError(e: unknown) {
+      if (isNotFoundError(e)) {
+        setStatus(404);
+      } else {
+        captureException(e);
+        setStatus(500);
+        console.error("Uncaough error", e);
+      }
+    },
+  };
   const rscStream = renderToReadableStream(rscPayload, rscOptions);
 
   // respond RSC stream without HTML rendering based on framework's convention.
@@ -102,15 +110,14 @@ async function handler(request: Request): Promise<Response> {
   // The plugin provides `loadModule` helper to allow loading SSR environment entry module
   // in RSC environment. however this can be customized by implementing own runtime communication
   // e.g. `@cloudflare/vite-plugin`'s service binding.
-  const ssrEntryModule = await import.meta.viteRsc.loadModule<typeof ssr>(
+  const { renderHTML } = await import.meta.viteRsc.loadModule<typeof ssr>(
     "ssr",
     "index",
   );
-  const htmlStream = await ssrEntryModule.renderHTML(rscStream, {
+  const htmlStream = await renderHTML(rscStream, {
     formState,
     // allow quick simulation of javscript disabled browser
     nojs: import.meta.env.DEV && url.searchParams.has("__nojs"),
-    onError: () => setStatus(500),
   });
 
   const headers = new Headers(result.headers);
@@ -145,4 +152,8 @@ export default {
 
 if (import.meta.hot) {
   import.meta.hot.accept();
+}
+
+function NotFoundShell(): never {
+  notFound();
 }

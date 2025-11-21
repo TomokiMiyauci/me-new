@@ -8,14 +8,12 @@ import type { RscPayload } from "./types.ts";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
-import { captureException } from "@sentry/deno";
-import { ServerError } from "@/routes/routes.tsx";
+import { Fallback } from "@/routes/routes.tsx";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
   nonce?: string;
   nojs?: boolean;
-  onError?: VoidFunction;
 }
 
 export async function renderHTML(
@@ -32,15 +30,13 @@ export async function renderHTML(
 
   const bootstrapScriptContent = await import.meta.viteRsc
     .loadBootstrapScriptContent("index");
-  const { nonce, formState, nojs, onError } = options;
+  const { nonce, formState, nojs } = options;
   const renderOptions = {
     bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
     formState,
     nonce,
-    onError(err, errorInfo) {
-      captureException(err);
-      console.error("Uncaough error", err, errorInfo.componentStack);
-      onError?.();
+    onError() {
+      // noop
     },
   } satisfies RenderToReadableStreamOptions;
 
@@ -68,9 +64,8 @@ export async function renderHTML(
 
 function fallback(e: unknown): JSX.Element {
   if (e instanceof Error) {
-    return <ServerError error={e} reset={() => {}} />;
+    return <Fallback error={e} reset={() => {}} />;
   }
-
   return <DefaultHtml />;
 }
 
