@@ -22,7 +22,7 @@ import {
   RscResponse,
 } from "rsc-protocol";
 import { createRef } from "./utils.tsx";
-import { isNotFoundError, notFound } from "react-app";
+import { isNotFoundErrorLike, notFound } from "react-app";
 import { captureException } from "@sentry/deno";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
@@ -89,8 +89,9 @@ async function handler(request: Request): Promise<Response> {
   const rscOptions = {
     temporaryReferences,
     onError(e: unknown) {
-      if (isNotFoundError(e)) {
+      if (isNotFoundErrorLike(e)) {
         setStatus(404);
+        return e.digest;
       } else {
         captureException(e);
         setStatus(500);

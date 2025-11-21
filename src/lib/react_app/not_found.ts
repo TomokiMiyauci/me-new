@@ -1,13 +1,20 @@
+const KEY = "NOT_FOUND";
 export function notFound(message?: string): never {
-  const e = new NotFoundError(message);
+  const err = new NotFoundError(message);
 
-  throw e;
+  throw err;
 }
 
 export class NotFoundError extends Error {
   override name: string = "NotFound";
+
+  digest = KEY;
 }
 
-export function isNotFoundError(e: unknown): e is NotFoundError {
-  return e instanceof Error && e.name === "NotFound";
+export interface NotFoundErrorLike {
+  digest: "NOT_FOUND";
+}
+
+export function isNotFoundErrorLike(e: unknown): e is NotFoundErrorLike {
+  return !!e && typeof e === "object" && "digest" in e && e.digest === KEY;
 }
