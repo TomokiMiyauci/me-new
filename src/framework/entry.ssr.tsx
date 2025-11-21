@@ -1,5 +1,5 @@
 import { createFromReadableStream } from "@vitejs/plugin-rsc/ssr";
-import { type JSX, type ReactNode, use } from "react";
+import { type JSX } from "react";
 import type { ReactFormState } from "react-dom/client";
 import { renderToReadableStream } from "react-dom/server.edge";
 import type { RenderToReadableStreamOptions } from "react-dom/server";
@@ -9,6 +9,7 @@ import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
 import { Fallback } from "@/routes/routes.tsx";
+import { RscPromise } from "./utils.tsx";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
@@ -26,7 +27,7 @@ export async function renderHTML(
   const [rscStream1, rscStream2] = rscStream.tee();
 
   // deserialize RSC stream back to React VDOM
-  const payload = createFromReadableStream<RscPayload>(rscStream1);
+  const promise = createFromReadableStream<RscPayload>(rscStream1);
 
   const bootstrapScriptContent = await import.meta.viteRsc
     .loadBootstrapScriptContent("index");
@@ -41,7 +42,7 @@ export async function renderHTML(
   } satisfies RenderToReadableStreamOptions;
 
   const stream: ReadableStream<BufferSource> = await renderToReadableStream(
-    <SsrRoot payload={payload} />,
+    <RscPromise promise={promise} />,
     renderOptions,
   ).catch((e: unknown) => {
     const jsx = fallback(e);
@@ -51,14 +52,13 @@ export async function renderHTML(
 
   if (nojs) return stream;
 
-  // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
-  // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
-  return stream
-    .pipeThrough(new TextDecoderStream())
+  return stream.pipeThrough(new TextDecoderStream())
     .pipeThrough(
       new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
     )
     .pipeThrough(new TextEncoderStream())
+    // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
+    // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
     .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
 }
 
@@ -73,16 +73,7 @@ function DefaultHtml(): JSX.Element {
   return (
     <html>
       <body>
-        <h1>Internal Server Error</h1>
       </body>
     </html>
   );
-}
-
-interface SsrRootProps {
-  payload: Promise<RscPayload>;
-}
-
-function SsrRoot(props: SsrRootProps): ReactNode {
-  return use(props.payload).root;
 }

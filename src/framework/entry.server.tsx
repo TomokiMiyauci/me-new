@@ -17,7 +17,7 @@ import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { parseRequest, RscResponse } from "rsc-protocol";
-import { createRef } from "./utils.ts";
+import { createRef } from "./utils.tsx";
 import { isNotFoundError, notFound } from "react-app";
 import { captureException } from "@sentry/deno";
 

@@ -7,13 +7,7 @@ import {
   encodeReply,
   setServerCallback,
 } from "@vitejs/plugin-rsc/browser";
-import {
-  type ReactNode,
-  startTransition,
-  StrictMode,
-  useEffect,
-  useState,
-} from "react";
+import { startTransition, StrictMode, useEffect, useState } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
 import type { RscPayload } from "./types.ts";
@@ -22,86 +16,88 @@ import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { RscRequest } from "rsc-protocol";
 import { ErrorBoundary } from "error-boundary";
 import { Fallback } from "@/routes/routes.tsx";
+import { Rsc } from "./utils.tsx";
+
+async function fetchRscPayload(
+  href = globalThis.location.href,
+): Promise<RscPayload> {
+  const request = new RscRequest(href);
+  const response = fetch(request);
+  const payload = await createFromFetch<RscPayload>(response);
+
+  return payload;
+}
 
 async function main(): Promise<void> {
-  // stash `setPayload` function to trigger re-rendering
-  // from outside of `BrowserRoot` component (e.g. server function call, navigation, hmr)
-  let setPayload: (v: RscPayload) => void;
-
   // deserialize RSC stream back to React VDOM for CSR
   const initialPayload = await createFromReadableStream<RscPayload>(
     // initial RSC stream is injected in SSR stream as <script>...FLIGHT_DATA...</script>
     rscStream,
   );
 
-  // browser root component to (re-)render RSC payload as state
-  function BrowserRoot(): ReactNode {
-    const [payload, setPayload_] = useState(initialPayload);
+  function Root({ promise }: { promise: RscPayload }) {
+    const [payload, setPayload] = useState(promise);
 
+    // re-fetch RSC and trigger re-rendering
     useEffect(() => {
-      setPayload = (v) => startTransition(() => setPayload_(v));
-    }, [setPayload_]);
+      return listenNavigation(async () => {
+        const promise = await fetchRscPayload();
 
-    // re-fetch/render on client side navigation
-    useEffect(() => {
-      return listenNavigation(() => fetchRscPayload());
+        startTransition(() => setPayload(promise));
+      });
     }, []);
 
-    return payload.root;
-  }
+    useEffect(() => {
+      // register a handler which will be internally called by React
+      // on server function request after hydration.
+      setServerCallback(async (id, args) => {
+        const temporaryReferences = createTemporaryReferenceSet();
+        const request = new RscRequest(globalThis.location.href, {
+          body: await encodeReply(args, { temporaryReferences }),
+          action: { id },
+        });
+        const payload = await createFromFetch<RscPayload>(
+          fetch(request),
+          { temporaryReferences },
+        );
+        startTransition(() => setPayload(promise));
 
-  // re-fetch RSC and trigger re-rendering
-  async function fetchRscPayload(): Promise<void> {
-    const request = new RscRequest(globalThis.location.href);
-    const payload = await createFromFetch<RscPayload>(fetch(request));
-    setPayload(payload);
-  }
+        const { ok, data } = payload.returnValue!;
+        if (!ok) throw data;
+        return data;
+      });
 
-  // register a handler which will be internally called by React
-  // on server function request after hydration.
-  setServerCallback(async (id, args) => {
-    const temporaryReferences = createTemporaryReferenceSet();
-    const request = new RscRequest(globalThis.location.href, {
-      body: await encodeReply(args, { temporaryReferences }),
-      action: { id },
-    });
-    const payload = await createFromFetch<RscPayload>(
-      fetch(request),
-      { temporaryReferences },
+      // implement server HMR by trigering re-fetch/render of RSC upon server code change
+      if (import.meta.hot) {
+        import.meta.hot.on("rsc:update", async () => {
+          const payload = await fetchRscPayload();
+          startTransition(() => setPayload(payload));
+        });
+      }
+    }, []);
+
+    return (
+      <StrictMode>
+        <ErrorBoundary key={globalThis.location.href} renderFallback={Fallback}>
+          <Rsc payload={payload} />
+        </ErrorBoundary>
+      </StrictMode>
     );
-    setPayload(payload);
+  }
 
-    const { ok, data } = payload.returnValue!;
-    if (!ok) throw data;
-    return data;
-  });
-
-  // hydration
-  const browserRoot = (
-    <StrictMode>
-      <ErrorBoundary renderFallback={Fallback}>
-        <BrowserRoot />
-      </ErrorBoundary>
-    </StrictMode>
-  );
-  hydrateRoot(document, browserRoot, {
+  hydrateRoot(document, <Root promise={initialPayload} />, {
     formState: initialPayload.formState,
     // Callback called when an error is thrown and not caught by an ErrorBoundary.
     onUncaughtError: reactErrorHandler((error, errorInfo) => {
       console.error("Uncaught error", error, errorInfo.componentStack);
     }),
     // Callback called when React catches an error in an ErrorBoundary.
-    onCaughtError: reactErrorHandler(),
+    onCaughtError: () => {
+      // noop
+    },
     // Callback called when React automatically recovers from errors.
     onRecoverableError: reactErrorHandler(),
   });
-
-  // implement server HMR by trigering re-fetch/render of RSC upon server code change
-  if (import.meta.hot) {
-    import.meta.hot.on("rsc:update", () => {
-      fetchRscPayload();
-    });
-  }
 }
 
 // a little helper to setup events interception for client side navigation
