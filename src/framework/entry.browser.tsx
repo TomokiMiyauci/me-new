@@ -10,13 +10,11 @@ import {
 import { startTransition, StrictMode, useEffect, useState } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
-import type { RscPayload } from "./types.ts";
 import { init, reactErrorHandler } from "@sentry/react";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
-import { RscRequest } from "rsc-protocol";
+import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { ErrorBoundary } from "error-boundary";
 import { Fallback } from "@/routes/routes.tsx";
-import { Rsc } from "./utils.tsx";
 
 async function fetchRscPayload(
   href = globalThis.location.href,

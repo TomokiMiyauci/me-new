@@ -8,7 +8,6 @@ import {
 } from "@vitejs/plugin-rsc/rsc";
 import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
-import type { ReturnValue, RscPayload } from "./types.ts";
 import { Router as ReactRouter } from "react-router";
 import routes from "@/routes/routes.tsx";
 import { type MiddlewareObject, Router } from "router";
@@ -16,7 +15,12 @@ import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
-import { parseRequest, RscResponse } from "rsc-protocol";
+import {
+  parseRequest,
+  type ReturnValue,
+  type RscPayload,
+  RscResponse,
+} from "rsc-protocol";
 import { createRef } from "./utils.tsx";
 import { isNotFoundError, notFound } from "react-app";
 import { captureException } from "@sentry/deno";

@@ -4,12 +4,11 @@ import type { ReactFormState } from "react-dom/client";
 import { renderToReadableStream } from "react-dom/server.edge";
 import type { RenderToReadableStreamOptions } from "react-dom/server";
 import { injectRSCPayload } from "rsc-html-stream/server";
-import type { RscPayload } from "./types.ts";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
 import { Fallback } from "@/routes/routes.tsx";
-import { RscPromise } from "./utils.tsx";
+import { type RscPayload, RscPromise } from "rsc-protocol";
 
 export interface RenderHTMLOptions {
   formState?: ReactFormState;
