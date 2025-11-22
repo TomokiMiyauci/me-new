@@ -73,27 +73,6 @@ export default defineConfig(({ command }) => ({
     rscAssets,
     manifest,
     outDirResolve,
-    {
-      // This is workaround for rsc plugin constraints
-      // client: {
-      //       build: {
-      //         rollupOptions: {
-      //           plugins: [inject(...)],
-      //         },
-      //       },
-      //     },
-      name: "apply-transform-client-only",
-      transform(...args) {
-        if (this.environment.name === "client") {
-          // deno-lint-ignore no-explicit-any
-          const { transform } = (inject as any)({
-            "Deno.env": "./src/framework/polyfills/deno_env.ts",
-          })!;
-
-          return transform.apply(this, args);
-        }
-      },
-    },
     viteStaticCopy({
       targets: [
         { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
@@ -164,6 +143,13 @@ export default defineConfig(({ command }) => ({
           input: {
             index: "./src/framework/entry.browser.tsx",
           },
+          plugins: [
+            // This is deno bug
+            // deno-lint-ignore no-explicit-any
+            (inject as any)({
+              "Deno.env": "./src/framework/polyfills/deno_env.ts",
+            }),
+          ],
         },
       },
     },
