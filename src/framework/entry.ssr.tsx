@@ -7,7 +7,7 @@ import { injectRSCPayload } from "rsc-html-stream/server";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import { HTMLInjectionStream } from "html-stream";
-import { Fallback } from "@/routes/routes.tsx";
+import { Fallback } from "@/services/app.tsx";
 import { type RscPayload, RscPromise } from "rsc-protocol";
 
 export interface RenderHTMLOptions {
@@ -65,14 +65,6 @@ function fallback(e: unknown): JSX.Element {
   if (e instanceof Error) {
     return <Fallback error={e} reset={() => {}} />;
   }
-  return <DefaultHtml />;
-}
 
-function DefaultHtml(): JSX.Element {
-  return (
-    <html>
-      <body>
-      </body>
-    </html>
-  );
+  throw e;
 }

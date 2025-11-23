@@ -1,15 +1,21 @@
 import { Route } from "react-router";
-import { type JSX, lazy } from "react";
-import { type FallbackProps } from "error-boundary";
-import { isNotFoundErrorLike } from "react-app";
+import { lazy } from "react";
 
-const Admin = lazy(() => import("@/routes/(sanity)/admin.tsx"));
-const AdminLayout = lazy(() => import("@/routes/(sanity)/_layout.tsx"));
-const About = lazy(() => import("@/routes/(website)/about.tsx"));
-const Index = lazy(() => import("@/routes/(website)/index.tsx"));
-const Layout = lazy(() => import("@/routes/(website)/_layout.tsx"));
-const _NotFound = lazy(() => import("@/routes/(website)/_404.tsx"));
-const _ServerError = lazy(() => import("@/routes/(website)/_500.tsx"));
+const Admin = /* @__PURE__ */ lazy(() => import("@/routes/(sanity)/admin.tsx"));
+const AdminLayout = /* @__PURE__ */ lazy(() =>
+  import("@/routes/(sanity)/_layout.tsx")
+);
+const About = /* @__PURE__ */ lazy(() =>
+  import("@/routes/(website)/about.tsx")
+);
+const Index = /* @__PURE__ */ lazy(() =>
+  import("@/routes/(website)/index.tsx")
+);
+const Layout = /* @__PURE__ */ lazy(() =>
+  import("@/routes/(website)/_layout.tsx")
+);
+const _NotFound = /* @__PURE__ */ lazy(() => import("@/routes/_404.tsx"));
+const _ServerError = /* @__PURE__ */ lazy(() => import("@/routes/_500.tsx"));
 
 export default [
   {
@@ -37,25 +43,3 @@ export default [
     ),
   },
 ] satisfies Route[];
-
-export const NotFound = (props: FallbackProps) => (
-  <Layout>
-    <_NotFound {...props} />
-  </Layout>
-);
-
-export const ServerError = (props: FallbackProps) => (
-  <Layout>
-    <_ServerError {...props}></_ServerError>
-  </Layout>
-);
-
-export function Fallback(props: FallbackProps): JSX.Element {
-  const { error, reset } = props;
-
-  if (isNotFoundErrorLike(error)) {
-    return <NotFound error={error} reset={reset} />;
-  }
-
-  return <ServerError error={error} reset={reset} />;
-}
