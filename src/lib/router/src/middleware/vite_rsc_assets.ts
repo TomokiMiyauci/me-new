@@ -45,10 +45,7 @@ export class ViteRscAssets implements MiddlewareObject {
         [_, map],
       ) => map.js.concat(map.css)),
     };
-    const clients = Object.entries(clientManifest).map(([_, matadata]) =>
-      join("/", matadata.file)
-    );
-
+    const clients = extractDeps(clientManifest).map((path) => join("/", path));
     const entries = new Set<string>(clients.concat(rsc.clients, rsc.servers));
 
     function toRoutes(): Route[] {
@@ -79,6 +76,12 @@ export class ViteRscAssets implements MiddlewareObject {
 
     return next();
   }
+}
+
+function extractDeps(manifest: ViteManifest): string[] {
+  return Object.entries(manifest).flatMap(([_, metadata]) => {
+    return (metadata.css ?? []).concat(metadata.file);
+  });
 }
 
 interface Route {
