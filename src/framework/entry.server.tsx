@@ -14,7 +14,7 @@ import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
-import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
+import { CSP_ENDPOINT, SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import {
   parseRequest,
   type ReturnValue,
@@ -143,7 +143,15 @@ init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
 const router = new Router<NonceContext>();
 router
   .use(new NonceProvider())
-  .use(new Csp());
+  .use(
+    new Csp((_, { nonce }) => ({
+      "default-src": ["'none'"],
+      "script-src": [`'nonce-${nonce}'`],
+      "style-src": ["'self'"],
+      "report-uri": CSP_ENDPOINT ? [CSP_ENDPOINT] : [],
+      "connect-src": ["ws:", "https:", "http:"],
+    })),
+  );
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 
