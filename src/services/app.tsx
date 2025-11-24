@@ -9,7 +9,7 @@ export function Fallback(props: FallbackProps): JSX.Element {
   const { error, reset } = props;
 
   if (isNotFoundErrorLike(error)) {
-    return <NotFound error={error} reset={reset} />;
+    return <NotFound />;
   }
 
   return <ServerError error={error} reset={reset} />;

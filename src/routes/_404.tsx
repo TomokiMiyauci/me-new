@@ -1,8 +1,7 @@
 import type { JSX } from "react";
-import { FallbackProps } from "error-boundary";
 import Layout from "@/routes/(website)/_layout.tsx";
 
-export default function NotFound(props: FallbackProps): JSX.Element {
+export default function NotFound(): JSX.Element {
   return (
     <Layout>
       <main>

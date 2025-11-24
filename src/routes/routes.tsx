@@ -14,8 +14,6 @@ const Index = /* @__PURE__ */ lazy(() =>
 const Layout = /* @__PURE__ */ lazy(() =>
   import("@/routes/(website)/_layout.tsx")
 );
-const _NotFound = /* @__PURE__ */ lazy(() => import("@/routes/_404.tsx"));
-const _ServerError = /* @__PURE__ */ lazy(() => import("@/routes/_500.tsx"));
 
 export default [
   {
