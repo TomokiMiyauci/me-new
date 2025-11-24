@@ -49,6 +49,7 @@
     "npm:keychain@1.5.0": "1.5.0",
     "npm:magic-string@~0.30.21": "0.30.21",
     "npm:react-dom@^19.2.0": "19.2.0_react@19.2.0",
+    "npm:react-error-boundary@6": "6.0.0_react@19.2.0",
     "npm:react@^19.1.1": "19.2.0",
     "npm:react@^19.2.0": "19.2.0",
     "npm:rsc-html-stream@^0.0.7": "0.0.7",
@@ -4795,7 +4796,8 @@
       "integrity": "sha512-HMSDTgj1HPFAuZG0FqxzHbYt5JeEGDUeT9r1RLXhS6RZQS8rLRjokgjZ0Pd28CN0lhXlRwfH6eviZqZEJ2kIoA==",
       "dependencies": [
         "get-random-values"
-      ]
+      ],
+      "deprecated": true
     },
     "get-random-values@1.2.2": {
       "integrity": "sha512-lMyPjQyl0cNNdDf2oR+IQ/fM3itDvpoHy45Ymo2r0L1EjazeSl13SfbKZs7KtZ/3MDCeueiaJiuOEfKqRTsSgA==",
@@ -6439,6 +6441,13 @@
       "dependencies": [
         "react",
         "scheduler"
+      ]
+    },
+    "react-error-boundary@6.0.0_react@19.2.0": {
+      "integrity": "sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==",
+      "dependencies": [
+        "@babel/runtime",
+        "react"
       ]
     },
     "react-fast-compare@3.2.2": {
@@ -8239,6 +8248,7 @@
         "npm:fetch-to-node@^2.1.0",
         "npm:github-slugid@^1.0.1",
         "npm:react-dom@^19.2.0",
+        "npm:react-error-boundary@6",
         "npm:react@^19.2.0",
         "npm:rsc-html-stream@^0.0.7",
         "npm:sanity-plugin-internationalized-array@^3.2.0",

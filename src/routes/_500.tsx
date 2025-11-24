@@ -1,5 +1,5 @@
 "use client";
-import { type FallbackProps } from "error-boundary";
+import { type FallbackProps } from "react-error-boundary";
 import { JSX } from "react";
 
 export default function ServerError(props: FallbackProps): JSX.Element {
@@ -11,7 +11,9 @@ export default function ServerError(props: FallbackProps): JSX.Element {
           {import.meta.env.DEV && <p>{props.error.message}</p>}
           {import.meta.env.DEV && <p>{props.error.stack}</p>}
 
-          <button type="button" onClick={() => props.reset()}>rest</button>
+          <button type="button" onClick={() => props.resetErrorBoundary()}>
+            rest
+          </button>
         </main>
       </body>
     </html>

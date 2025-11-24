@@ -89,7 +89,6 @@
     "src/lib/deno_env",
     "src/lib/html_stream",
     "src/lib/rsc_protocol",
-    "src/lib/error_boundary",
     "src/lib/react_app"
   ],
   "lint": {
