@@ -24,11 +24,15 @@ import {
 import { createRef } from "./utils.tsx";
 import { isNotFoundErrorLike, notFound } from "react-app";
 import { captureException } from "@sentry/deno";
+import { Csp, NonceContext, NonceProvider } from "router/csp";
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
 // own server handler e.g. `@cloudflare/vite-plugin`.
-async function handler(request: Request): Promise<Response> {
+async function handler(
+  request: Request,
+  context: Partial<NonceContext>,
+): Promise<Response> {
   const result = parseRequest(request);
 
   let returnValue: ReturnValue | undefined;
@@ -98,6 +102,7 @@ async function handler(request: Request): Promise<Response> {
         console.error("Uncaough error", e);
       }
     },
+    nonce: context.nonce,
   };
   const rscStream = renderToReadableStream(rscPayload, rscOptions);
 
@@ -123,6 +128,7 @@ async function handler(request: Request): Promise<Response> {
     formState,
     // allow quick simulation of javscript disabled browser
     nojs: import.meta.env.DEV && url.searchParams.has("__nojs"),
+    nonce: context.nonce,
   });
 
   const headers = new Headers(result.headers);
@@ -134,7 +140,10 @@ async function handler(request: Request): Promise<Response> {
 
 init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
 
-const router = new Router();
+const router = new Router<NonceContext>();
+router
+  .use(new NonceProvider())
+  .use(new Csp());
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 
