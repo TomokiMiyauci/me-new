@@ -63,7 +63,7 @@ export async function renderHTML(
 
 function fallback(e: unknown): JSX.Element {
   if (e instanceof Error) {
-    return <Fallback error={e} reset={() => {}} />;
+    return <Fallback error={e} resetErrorBoundary={() => {}} />;
   }
 
   throw e;
