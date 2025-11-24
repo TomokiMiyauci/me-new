@@ -13,7 +13,6 @@ import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
-// import { ErrorBoundary } from "error-boundary";
 import { Fallback } from "@/services/app.tsx";
 import { ErrorBoundary } from "react-error-boundary";
 
