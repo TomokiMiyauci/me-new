@@ -1,4 +1,4 @@
-import type { Handler, MiddlewareObject } from "../types.ts";
+import type { Handler, MiddlewareObject, Next } from "../types.ts";
 import { serveFile } from "@std/http/file-server";
 import { isAbsolute, join } from "@std/path";
 
@@ -66,7 +66,7 @@ export class ViteRscAssets implements MiddlewareObject {
 
   handle(
     request: Request,
-    next: () => Promise<Response>,
+    next: Next,
   ): Response | Promise<Response> {
     for (const route of this.#routes) {
       if (route.pattern.test(request.url)) {
@@ -74,7 +74,7 @@ export class ViteRscAssets implements MiddlewareObject {
       }
     }
 
-    return next();
+    return next(request);
   }
 }
 

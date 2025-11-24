@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import type { MiddlewareObject } from "../types.ts";
+import type { MiddlewareObject, Next } from "../types.ts";
 import { serveDir } from "@std/http";
 
 export interface StaticOptions {
@@ -15,7 +15,7 @@ export class StaticDir implements MiddlewareObject {
 
   async handle(
     request: Request,
-    next: () => Promise<Response>,
+    next: Next,
   ): Promise<Response> {
     const urlRoot = this.#options.urlRoot ?? "";
     const pathname = join("/", urlRoot, "/", "*");
@@ -31,6 +31,6 @@ export class StaticDir implements MiddlewareObject {
       return response;
     }
 
-    return next();
+    return next(request);
   }
 }

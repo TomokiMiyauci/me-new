@@ -3,17 +3,18 @@ export interface Route {
   middleware: Middleware;
 }
 
-export interface MiddlewareObject {
-  handle(
-    request: Request,
-    next: () => Promise<Response>,
-  ): Response | Promise<Response>;
+export interface MiddlewareObject<T = object> {
+  handle(request: Request, next: Next<T>): Response | Promise<Response>;
 }
 
-export interface Middleware {
+export type Next<T = object> = {
+  (request: Request, ctx?: T): Promise<Response>;
+} & Readonly<Partial<T>>;
+
+export interface Middleware<T = object> {
   (
     request: Request,
-    next: () => Promise<Response>,
+    next: Next<T>,
   ): Response | Promise<Response>;
 }
 
@@ -26,4 +27,6 @@ export interface HandlerObject {
 }
 
 export type HandlerOrHandlerObject = Handler | HandlerObject;
-export type MiddlewareOrMiddlewareObject = Middleware | MiddlewareObject;
+export type MiddlewareOrMiddlewareObject<T = object> =
+  | Middleware<T>
+  | MiddlewareObject<T>;
