@@ -14,7 +14,7 @@ export class Csp implements MiddlewareObject<NonceContext> {
     if (typeof nonce === "string" && contentType?.includes("text/html")) {
       response.headers.append(
         "Content-Security-Policy",
-        `script-src 'nonce-${nonce}'`,
+        `default-src 'none';script-src 'nonce-${nonce}';style-src 'self';connect-src 'self';`,
       );
     }
 
