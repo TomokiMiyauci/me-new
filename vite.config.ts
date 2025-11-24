@@ -1,7 +1,7 @@
 import rsc from "@vitejs/plugin-rsc";
 import react from "@vitejs/plugin-react";
 import deno from "@deno/vite-plugin";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, perEnvironmentPlugin, type Plugin } from "vite";
 import { cjsInterop } from "vite-plugin-cjs-interop";
 import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
@@ -73,6 +73,16 @@ export default defineConfig(({ command }) => ({
     rscAssets,
     manifest,
     outDirResolve,
+    perEnvironmentPlugin("inject", (env) => {
+      if (env.name === "client") {
+        // This is deno bug
+        // deno-lint-ignore no-explicit-any
+        return (inject as any)({
+          "Deno.env": "./src/framework/polyfills/deno_env.ts",
+        });
+      }
+      return false;
+    }),
     viteStaticCopy({
       targets: [
         { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
@@ -143,13 +153,6 @@ export default defineConfig(({ command }) => ({
           input: {
             index: "./src/framework/entry.browser.tsx",
           },
-          plugins: [
-            // This is deno bug
-            // deno-lint-ignore no-explicit-any
-            (inject as any)({
-              "Deno.env": "./src/framework/polyfills/deno_env.ts",
-            }),
-          ],
         },
       },
     },
