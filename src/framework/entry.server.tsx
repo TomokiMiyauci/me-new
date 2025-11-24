@@ -126,7 +126,7 @@ async function handler(request: Request): Promise<Response> {
   });
 
   const headers = new Headers(result.headers);
-  headers.set("congtent-type", "text/html");
+  headers.set("content-type", "text/html");
 
   // respond html
   return new Response(htmlStream, { status: statusRef.current, headers });
