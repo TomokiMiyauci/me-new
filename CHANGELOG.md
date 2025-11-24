@@ -1,3 +1,23 @@
+# [1.4.0](https://github.com/TomokiMiyauci/me-new/compare/1.3.0...1.4.0) (2025-11-24)
+
+
+### Bug Fixes
+
+* fix to extract client manifest ([d6837f2](https://github.com/TomokiMiyauci/me-new/commit/d6837f26e0390777a89b92ff460ab8e0cf6cf91d))
+
+
+### Features
+
+* add app as service ([cf5f707](https://github.com/TomokiMiyauci/me-new/commit/cf5f707753d2aaec9639d315e6dea8e88825d94d))
+* add error boundary and handle ssr error ([0987d95](https://github.com/TomokiMiyauci/me-new/commit/0987d9554f5e8bc689d082c8a6f1da5929f1c065))
+* add is not found error like function ([7076d63](https://github.com/TomokiMiyauci/me-new/commit/7076d63d35dd464cbeac5aaae378a9935bebf3a1))
+* add key to error boundary ([0c9e844](https://github.com/TomokiMiyauci/me-new/commit/0c9e844d6ae683fbe36b8e7be1ff153ac8306447))
+* add not found protocol, change rsc streaming error handling ([dace182](https://github.com/TomokiMiyauci/me-new/commit/dace1828ce62a716bb40fcaca7597985115dd428))
+* add react-error-boundary ([c629103](https://github.com/TomokiMiyauci/me-new/commit/c6291032a51953a93109814b27acd81a282545f9))
+* add server error component ([a1468b1](https://github.com/TomokiMiyauci/me-new/commit/a1468b1cc735e463e6f8c99d41dc1e3135240ade))
+* change error boundary props ([07c322e](https://github.com/TomokiMiyauci/me-new/commit/07c322effaab5729ec4f92b7b71b939e04906513))
+* change error boundary props ([200aac4](https://github.com/TomokiMiyauci/me-new/commit/200aac4e86e1039c20a8a66bec01f65fade48a2b))
+
 # [1.3.0](https://github.com/TomokiMiyauci/me-new/compare/1.2.0...1.3.0) (2025-11-17)
 
 
