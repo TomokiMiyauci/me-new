@@ -15,20 +15,12 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v5
-
       - uses: denoland/setup-deno@v2
-        with:
-          cache: true
 
       - name: Download artifact
         uses: actions/download-artifact@v6
         with:
-          path: dist
           name: ${{ needs.build.outputs.artifact-name }}
 
       - name: Deploy
-        run: deno task deploy:preview
-        env:
-          PROJECT_ID: ${{ vars.PROJECT_NAME }}
-          DEPLOY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: deno deploy --org=${{ vars.ORG }} --app=${{ vars.APP }} --token=${{ secrets.DEPLOY_TOKEN }}
