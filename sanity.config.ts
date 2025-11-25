@@ -17,7 +17,7 @@ function toLanguages(map: Record<string, string>): Language[] {
   return Object.entries(map).map(([id, title]) => ({ id, title }));
 }
 
-const languages = toLanguages(localeMap);
+const languages = /* /@__PURE__/ */ toLanguages(localeMap);
 
 export default defineConfig({
   basePath: "/admin",

@@ -1,7 +1,7 @@
 import { DenoEnv } from "deno-env";
 import { source } from "@/services/source.ts";
 
-const data = JSON.parse(source.consume());
+const data = /* /@__PURE__/ */ JSON.parse(source.consume());
 
 function assertFlatObject(
   input: unknown,
@@ -19,6 +19,6 @@ function assertFlatObject(
 
 assertFlatObject(data);
 
-const env = new DenoEnv(Object.entries(data));
+const env = /* /@__PURE__/ */ new DenoEnv(Object.entries(data));
 
 export default env;

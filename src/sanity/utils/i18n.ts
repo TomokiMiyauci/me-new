@@ -6,7 +6,7 @@ function createI18n(locale: Record<string, string>) {
   };
 }
 
-const i18n = createI18n({
+const i18n = /* /@__PURE__/ */ createI18n({
   "untitled": "Untitled",
 });
 

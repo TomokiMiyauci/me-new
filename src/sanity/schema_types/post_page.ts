@@ -6,7 +6,7 @@ enum Group {
   Content = "content",
 }
 
-const postPage = defineType({
+const postPage = /* /@__PURE__/ */ defineType({
   name: "post.page",
   type: "document",
   fields: [

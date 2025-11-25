@@ -140,7 +140,7 @@ async function handler(
 
 init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
 
-const router = new Router<NonceContext>();
+const router = /* /@__PURE__/ */ new Router<NonceContext>();
 router
   .use(new NonceProvider())
   .use(
