@@ -19,7 +19,6 @@ export class Csp implements MiddlewareObject<NonceContext> {
       const value = this.stringify(cspValue);
 
       response.headers.append("Content-Security-Policy", value);
-      console.log(response.headers.get("Content-Security-Policy"));
     }
 
     return response;

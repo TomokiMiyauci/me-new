@@ -63,7 +63,6 @@ export const manifest: Plugin = {
       const replacement = `(fetch(import.meta.resolve(${
         JSON.stringify(importPath)
       })).then((res) => res.json()))`;
-      console.log(replacement);
       const [start, end] = match.indices![0]!;
       s.overwrite(start, end, replacement);
     }
@@ -132,7 +131,6 @@ export const outDirResolve: Plugin = {
       const replacement = `(import.meta.resolve(${
         JSON.stringify(importPath)
       }))`;
-      console.log(replacement);
       const [start, end] = match.indices![0]!;
       s.overwrite(start, end, replacement);
     }
