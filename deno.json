@@ -78,6 +78,7 @@
     "src/lib/react_app"
   ],
   "lint": {
+    "plugins": ["./src/lib/deno_lint_plugin_pure/mod.ts"],
     "rules": {
       "exclude": [
         "no-slow-types"
