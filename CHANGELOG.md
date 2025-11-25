@@ -1,3 +1,19 @@
+# [1.5.0](https://github.com/TomokiMiyauci/me-new/compare/1.4.0...1.5.0) (2025-11-25)
+
+
+### Bug Fixes
+
+* fix to typo of header field ([35802b6](https://github.com/TomokiMiyauci/me-new/commit/35802b6ee47e752696fd629512de6432ef543a6a))
+
+
+### Features
+
+* add deps ([36d7361](https://github.com/TomokiMiyauci/me-new/commit/36d73610428ca34585a33d1c2ee9611a9c6a63ae))
+* add html csp middleware ([bf03d85](https://github.com/TomokiMiyauci/me-new/commit/bf03d855998cef2778ab86a5ff5134e69abfee55))
+* change content security policy ([d2229b5](https://github.com/TomokiMiyauci/me-new/commit/d2229b587cfb7747f6ab86b04b2005703c6e479d))
+* change router interface to accept context ([5e1866c](https://github.com/TomokiMiyauci/me-new/commit/5e1866cc1f16dd967a50a9c94ad43978a870fd14))
+* improve csp interface to accept csp directives ([cc9932b](https://github.com/TomokiMiyauci/me-new/commit/cc9932b0017dbd0b8551ae46bdf84a4998d81510))
+
 # [1.4.0](https://github.com/TomokiMiyauci/me-new/compare/1.3.0...1.4.0) (2025-11-24)
 
 
