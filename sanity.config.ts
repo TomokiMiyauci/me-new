@@ -21,8 +21,8 @@ const languages = toLanguages(localeMap);
 
 export default defineConfig({
   basePath: "/admin",
-  projectId: SANITY_ID!,
-  dataset: SANITY_DATASET!,
+  projectId: SANITY_ID,
+  dataset: SANITY_DATASET,
 
   plugins: [
     structureTool(),
