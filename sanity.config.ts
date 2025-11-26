@@ -20,7 +20,6 @@ function toLanguages(map: Record<string, string>): Language[] {
 const languages = /* /@__PURE__/ */ toLanguages(localeMap);
 
 export default defineConfig({
-  basePath: "/admin",
   projectId: SANITY_ID,
   dataset: SANITY_DATASET,
 

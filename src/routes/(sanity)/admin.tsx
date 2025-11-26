@@ -3,5 +3,5 @@ import config from "~/sanity.config.ts";
 import { type JSX } from "react";
 
 export default function Admin(): JSX.Element {
-  return <Studio config={config} />;
+  return <Studio config={config} basePath="/admin" />;
 }
