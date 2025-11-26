@@ -146,8 +146,9 @@ router
   .use(
     new Csp((_, { nonce }) => ({
       "default-src": ["'none'"],
-      "script-src": [`'nonce-${nonce}'`],
-      "style-src": ["'self'"],
+      "script-src": [`'nonce-${nonce}'`, "'unsafe-eval'"],
+      "style-src": ["'self'", `'unsafe-inline'`],
+      "img-src": ["https:"],
       "report-uri": CSP_ENDPOINT ? [CSP_ENDPOINT] : [],
       "connect-src": ["ws:", "https:", "http:"],
     })),
