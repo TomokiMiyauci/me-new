@@ -14,6 +14,7 @@ import {
 } from "vite-plugin-node-polyfills";
 import { nodeScheme } from "vite-node-scheme";
 import { builtinModules } from "node:module";
+import renameNodeModules from "rollup-plugin-rename-node-modules";
 
 export default defineConfig(({ command }) => ({
   server: { port: 8000 },
@@ -82,6 +83,10 @@ export default defineConfig(({ command }) => ({
       exclude: [...builtinModules] as ModuleNameWithoutNodePrefix[],
       protocolImports: false,
     }),
+    // Rename node_modules to vendor directory. The platform may treat `node_modules` specially and ignore uploads.
+    // This is deno bug
+    // deno-lint-ignore no-explicit-any
+    (renameNodeModules as any)("vendor"),
   ],
 
   resolve: {
@@ -105,6 +110,9 @@ export default defineConfig(({ command }) => ({
           input: {
             main: "./src/framework/entry.server.tsx",
           },
+          output: {
+            preserveModules: true,
+          },
         },
         outDir: "dist/server",
       },
@@ -124,6 +132,9 @@ export default defineConfig(({ command }) => ({
         rollupOptions: {
           input: {
             index: "./src/framework/entry.ssr.tsx",
+          },
+          output: {
+            preserveModules: true,
           },
         },
       },
