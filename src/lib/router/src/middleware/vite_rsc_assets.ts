@@ -46,11 +46,13 @@ export class ViteRscAssets implements MiddlewareObject {
       ) => map.js.concat(map.css)),
     };
     const clients = extractDeps(clientManifest).map((path) => join("/", path));
-    const entries = new Set<string>(clients.concat(rsc.clients, rsc.servers));
+    const entries = new Set<string>(
+      clients.concat(rsc.clients, rsc.servers),
+    );
 
     function toRoutes(): Route[] {
       return entries.values().map((entry) => {
-        const pattern = new URLPattern({ pathname: entry });
+        const pattern = new URLPattern({ pathname: escapeURLPattern(entry) });
         const filePath = join(fsRoot, entry);
         function handler(request: Request) {
           return serveFile(request, filePath);
@@ -87,4 +89,11 @@ function extractDeps(manifest: ViteManifest): string[] {
 interface Route {
   pattern: URLPattern;
   handler: Handler;
+}
+
+/**
+ * Escape special characters
+ */
+function escapeURLPattern(value: string): string {
+  return value.replace(/([(){}?:])/g, "\\$1");
 }
