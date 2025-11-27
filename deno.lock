@@ -23,6 +23,7 @@
     "npm:@sentry/deno@*": "10.25.0",
     "npm:@sentry/deno@^10.25.0": "10.25.0",
     "npm:@sentry/react@^10.25.0": "10.25.0_react@19.2.0",
+    "npm:@types/dom-navigation@^1.0.6": "1.0.6",
     "npm:@types/node@*": "24.2.0",
     "npm:@types/react-dom@^19.2.2": "19.2.2_@types+react@19.2.2",
     "npm:@types/react@^19.2.2": "19.2.2",
@@ -3141,6 +3142,9 @@
       "dependencies": [
         "@babel/types"
       ]
+    },
+    "@types/dom-navigation@1.0.6": {
+      "integrity": "sha512-4srBpebg8rFDm0LafYuWhZMgLoSr5J4gx4q1uaTqOXwVk00y+CkTdJ4SC57sR1cMhP0ZRjApMRdHVcFYOvPGTw=="
     },
     "@types/estree@1.0.8": {
       "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="
@@ -8183,6 +8187,7 @@
         "npm:@sentry/core@^10.25.0",
         "npm:@sentry/deno@^10.25.0",
         "npm:@sentry/react@^10.25.0",
+        "npm:@types/dom-navigation@^1.0.6",
         "npm:@types/react-dom@^19.2.2",
         "npm:@types/react@^19.2.2",
         "npm:@vitejs/plugin-react@latest",

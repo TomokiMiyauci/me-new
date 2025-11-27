@@ -1,4 +1,5 @@
 /// <reference lib="dom" />
+/// <reference types="@types/dom-navigation" />
 
 import {
   createFromFetch,
@@ -101,51 +102,45 @@ async function main(): Promise<void> {
   });
 }
 
+// TODO(miyauci) use URLPattern if stable.
+function isAdminPage(url: URL) {
+  return url.pathname.startsWith("/admin/");
+}
+
+function shouldNotIntercept(ev: NavigateEvent): boolean {
+  return !ev.canIntercept ||
+    // If this is just a hashChange,
+    // just let the browser handle scrolling to the content.
+    ev.hashChange ||
+    // If this is a download,
+    // let the browser perform the download.
+    ev.downloadRequest !== null ||
+    // If this is a form submission,
+    // let that go to the server.
+    !!ev.formData ||
+    // Sanity Studio has own navigation method.
+    isAdminPage(new URL(ev.destination.url));
+}
+
 // a little helper to setup events interception for client side navigation
 function listenNavigation(onNavigation: () => void): VoidFunction {
-  globalThis.addEventListener("popstate", onNavigation);
+  function handler(navigateEvent: NavigateEvent): void {
+    if (shouldNotIntercept(navigateEvent)) return;
 
-  const oldPushState = globalThis.history.pushState;
-  globalThis.history.pushState = function (...args): void {
-    const res = oldPushState.apply(this, args);
-    onNavigation();
-    return res;
-  };
-
-  const oldReplaceState = globalThis.history.replaceState;
-  globalThis.history.replaceState = function (...args) {
-    const res = oldReplaceState.apply(this, args);
-    onNavigation();
-    return res;
-  };
-
-  function onClick(e: MouseEvent): void {
-    const link = (e.target as Element).closest("a");
-    if (
-      link &&
-      link instanceof HTMLAnchorElement &&
-      link.href &&
-      (!link.target || link.target === "_self") &&
-      link.origin === location.origin &&
-      !link.hasAttribute("download") &&
-      e.button === 0 && // left clicks only
-      !e.metaKey && // open in new tab (mac)
-      !e.ctrlKey && // open in new tab (globalThiss)
-      !e.altKey && // download
-      !e.shiftKey &&
-      !e.defaultPrevented
-    ) {
-      e.preventDefault();
-      history.pushState(null, "", link.href);
-    }
+    navigateEvent.intercept({
+      handler() {
+        // return Promise.resolve();
+        return Promise.resolve(onNavigation());
+      },
+    });
   }
-  document.addEventListener("click", onClick);
+
+  // deno-lint-ignore no-window
+  window.navigation?.addEventListener("navigate", handler);
 
   return () => {
-    document.removeEventListener("click", onClick);
-    globalThis.removeEventListener("popstate", onNavigation);
-    globalThis.history.pushState = oldPushState;
-    globalThis.history.replaceState = oldReplaceState;
+    // deno-lint-ignore no-window
+    window.navigation?.removeEventListener("navigate", handler);
   };
 }
 

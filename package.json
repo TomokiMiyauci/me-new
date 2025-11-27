@@ -9,6 +9,7 @@
     "@sentry/core": "^10.25.0",
     "@sentry/deno": "^10.25.0",
     "@sentry/react": "^10.25.0",
+    "@types/dom-navigation": "^1.0.6",
     "fetch-to-node": "^2.1.0",
     "github-slugid": "^1.0.1",
     "react": "^19.2.0",
