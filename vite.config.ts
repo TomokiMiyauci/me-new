@@ -97,6 +97,10 @@ export default defineConfig(({ command }) => ({
     // The tranform of cjs fails in dev.
     external: command === "build" ? undefined : ["readable-stream"],
   },
+
+  build: {
+    license: true,
+  },
   // specify entry point for each environment.
   // (currently the plugin assumes `rollupOptions.input.index` for some features.)
   environments: {
