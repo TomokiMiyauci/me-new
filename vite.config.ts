@@ -114,6 +114,7 @@ export default defineConfig(({ command }) => ({
             preserveModules: true,
           },
         },
+        sourcemap: true,
         outDir: "dist/server",
       },
       define: {
@@ -137,6 +138,7 @@ export default defineConfig(({ command }) => ({
             preserveModules: true,
           },
         },
+        sourcemap: true,
       },
     },
 
