@@ -1,4 +1,5 @@
-import { Route } from "react-router";
+import { Route } from "app-router";
+import { LocaleContext } from "app-router/locale";
 import { lazy } from "react";
 
 const Admin = /* @__PURE__ */ lazy(() => import("@/routes/(sanity)/admin.tsx"));
@@ -18,26 +19,29 @@ const Layout = /* @__PURE__ */ lazy(() =>
 export default [
   {
     pattern: new URLPattern({ pathname: "/" }),
-    component: (
-      <Layout>
+    component: (props) => (
+      <Layout {...props}>
         <Index />
       </Layout>
     ),
   },
   {
     pattern: new URLPattern({ pathname: "/about" }),
-    component: (
-      <Layout>
+    component: (props) => (
+      <Layout {...props}>
         <About />
       </Layout>
     ),
   },
   {
     pattern: new URLPattern({ pathname: "/admin*" }),
-    component: (
-      <AdminLayout>
+    component: (props) => (
+      <AdminLayout {...props}>
         <Admin />
       </AdminLayout>
     ),
+    metadata: {
+      locales: [],
+    },
   },
-] satisfies Route[];
+] satisfies Route<LocaleContext, { url: URL }>[];

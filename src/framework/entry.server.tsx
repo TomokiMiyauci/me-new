@@ -8,7 +8,8 @@ import {
 } from "@vitejs/plugin-rsc/rsc";
 import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
-import { Router as ReactRouter } from "react-router";
+import { AppRouter } from "app-router";
+import { LocaleContext, Multilingual } from "app-router/locale";
 import routes from "@/routes/routes.tsx";
 import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
@@ -25,6 +26,26 @@ import { createRef } from "./utils.tsx";
 import { isNotFoundErrorLike, notFound } from "react-app";
 import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
+
+const appRouter = /* /@__PURE__/ */ new AppRouter<LocaleContext, { url: URL }>(
+  routes,
+  {
+    plugins: [
+      new Multilingual({
+        en: (pattern) => {
+          const { pathname, ...rest } = pattern;
+          return new URLPattern({ ...rest, pathname: pathname });
+        },
+        ja: (pattern) => {
+          const { pathname: _pathhame, ...rest } = pattern;
+
+          const pathname = _pathhame === "/" ? "/ja" : "/ja" + _pathhame;
+          return new URLPattern({ ...rest, pathname });
+        },
+      }),
+    ],
+  },
+);
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
@@ -78,15 +99,11 @@ async function handler(
   const [statusRef, setStatus] = createRef(200);
 
   const url = new URL(request.url);
+
+  const route = appRouter.match(url);
+  const Component = route?.component ?? NotFoundShell;
   const rscPayload = {
-    root: (
-      <ReactRouter
-        url={url}
-        routes={routes}
-        fallback={<NotFoundShell />}
-      >
-      </ReactRouter>
-    ),
+    root: <Component url={url} />,
     formState,
     returnValue,
   } satisfies RscPayload;

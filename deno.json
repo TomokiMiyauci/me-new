@@ -75,7 +75,8 @@
     "src/lib/deno_env",
     "src/lib/html_stream",
     "src/lib/rsc_protocol",
-    "src/lib/react_app"
+    "src/lib/react_app",
+    "src/lib/app_router"
   ],
   "lint": {
     "plugins": ["./src/lib/deno_lint_plugin_pure/mod.ts"],
