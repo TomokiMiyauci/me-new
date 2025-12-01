@@ -2,6 +2,7 @@ import { type JSX, lazy } from "react";
 import { isNotFoundErrorLike } from "react-app";
 import { type FallbackProps } from "react-error-boundary";
 import { Entry } from "@/routes/routes.tsx";
+import i18n from "i18next";
 
 const NotFound = /* @__PURE__ */ lazy(() => import("@/routes/_404.tsx"));
 const ServerError = /* @__PURE__ */ lazy(() => import("@/routes/_500.tsx"));
@@ -20,4 +21,5 @@ export interface AppProps {
   url: URL;
   lang: string;
   entry: Entry;
+  i18n: typeof i18n;
 }
