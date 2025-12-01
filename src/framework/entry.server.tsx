@@ -8,8 +8,6 @@ import {
 } from "@vitejs/plugin-rsc/rsc";
 import type { ReactFormState } from "react-dom/client";
 import type * as ssr from "./entry.ssr.tsx";
-import { AppRouter } from "app-router";
-import { LocaleContext, Multilingual } from "app-router/locale";
 import routes from "@/routes/routes.tsx";
 import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
@@ -26,26 +24,10 @@ import { createRef } from "./utils.tsx";
 import { isNotFoundErrorLike, notFound } from "react-app";
 import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
+import { components } from "@/routes/routes.tsx";
+import { URLResolver } from "route-kit";
 
-const appRouter = /* /@__PURE__/ */ new AppRouter<LocaleContext, { url: URL }>(
-  routes,
-  {
-    plugins: [
-      new Multilingual({
-        en: (pattern) => {
-          const { pathname, ...rest } = pattern;
-          return new URLPattern({ ...rest, pathname: pathname });
-        },
-        ja: (pattern) => {
-          const { pathname: _pathhame, ...rest } = pattern;
-
-          const pathname = _pathhame === "/" ? "/ja" : "/ja" + _pathhame;
-          return new URLPattern({ ...rest, pathname });
-        },
-      }),
-    ],
-  },
-);
+const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
 // the plugin by default assumes `rsc` entry having default export of request handler.
 // however, how server entries are executed can be customized by registering
@@ -99,11 +81,10 @@ async function handler(
   const [statusRef, setStatus] = createRef(200);
 
   const url = new URL(request.url);
-
-  const route = appRouter.match(url);
-  const Component = route?.component ?? NotFoundShell;
+  const resolved = resolver.resolve(url);
+  const Component = resolved ? components[resolved.key] : NotFoundShell;
   const rscPayload = {
-    root: <Component url={url} />,
+    root: <Component url={url} lang={resolved?.params.lang ?? "en"} />,
     formState,
     returnValue,
   } satisfies RscPayload;
