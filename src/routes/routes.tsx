@@ -39,7 +39,12 @@ export default {
     config,
   ),
   [Entry.Admin]: route({
-    pathname: () => "/admin",
+    entries: [
+      { pathname: () => "/admin" },
+
+      // TODO(miuyauci) use params slug
+      { pathname: () => "/admin/*" },
+    ],
   }),
 } satisfies Record<Entry, Route>;
 
