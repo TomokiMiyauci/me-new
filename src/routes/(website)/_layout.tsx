@@ -1,15 +1,12 @@
 import "./index.css";
-import { JSX, ReactNode } from "react";
+import { JSX, PropsWithChildren } from "react";
+import { type AppProps } from "@/services/app.tsx";
 
-export interface AppProps {
-  children: ReactNode;
-}
-
-export default function App(props: AppProps): JSX.Element {
-  const { children } = props;
+export default function App(props: PropsWithChildren<AppProps>): JSX.Element {
+  const { children, lang } = props;
 
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

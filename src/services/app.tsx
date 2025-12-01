@@ -14,3 +14,8 @@ export function Fallback(props: FallbackProps): JSX.Element {
 
   return <ServerError error={error} resetErrorBoundary={resetErrorBoundary} />;
 }
+
+export interface AppProps {
+  url: URL;
+  lang: string;
+}
