@@ -28,7 +28,7 @@ export default defineConfig({
     visionTool(),
     internationalizedArray({
       languages,
-      defaultLanguages: [i18n.defaultLocale],
+      defaultLanguages: [i18n.defaultLang],
       fieldTypes: ["string", "bodyContent"],
       buttonAddAll: false,
     }),

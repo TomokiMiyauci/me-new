@@ -1,6 +1,8 @@
-import { type JSX, lazy } from "react";
+import { type FunctionComponent, lazy } from "react";
 import { type Route, route } from "route-kit";
 import { withLang } from "route-kit/lang";
+import { type AppProps } from "@/services/app.tsx";
+import { i18n } from "~/i18n.ts";
 
 export enum Entry {
   About,
@@ -22,21 +24,19 @@ const Layout = /* @__PURE__ */ lazy(() =>
   import("@/routes/(website)/_layout.tsx")
 );
 
-const config = { defaultLang: "en", alternatives: ["ja"] };
-
 export default {
   [Entry.About]: withLang(
     route({
       pathname: () => "/about",
     }),
-    config,
+    i18n,
   ),
 
   [Entry.Home]: withLang(
     route({
       pathname: () => "/",
     }),
-    config,
+    i18n,
   ),
   [Entry.Admin]: route({
     entries: [
@@ -64,4 +64,4 @@ export const components = {
       <Admin />
     </AdminLayout>
   ),
-} satisfies Record<Entry, (props: { url: URL; lang: string }) => JSX.Element>;
+} satisfies Record<Entry, FunctionComponent<AppProps>>;

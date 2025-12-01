@@ -26,6 +26,7 @@ import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
 import { components } from "@/routes/routes.tsx";
 import { URLResolver } from "route-kit";
+import { i18n } from "~/i18n.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -83,8 +84,9 @@ async function handler(
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
   const Component = resolved ? components[resolved.key] : NotFoundShell;
+  const lang = resolved?.params.lang ?? i18n.defaultLang;
   const rscPayload = {
-    root: <Component url={url} lang={resolved?.params.lang ?? "en"} />,
+    root: <Component url={url} lang={lang} />,
     formState,
     returnValue,
   } satisfies RscPayload;

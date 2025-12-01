@@ -4,7 +4,7 @@ export function withLang<T extends Params>(
   route: Route<T>,
   config: {
     defaultLang: string;
-    alternatives: string[];
+    alternatives: readonly string[];
   },
 ): Route<T & { lang: string }> {
   const versions = ["default", "alternatives"] as const;
