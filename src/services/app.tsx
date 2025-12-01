@@ -1,6 +1,7 @@
 import { type JSX, lazy } from "react";
 import { isNotFoundErrorLike } from "react-app";
 import { type FallbackProps } from "react-error-boundary";
+import { Entry } from "@/routes/routes.tsx";
 
 const NotFound = /* @__PURE__ */ lazy(() => import("@/routes/_404.tsx"));
 const ServerError = /* @__PURE__ */ lazy(() => import("@/routes/_500.tsx"));
@@ -18,4 +19,5 @@ export function Fallback(props: FallbackProps): JSX.Element {
 export interface AppProps {
   url: URL;
   lang: string;
+  entry: Entry;
 }
