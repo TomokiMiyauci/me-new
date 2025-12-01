@@ -1,0 +1,48 @@
+{
+  "action": {
+    "navigation": {
+      "home": "ホームへ戻る",
+      "posts": "ブログへ戻る"
+    }
+  },
+  "error": {
+    "404": {
+      "title": "ページが見つかりません",
+      "description": "お探しのページが見つかりませんでした。"
+    }
+  },
+  "languageSwitcher": {
+    "ariaLabel": "言語切替メニューを開く",
+    "menu": {
+      "title": "翻訳"
+    }
+  },
+  "blog": {
+    "title": "ブログ",
+    "description": "最新のブログ記事を一覧でご紹介。Web開発、デザイン、技術トレンドなど、役立つ情報を随時更新中。",
+    "toc": {
+      "title": "目次"
+    }
+  },
+  "home": {
+    "title": "ホーム"
+  },
+  "footer": {
+    "navigation": {
+      "blog": {
+        "title": "ブログ"
+      },
+      "privacy-policy": {
+        "title": "プライバシーポリシー"
+      }
+    },
+    "navigationGroup": {
+      "media": {
+        "title": "メディア"
+      },
+      "legal": {
+        "title": "法的情報"
+      }
+    }
+  }
+}
