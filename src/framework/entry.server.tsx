@@ -27,6 +27,8 @@ import { Csp, NonceContext, NonceProvider } from "router/csp";
 import { components } from "@/routes/routes.tsx";
 import { URLResolver } from "route-kit";
 import { i18n } from "~/i18n.ts";
+import { changeLanguage } from "i18next";
+import "@/services/i18n.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -85,8 +87,11 @@ async function handler(
   const resolved = resolver.resolve(url);
   const Component = resolved ? components[resolved.key] : NotFoundShell;
   const lang = resolved?.params.lang ?? i18n.defaultLang;
+  await changeLanguage(lang);
   const rscPayload = {
-    root: <Component url={url} lang={lang} />,
+    root: resolved
+      ? <Component url={url} lang={lang} entry={resolved.key} />
+      : <NotFoundShell />,
     formState,
     returnValue,
   } satisfies RscPayload;

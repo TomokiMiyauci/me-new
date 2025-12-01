@@ -12,14 +12,6 @@ export default function Home(props: AppProps): JSX.Element {
         {/* <Button>Label</Button> */}
         <a href={admin ?? undefined}>Admin</a>
         <a href={about ?? undefined}>About</a>
-
-        <a href={resolver.resolve(Entry.Home, { lang: "en" }) ?? undefined}>
-          To En
-        </a>
-
-        <a href={resolver.resolve(Entry.Home, { lang: "ja" }) ?? undefined}>
-          To JA
-        </a>
       </div>
     </div>
   );
