@@ -21,7 +21,7 @@ import {
   RscResponse,
 } from "rsc-protocol";
 import { createRef } from "./utils.tsx";
-import { isNotFoundErrorLike, notFound } from "react-app";
+import { isNotFoundErrorLike, NotFound } from "react-app";
 import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
 import { components } from "@/routes/routes.tsx";
@@ -86,7 +86,7 @@ async function handler(
 
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
-  const Component = resolved ? components[resolved.key] : NotFoundShell;
+  const Component = resolved ? components[resolved.key] : NotFound;
   const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
@@ -94,7 +94,7 @@ async function handler(
   const rscPayload = {
     root: resolved
       ? <Component url={url} lang={lang} i18n={i18n} entry={resolved.key} />
-      : <NotFoundShell />,
+      : <NotFound />,
     formState,
     returnValue,
   } satisfies RscPayload;
@@ -183,8 +183,4 @@ export default {
 
 if (import.meta.hot) {
   import.meta.hot.accept();
-}
-
-function NotFoundShell(): never {
-  notFound();
 }
