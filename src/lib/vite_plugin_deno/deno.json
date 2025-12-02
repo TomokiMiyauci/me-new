@@ -1,0 +1,11 @@
+{
+  "name": "vite-plugin-deno",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "imports": {
+    "@deno/loader": "jsr:@deno/loader@^0.3.10",
+    "rollup": "npm:rollup@^4.53.3",
+    "vite": "npm:vite@^7.2.6"
+  }
+}
