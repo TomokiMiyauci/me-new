@@ -2,7 +2,7 @@ import { type FunctionComponent, lazy } from "react";
 import { type Route, route } from "route-kit";
 import { withLang } from "route-kit/lang";
 import { type AppProps } from "@/services/app.tsx";
-import { i18n } from "@/i18n.ts";
+import { i18n } from "@/language.ts";
 
 export enum Entry {
   About,

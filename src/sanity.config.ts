@@ -9,7 +9,7 @@ import {
   type Language,
 } from "sanity-plugin-internationalized-array";
 import { documentInternationalization } from "@sanity/document-internationalization";
-import { i18n, localeMap } from "@/i18n.ts";
+import { i18n, localeMap } from "@/language.ts";
 // import { media } from "sanity-plugin-media";
 import { codeInput } from "@sanity/code-input";
 

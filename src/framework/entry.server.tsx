@@ -26,7 +26,7 @@ import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
 import { components } from "@/routes/routes.tsx";
 import { URLResolver } from "route-kit";
-import { i18n as langConfig } from "@/i18n.ts";
+import { i18n as langConfig } from "@/language.ts";
 import i18nConfig from "@/i18next.config.ts";
 import { createInstance } from "i18next";
 import sentryConfig from "@/sentry.config.ts";
