@@ -13,7 +13,7 @@ import { type MiddlewareObject, Router } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 import { init } from "@sentry/deno";
-import { CSP_ENDPOINT, SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
+import { CSP_ENDPOINT } from "@/env.ts";
 import {
   parseRequest,
   type ReturnValue,
@@ -29,6 +29,7 @@ import { URLResolver } from "route-kit";
 import { i18n as langConfig } from "@/i18n.ts";
 import i18nConfig from "@/i18next.config.ts";
 import { createInstance } from "i18next";
+import sentryConfig from "@/sentry.config.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -145,7 +146,7 @@ async function handler(
   return new Response(htmlStream, { status: statusRef.current, headers });
 }
 
-init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
+init(sentryConfig);
 
 const router = /* /@__PURE__/ */ new Router<NonceContext>();
 router

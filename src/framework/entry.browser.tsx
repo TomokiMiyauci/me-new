@@ -12,7 +12,7 @@ import { startTransition, StrictMode, useEffect, useState } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
-import { SENTRY_DSN, SENTRY_ENV } from "@/env.ts";
+import sentryConfig from "@/sentry.config.ts";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { Fallback } from "@/services/app.tsx";
 import { ErrorBoundary } from "react-error-boundary";
@@ -144,5 +144,5 @@ function listenNavigation(onNavigation: () => void): VoidFunction {
   };
 }
 
-init({ dsn: SENTRY_DSN, environment: SENTRY_ENV });
+init(sentryConfig);
 main();
