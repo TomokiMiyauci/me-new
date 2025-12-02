@@ -1,5 +1,5 @@
 import { type InitOptions } from "i18next";
-import { i18n as i } from "~/i18n.ts";
+import { i18n as i } from "@/i18n.ts";
 import enTranslation from "../locales/en.json" with {
   type: "json",
 };
