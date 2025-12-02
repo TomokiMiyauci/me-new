@@ -1,6 +1,5 @@
 import rsc from "@vitejs/plugin-rsc";
 import react from "@vitejs/plugin-react";
-import deno from "@deno/vite-plugin";
 import { defineConfig, perEnvironmentPlugin } from "vite";
 import { cjsInterop } from "vite-plugin-cjs-interop";
 import { nodeEnv } from "vite-node-env";
@@ -15,6 +14,7 @@ import {
 import { nodeScheme } from "vite-node-scheme";
 import { builtinModules } from "node:module";
 import renameNodeModules from "rollup-plugin-rename-node-modules";
+import deno from "vite-plugin-deno";
 
 export default defineConfig(({ command }) => ({
   server: { port: 8000 },
@@ -40,17 +40,6 @@ export default defineConfig(({ command }) => ({
     // use https://github.com/antfu-collective/vite-plugin-inspect
     // to understand internal transforms required for RSC.
     // import("vite-plugin-inspect").then(m => m.default()),
-
-    // Patch for @deno/vite-plugin
-    // @deno/vite-plugin is not suported JSON module. The JSON module is used by @std/http.
-    {
-      name: "deno-json-patch-resolver",
-      resolveId(id): string | void {
-        if (id === "./deno.json") {
-          return "./deno.json";
-        }
-      },
-    },
     deno(),
     nodeEnv(),
     nodeScheme(),
@@ -67,7 +56,9 @@ export default defineConfig(({ command }) => ({
         // This is deno bug
         // deno-lint-ignore no-explicit-any
         return (inject as any)({
-          "Deno.env": "./src/framework/polyfills/deno_env.ts",
+          // TODO(miyauci) There may be a bug in how relative paths for plugins are resolved.
+          // Expected "./src/framework/polyfills/deno_env.ts"
+          "Deno.env": "./framework/polyfills/deno_env.ts",
         });
       }
       return false;
@@ -90,9 +81,6 @@ export default defineConfig(({ command }) => ({
   ],
 
   resolve: {
-    alias: {
-      "npm:react@^19.1.1/jsx-runtime": "react/jsx-runtime",
-    },
     noExternal: true,
     // The tranform of cjs fails in dev.
     external: command === "build" ? undefined : ["readable-stream"],

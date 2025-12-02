@@ -83,7 +83,8 @@
     "src/lib/rsc_protocol",
     "src/lib/react_app",
     "src/lib/app_router",
-    "src/lib/routekit"
+    "src/lib/routekit",
+    "src/lib/vite_plugin_deno"
   ],
   "lint": {
     "plugins": ["./src/lib/deno_lint_plugin_pure/mod.ts"],
