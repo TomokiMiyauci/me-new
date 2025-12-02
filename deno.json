@@ -19,6 +19,10 @@
       "command": "deno lint",
       "description": "Check by deno"
     },
+    "lint:type": {
+      "command": "deno check",
+      "description": "Check types by deno"
+    },
     "lint:format": {
       "command": "deno fmt --check",
       "description": "Format check"
