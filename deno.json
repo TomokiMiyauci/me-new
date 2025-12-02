@@ -57,8 +57,7 @@
     "@std/http": "jsr:@std/http@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.2",
     "sanity_rsc": "./src/lib/sanity_rsc/mod.ts",
-    "@/": "./src/",
-    "~/": "./"
+    "@/": "./src/"
   },
   "nodeModulesDir": "auto",
   "exclude": [
