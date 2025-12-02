@@ -1,6 +1,6 @@
 import { coalesceInternationalizedArrayString } from "./stringify.ts";
 
-function createI18n(locale: Record<string, string>) {
+function createI18n(locale: Record<string, string>): (key: string) => string {
   return (key: string) => {
     return locale[key] || key;
   };

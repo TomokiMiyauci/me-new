@@ -2,7 +2,7 @@ export default {
   name: "pure",
   rules: {
     "pure-init-on-top-level": {
-      create(context) {
+      create(context): Deno.lint.LintVisitor {
         function hasPureComment(node: Deno.lint.Expression): boolean {
           const comments = context.sourceCode.getCommentsBefore(node);
 
@@ -33,7 +33,7 @@ export default {
         }
 
         return {
-          VariableDeclaration(node) {
+          VariableDeclaration(node): void {
             if (node.parent.type === "Program") {
               for (const decl of node.declarations) {
                 if (

@@ -35,7 +35,7 @@ export async function renderHTML(
     bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
     formState,
     nonce,
-    onError() {
+    onError(): void {
       // noop
     },
   } satisfies RenderToReadableStreamOptions;

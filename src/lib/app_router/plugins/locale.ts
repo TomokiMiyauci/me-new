@@ -21,7 +21,7 @@ export class Multilingual implements Plugin<LocaleContext> {
   ): Route<LocaleContext>[] {
     const map = this.map;
     const entries = Object.entries(map);
-    function* gen() {
+    function* gen(): Generator<Route<LocaleContext>> {
       for (const route of routes) {
         for (const [key, handler] of entries) {
           const pattern = route.metadata?.locales.find((locale) =>

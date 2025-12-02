@@ -90,6 +90,10 @@
     "rules": {
       "exclude": [
         "no-slow-types"
+      ],
+      "include": [
+        "explicit-module-boundary-types",
+        "explicit-function-return-type"
       ]
     }
   }

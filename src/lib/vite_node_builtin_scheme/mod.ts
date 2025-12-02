@@ -6,7 +6,8 @@ export function nodeScheme(): Plugin {
     name: "vite-plugin-node-builtin-scheme",
     enforce: "pre",
 
-    resolveId(source) {
+    // TODO(miyauci) use rollup.ResolveIdResult
+    resolveId(source): { id: string; external: boolean } | undefined {
       if (isBuiltin(source)) {
         if (!source.startsWith("node:")) {
           return { id: `node:${source}`, external: true };

@@ -8,7 +8,13 @@ import {
   encodeReply,
   setServerCallback,
 } from "@vitejs/plugin-rsc/browser";
-import { startTransition, StrictMode, useEffect, useState } from "react";
+import {
+  type JSX,
+  startTransition,
+  StrictMode,
+  useEffect,
+  useState,
+} from "react";
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
@@ -34,7 +40,7 @@ async function main(): Promise<void> {
     rscStream,
   );
 
-  function Root({ promise }: { promise: RscPayload }) {
+  function Root({ promise }: { promise: RscPayload }): JSX.Element {
     const [payload, setPayload] = useState(promise);
 
     // re-fetch RSC and trigger re-rendering
@@ -103,7 +109,7 @@ async function main(): Promise<void> {
 }
 
 // TODO(miyauci) use URLPattern if stable.
-function isAdminPage(url: URL) {
+function isAdminPage(url: URL): boolean {
   return url.pathname.startsWith("/admin/");
 }
 
@@ -128,7 +134,7 @@ function listenNavigation(onNavigation: () => void): VoidFunction {
     if (shouldNotIntercept(navigateEvent)) return;
 
     navigateEvent.intercept({
-      handler() {
+      handler(): Promise<void> {
         // return Promise.resolve();
         return Promise.resolve(onNavigation());
       },

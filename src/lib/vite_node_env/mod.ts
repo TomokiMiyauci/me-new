@@ -3,7 +3,7 @@ import type { Plugin } from "vite";
 export function nodeEnv(): Plugin {
   return {
     name: "set-node-env-production",
-    config(config, { mode }) {
+    config(config, { mode }): void {
       if (mode === "production") {
         config.define = {
           ...config.define,

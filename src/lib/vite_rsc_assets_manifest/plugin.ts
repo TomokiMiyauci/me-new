@@ -1,11 +1,11 @@
-import { normalizePath, type Plugin } from "vite";
+import { normalizePath, type Plugin, type TransformResult } from "vite";
 import MagicString from "magic-string";
 import path from "node:path";
 import { stripLiteral } from "strip-literal";
 
 export const rscAssets: Plugin = {
   name: "rsc:load-assets-manifest",
-  transform(code) {
+  transform(code): TransformResult | undefined {
     if (!code.includes("import.meta.vite.rsc.loadManifest")) return;
 
     const s = new MagicString(code);
@@ -35,7 +35,7 @@ export const rscAssets: Plugin = {
       };
     }
   },
-  renderChunk(code, chunk) {
+  renderChunk(code, chunk): TransformResult | undefined {
     if (!code.includes("__vite_rsc_load_assets_manifest")) return;
     const environments = this.environment.getTopLevelConfig().environments;
 

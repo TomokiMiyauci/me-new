@@ -100,7 +100,7 @@ async function handler(
   } satisfies RscPayload;
   const rscOptions = {
     temporaryReferences,
-    onError(e: unknown) {
+    onError(e: unknown): string | undefined {
       if (isNotFoundErrorLike(e)) {
         setStatus(404);
         return e.digest;
@@ -109,7 +109,6 @@ async function handler(
         setStatus(500);
         console.error("Uncaough error", e);
       }
-      return;
     },
     nonce: context.nonce,
   };

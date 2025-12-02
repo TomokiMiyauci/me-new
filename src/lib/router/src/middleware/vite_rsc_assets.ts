@@ -54,7 +54,7 @@ export class ViteRscAssets implements MiddlewareObject {
       return entries.values().map((entry) => {
         const pattern = new URLPattern({ pathname: escapeURLPattern(entry) });
         const filePath = join(fsRoot, entry);
-        function handler(request: Request) {
+        function handler(request: Request): Promise<Response> {
           return serveFile(request, filePath);
         }
         const route = { pattern, handler } satisfies Route;

@@ -8,7 +8,7 @@ export function fromConnect(connect: Connect.Server): Middleware {
 
     // Patch for socket getter
     Object.defineProperty(req, "socket", {
-      get() {
+      get(): object {
         return {};
       },
     });

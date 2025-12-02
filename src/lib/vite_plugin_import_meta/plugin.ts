@@ -1,11 +1,11 @@
-import { normalizePath, type Plugin } from "vite";
+import { normalizePath, type Plugin, type TransformResult } from "vite";
 import MagicString from "magic-string";
 import path from "node:path";
 import { stripLiteral } from "strip-literal";
 
 export const manifest: Plugin = {
   name: "load-manifest",
-  transform(code) {
+  transform(code): TransformResult | undefined {
     if (!code.includes("import.meta.vite.loadManifest")) return;
 
     const s = new MagicString(code);
@@ -35,7 +35,7 @@ export const manifest: Plugin = {
       };
     }
   },
-  renderChunk(code, chunk) {
+  renderChunk(code, chunk): TransformResult | undefined {
     if (!code.includes("__vite_load_manifest")) return;
     const environments = this.environment.getTopLevelConfig().environments;
 
@@ -77,7 +77,7 @@ export const manifest: Plugin = {
 
 export const outDirResolve: Plugin = {
   name: "load-manifest",
-  transform(code) {
+  transform(code): TransformResult | undefined {
     if (!code.includes("import.meta.vite.outDir.resolve")) return;
 
     const s = new MagicString(code);
@@ -107,7 +107,7 @@ export const outDirResolve: Plugin = {
       };
     }
   },
-  renderChunk(code, chunk) {
+  renderChunk(code, chunk): TransformResult | undefined {
     if (!code.includes("__vite_out_dir_resolve")) return;
     const environments = this.environment.getTopLevelConfig().environments;
 

@@ -16,7 +16,7 @@ export default defineType({
   ],
   preview: {
     select: { title: "name" },
-    prepare(selection) {
+    prepare(selection): Record<string, string> {
       return {
         title: displayInternationalizedArrayString(selection.title),
       };

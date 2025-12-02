@@ -45,7 +45,7 @@ export default defineConfig(({ command }) => ({
     // @deno/vite-plugin is not suported JSON module. The JSON module is used by @std/http.
     {
       name: "deno-json-patch-resolver",
-      resolveId(id) {
+      resolveId(id): string | void {
         if (id === "./deno.json") {
           return "./deno.json";
         }

@@ -23,7 +23,7 @@ export default defineType({
       title: "name",
       media: "image",
     },
-    prepare(selection) {
+    prepare(selection): Record<string, string> {
       return {
         title: displayInternationalizedArrayString(selection.title),
       };

@@ -8,7 +8,7 @@ export class HTMLInjectionStream extends TransformStream<string, string> {
     const mark = options?.mark ?? "</head>";
 
     super({
-      transform(chunk, controller) {
+      transform(chunk, controller): void {
         buffer += chunk;
 
         const index = buffer.indexOf(mark);
@@ -22,7 +22,7 @@ export class HTMLInjectionStream extends TransformStream<string, string> {
         }
       },
 
-      flush(controller) {
+      flush(controller): void {
         if (buffer.length > 0) {
           controller.enqueue(buffer);
         }
