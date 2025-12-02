@@ -5,7 +5,7 @@ export class EntryResolver<T extends Record<string, Route>> {
   }
 
   resolve<U extends keyof T>(key: U, params: T[U]["params"]): string | null {
-    for (const entry of this.routes[key].entries) {
+    for (const entry of this.routes[key]?.entries ?? []) {
       if (entry.condition) {
         if (!entry.condition(params)) {
           continue;

@@ -87,7 +87,7 @@ async function handler(
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
   const Component = resolved ? components[resolved.key] : NotFoundShell;
-  const lang = resolved?.params.lang ?? langConfig.defaultLang;
+  const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
 
@@ -109,6 +109,7 @@ async function handler(
         setStatus(500);
         console.error("Uncaough error", e);
       }
+      return;
     },
     nonce: context.nonce,
   };

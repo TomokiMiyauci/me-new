@@ -8,7 +8,9 @@
       "@vitejs/plugin-rsc/types",
       "vite-plugin-rsc-assets-manifest/types",
       "vite-plugin-manifest/types"
-    ]
+    ],
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true
   },
   "tasks": {
     "lint": {

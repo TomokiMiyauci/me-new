@@ -27,7 +27,7 @@ export default defineType({
           to: { type: "author" },
           options: {
             "filter": ({ document }) => {
-              const language = document.language;
+              const language = document["language"];
 
               if (typeof language === "string") {
                 return {
@@ -53,7 +53,7 @@ export default defineType({
           to: { type: "category" },
           options: {
             "filter": ({ document }) => {
-              const language = document.language;
+              const language = document["language"];
 
               if (typeof language === "string") {
                 return {
