@@ -179,7 +179,7 @@ async function createAssetMiddleware(): Promise<MiddlewareObject> {
 
 export default {
   fetch: router.fetch.bind(router),
-};
+} satisfies Deno.ServeDefaultExport;
 
 if (import.meta.hot) {
   import.meta.hot.accept();
