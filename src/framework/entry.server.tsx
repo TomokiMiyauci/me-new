@@ -30,6 +30,10 @@ import { i18n as langConfig } from "@/language.ts";
 import i18nConfig from "@/i18next.config.ts";
 import { createInstance } from "i18next";
 import sentryConfig from "@/sentry.config.ts";
+import { injectRSCPayload } from "rsc-html-stream/server";
+import { HTMLInjectionStream } from "html-stream";
+import { source } from "@/services/source.ts";
+import { PUBLIC } from "@/env.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -98,6 +102,7 @@ async function handler(
     formState,
     returnValue,
   } satisfies RscPayload;
+  const nonce = context.nonce;
   const rscOptions = {
     temporaryReferences,
     onError(e: unknown): string | undefined {
@@ -110,13 +115,12 @@ async function handler(
         console.error("Uncaough error", e);
       }
     },
-    nonce: context.nonce,
+    nonce,
   };
   const rscStream = renderToReadableStream(rscPayload, rscOptions);
 
   // respond RSC stream without HTML rendering based on framework's convention.
   // here we use request header `content-type`.
-  // additionally we allow `?__rsc` and `?__html` to easily view payload directly.
   if (result.isRsc) {
     return new RscResponse(rscStream, {
       headers: result.headers,
@@ -128,22 +132,49 @@ async function handler(
   // The plugin provides `loadModule` helper to allow loading SSR environment entry module
   // in RSC environment. however this can be customized by implementing own runtime communication
   // e.g. `@cloudflare/vite-plugin`'s service binding.
-  const { renderHTML } = await import.meta.viteRsc.loadModule<typeof ssr>(
+  const {
+    renderHTML,
+    // // createFromReadableStream,
+    // renderToReadableStream: renderHtml,
+  } = await import.meta.viteRsc.loadModule<
+    typeof ssr
+  >(
     "ssr",
     "index",
   );
-  const htmlStream = await renderHTML(rscStream, {
+
+  const nojs = import.meta.env.DEV && url.searchParams.has("__nojs");
+  const bootstrapScriptContent = await import.meta.viteRsc
+    .loadBootstrapScriptContent("index");
+
+  // duplicate one RSC stream into two.
+  // - one for SSR (ReactClient.createFromReadableStream below)
+  // - another for browser hydration payload by injecting <script>...FLIGHT_DATA...</script>.
+  const [rscStream1, rscStream2] = rscStream.tee();
+  // const htmlStream = await renderHtml(<RscPromise promise={promise} />);
+  const htmlStream = await renderHTML(rscStream1, {
     formState,
-    // allow quick simulation of javscript disabled browser
-    nojs: import.meta.env.DEV && url.searchParams.has("__nojs"),
     nonce: context.nonce,
+    bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,
+    onError(): void {
+      // noop
+    },
   });
 
   const headers = new Headers(result.headers);
   headers.set("content-type", "text/html");
 
-  // respond html
-  return new Response(htmlStream, { status: statusRef.current, headers });
+  const finalStream = nojs ? htmlStream : htmlStream
+    .pipeThrough(new TextDecoderStream())
+    .pipeThrough(
+      new HTMLInjectionStream(source.provide(JSON.stringify(PUBLIC))),
+    )
+    .pipeThrough(new TextEncoderStream())
+    // initial RSC stream is injected in HTML stream as <script>...FLIGHT_DATA...</script>
+    // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
+    .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
+
+  return new Response(finalStream, { status: statusRef.current, headers });
 }
 
 init(sentryConfig);
