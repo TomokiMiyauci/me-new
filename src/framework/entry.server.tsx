@@ -101,7 +101,7 @@ async function handler(
     formState,
     returnValue,
   } satisfies RscPayload;
-  const nonce = context.nonce;
+  const { nonce } = context;
   const rscOptions = {
     temporaryReferences,
     onError(e: unknown): string | undefined {
@@ -131,13 +131,7 @@ async function handler(
   // The plugin provides `loadModule` helper to allow loading SSR environment entry module
   // in RSC environment. however this can be customized by implementing own runtime communication
   // e.g. `@cloudflare/vite-plugin`'s service binding.
-  const {
-    renderHTML,
-    // // createFromReadableStream,
-    // renderToReadableStream: renderHtml,
-  } = await import.meta.viteRsc.loadModule<
-    typeof ssr
-  >(
+  const { renderHtmlStream } = await import.meta.viteRsc.loadModule<typeof ssr>(
     "ssr",
     "index",
   );
@@ -151,7 +145,7 @@ async function handler(
   // - another for browser hydration payload by injecting <script>...FLIGHT_DATA...</script>.
   const [rscStream1, rscStream2] = rscStream.tee();
   // const htmlStream = await renderHtml(<RscPromise promise={promise} />);
-  const htmlStream = await renderHTML(rscStream1, {
+  const htmlStream = await renderHtmlStream(rscStream1, {
     formState,
     nonce: context.nonce,
     bootstrapScriptContent: nojs ? undefined : bootstrapScriptContent,

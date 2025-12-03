@@ -4,7 +4,7 @@ import type { RenderToReadableStreamOptions } from "react-dom/server";
 import { Fallback } from "@/services/app.tsx";
 import { type RscPayload, RscPromise } from "rsc-protocol";
 
-export async function renderHTML(
+export async function renderHtmlStream(
   rscStream: ReadableStream<Uint8Array>,
   options: RenderToReadableStreamOptions,
 ): Promise<ReadableStream<BufferSource>> {
