@@ -20,7 +20,6 @@ import {
   type RscPayload,
   RscResponse,
 } from "rsc-protocol";
-import { createRef } from "./utils.tsx";
 import { isNotFoundErrorLike, NotFound } from "react-app";
 import { captureException } from "@sentry/deno";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
@@ -86,7 +85,7 @@ async function handler(
   // so that new render reflects updated state from server function call
   // to achieve single round trip to mutate and fetch from server.
 
-  const [statusRef, setStatus] = createRef(200);
+  let status = 200;
 
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
@@ -107,11 +106,11 @@ async function handler(
     temporaryReferences,
     onError(e: unknown): string | undefined {
       if (isNotFoundErrorLike(e)) {
-        setStatus(404);
+        status = 404;
         return e.digest;
       } else {
         captureException(e);
-        setStatus(500);
+        status = 500;
         console.error("Uncaough error", e);
       }
     },
@@ -174,7 +173,7 @@ async function handler(
     // using utility made by devongovett https://github.com/devongovett/rsc-html-stream
     .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
 
-  return new Response(finalStream, { status: statusRef.current, headers });
+  return new Response(finalStream, { status, headers });
 }
 
 init(sentryConfig);
