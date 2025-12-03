@@ -1,7 +1,0 @@
-{
-  "name": "app-router",
-  "exports": {
-    ".": "./mod.ts",
-    "./locale": "./plugins/locale.ts"
-  }
-}

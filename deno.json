@@ -79,7 +79,6 @@
     "src/lib/html_stream",
     "src/lib/rsc_protocol",
     "src/lib/react_app",
-    "src/lib/app_router",
     "src/lib/routekit",
     "src/lib/vite_plugin_deno"
   ],
