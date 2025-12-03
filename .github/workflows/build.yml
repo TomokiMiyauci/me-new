@@ -18,6 +18,8 @@ jobs:
         with:
           cache: true
 
+      - run: deno install
+
       - name: Build
         run: deno task build
 
