@@ -1,7 +1,6 @@
 {
   "type": "module",
   "dependencies": {
-    "@deno/vite-plugin": "^1.0.5",
     "@rollup/plugin-inject": "^5.0.5",
     "@sanity/code-input": "^6.0.3",
     "@sanity/document-internationalization": "^4.1.0",
@@ -10,7 +9,6 @@
     "@sentry/deno": "^10.25.0",
     "@sentry/react": "^10.25.0",
     "@types/dom-navigation": "^1.0.6",
-    "fetch-to-node": "^2.1.0",
     "github-slugid": "^1.0.1",
     "i18next": "^25.6.3",
     "react": "^19.2.0",
