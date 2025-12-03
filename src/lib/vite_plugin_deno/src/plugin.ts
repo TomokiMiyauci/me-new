@@ -5,7 +5,7 @@ import {
   Workspace,
 } from "@deno/loader";
 import type { MinimalPluginContextWithoutEnvironment, Plugin } from "vite";
-import { fromFileUrl, isAbsolute, toFileUrl } from "@std/path";
+import { fromFileUrl } from "@std/path/from-file-url";
 import type { LoadResult, ResolveIdResult } from "rollup";
 import { format } from "@miyauci/format";
 import {
@@ -81,9 +81,8 @@ export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
         }
 
         if (isFileScheme(resolved)) {
-          const file = fromFileUrl(resolved);
-
-          return file;
+          const path = fromFileUrl(resolved);
+          return path;
         }
 
         return specifier.encode(resolved);
@@ -93,21 +92,14 @@ export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
       }
     },
     async load(id): Promise<LoadResult> {
-      const attributes = this.getModuleInfo(id)?.attributes ?? {};
+      if (!specifier.isVirtual(id)) return;
 
-      if (isAbsolute(id)) {
-        const url = toFileUrl(id);
+      const url = specifier.decode(id);
 
-        id = url.toString();
-      } else if (specifier.isVirtual(id)) {
-        id = specifier.decode(id);
-      } else {
-        return;
-      }
-
-      const moduleType = getModuleType(id, attributes);
-
-      const res = await loader.load(id, moduleType);
+      // vite is not supported moduleInfo in dev.
+      // This means that you cannot reference import attributes in dev.
+      const moduleType = getModuleType(url, {});
+      const res = await loader.load(url, moduleType);
 
       if (res.kind === "external") return;
 
