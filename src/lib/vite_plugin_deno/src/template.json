@@ -1,0 +1,4 @@
+{
+  "TEXT_MODULE": "export default `{source}`;",
+  "BYTES_MODULE": "export default new TextEncoder().encode(`{source}`);"
+}

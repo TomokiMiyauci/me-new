@@ -5,6 +5,7 @@
   },
   "imports": {
     "@deno/loader": "jsr:@deno/loader@^0.3.10",
+    "@miyauci/format": "jsr:@miyauci/format@^1.1.0",
     "rollup": "npm:rollup@^4.53.3",
     "vite": "npm:vite@^7.2.6"
   }

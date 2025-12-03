@@ -5,8 +5,17 @@ import {
   Workspace,
 } from "@deno/loader";
 import type { MinimalPluginContextWithoutEnvironment, Plugin } from "vite";
-import { isBuiltin } from "node:module";
+import { fromFileUrl, isAbsolute, toFileUrl } from "@std/path";
 import type { LoadResult, ResolveIdResult } from "rollup";
+import { format } from "@miyauci/format";
+import {
+  getModuleType,
+  isFileScheme,
+  isNodeScheme,
+  isSupported,
+  VirtualSpecifier,
+} from "./utils.ts";
+import template from "./template.json" with { type: "json" };
 
 export interface DenoPluginOptions {
   /** Show debugging logs */
@@ -22,6 +31,7 @@ export interface DenoPluginOptions {
 export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
   let workspace: Workspace;
   let loader: Loader;
+  const specifier = new VirtualSpecifier();
 
   return {
     name: "deno",
@@ -40,11 +50,21 @@ export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
 
       loader = await workspace.createLoader();
     },
+    /**
+     * This reports resolvable IDs for Deno in the following format:
+     * - deno::URL
+     * - ABSOLUTE_PATH
+     *
+     * Reporting IDs as URLs causes the Native ESM Loader in dev environments to evaluate the `https:` scheme before the load function, resulting in failure.
+     * Therefore, we prefix the URL format with `deno::`.
+     *
+     * Additionally, File URLs are not recognized as local files and cause issues in the dev environment. Therefore, file URLs are reported as ABSOLUTE_PATH.
+     */
     async resolveId(
       source,
       importer,
     ): Promise<ResolveIdResult> {
-      if (isBuiltin(source)) return { id: source, external: true };
+      importer = importer && specifier.decode(importer);
 
       try {
         const resolved = await loader.resolve(
@@ -52,65 +72,67 @@ export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
           importer,
           ResolutionMode.Import,
         );
-        return resolved;
+
+        // Loader returns values even for schemes not supported by Deno, such as `virtual:`, so it must be checked.
+        if (!isSupported(resolved)) return;
+
+        if (isNodeScheme(resolved)) {
+          return { id: source, external: true };
+        }
+
+        if (isFileScheme(resolved)) {
+          const file = fromFileUrl(resolved);
+
+          return file;
+        }
+
+        return specifier.encode(resolved);
       } catch {
-        // Fall thought
+        // Because import map resolution exists, the resolution targets cannot be determined in advance.
+        // Therefore, we must attempt resolution even for unnecessary targets.
       }
     },
     async load(id): Promise<LoadResult> {
-      if (!isSupported(id)) return;
-
       const attributes = this.getModuleInfo(id)?.attributes ?? {};
+
+      if (isAbsolute(id)) {
+        const url = toFileUrl(id);
+
+        id = url.toString();
+      } else if (specifier.isVirtual(id)) {
+        id = specifier.decode(id);
+      } else {
+        return;
+      }
+
       const moduleType = getModuleType(id, attributes);
 
       const res = await loader.load(id, moduleType);
 
       if (res.kind === "external") return;
 
-      const code = new TextDecoder().decode(res.code);
+      const decoded = new TextDecoder().decode(res.code);
 
       switch (moduleType) {
         case RequestedModuleType.Default:
         case RequestedModuleType.Json: {
-          return { code };
+          return { code: decoded };
         }
         case RequestedModuleType.Text: {
-          return { code: `export default \`${code}\`;` };
+          const code = format(template.TEXT_MODULE, {
+            source: decoded,
+          });
+
+          return { code };
         }
         case RequestedModuleType.Bytes: {
-          return {
-            code: `export default new TextEncoder().encode(\`${code}\`);`,
-          };
+          const code = format(template.BYTES_MODULE, {
+            source: decoded,
+          });
+
+          return { code };
         }
       }
     },
   };
-}
-
-function isSupported(id: string): boolean {
-  return id.startsWith("http:") ||
-    id.startsWith("https:") ||
-    id.startsWith("npm:") ||
-    id.startsWith("jsr:") ||
-    id.startsWith("file:");
-}
-
-function getModuleType(
-  file: string,
-  withArgs: Record<string, string>,
-): RequestedModuleType {
-  switch (withArgs["type"]) {
-    case "text":
-      return RequestedModuleType.Text;
-    case "bytes":
-      return RequestedModuleType.Bytes;
-    case "json":
-      return RequestedModuleType.Json;
-    default:
-      if (file.endsWith(".json")) {
-        return RequestedModuleType.Json;
-      }
-
-      return RequestedModuleType.Default;
-  }
 }
