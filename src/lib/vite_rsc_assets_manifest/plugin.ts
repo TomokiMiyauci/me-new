@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-non-null-assertion
 import { normalizePath, type Plugin, type TransformResult } from "vite";
 import MagicString from "magic-string";
 import path from "node:path";

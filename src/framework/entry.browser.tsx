@@ -67,9 +67,12 @@ async function main(): Promise<void> {
         );
         startTransition(() => setPayload(promise));
 
-        const { ok, data } = payload.returnValue!;
-        if (!ok) throw data;
-        return data;
+        const { returnValue } = payload;
+        if (returnValue) {
+          const { ok, data } = returnValue;
+          if (!ok) throw data;
+          return data;
+        }
       });
 
       // implement server HMR by trigering re-fetch/render of RSC upon server code change

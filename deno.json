@@ -90,7 +90,19 @@
       ],
       "include": [
         "explicit-module-boundary-types",
-        "explicit-function-return-type"
+        "explicit-function-return-type",
+        "eqeqeq",
+        "camelcase",
+        "no-await-in-loop",
+        "no-eval",
+        "no-non-null-asserted-optional-chain",
+        "no-non-null-assertion",
+        "no-self-compare",
+        "no-sparse-arrays",
+        "no-sync-fn-in-async-fn",
+        "no-throw-literal",
+        "no-useless-rename",
+        "prefer-ascii"
       ]
     }
   }
