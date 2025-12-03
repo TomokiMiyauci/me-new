@@ -1,4 +1,4 @@
-import type { MiddlewareObject, Next } from "../types.ts";
+import type { MiddlewareObject, Next } from "@/types.ts";
 import { randomBytes } from "node:crypto";
 
 export class Csp implements MiddlewareObject<NonceContext> {

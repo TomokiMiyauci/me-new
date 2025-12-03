@@ -1,4 +1,4 @@
-import type { Handler, MiddlewareObject, Next } from "../types.ts";
+import type { Handler, MiddlewareObject, Next } from "@/types.ts";
 import { serveFile } from "@std/http/file-server";
 import { isAbsolute, join } from "@std/path";
 

@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import type { MiddlewareObject, Next } from "../types.ts";
-import { serveDir } from "@std/http";
+import type { MiddlewareObject, Next } from "@/types.ts";
+import { serveDir } from "@std/http/file-server";
 
 export interface StaticOptions {
   fsRoot?: string;
