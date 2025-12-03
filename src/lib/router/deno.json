@@ -5,5 +5,9 @@
     "./static": "./src/middleware/static.ts",
     "./vite-rsc": "./src/middleware/vite_rsc_assets.ts",
     "./csp": "./src/middleware/csp.ts"
+  },
+  "imports": {
+    "@/": "./src/",
+    "@std/http": "jsr:@std/http@^1.0.22"
   }
 }
