@@ -35,7 +35,11 @@ export default defineConfig(({ command }) => ({
 
     // use any of react plugins https://github.com/vitejs/vite-plugin-react
     // to enable client component HMR
-    react(),
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
 
     // use https://github.com/antfu-collective/vite-plugin-inspect
     // to understand internal transforms required for RSC.
