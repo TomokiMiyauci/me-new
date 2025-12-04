@@ -3,16 +3,20 @@ import resolver, { Entry } from "@/services/link.ts";
 import { type AppProps } from "@/services/app.tsx";
 
 export default function Home(props: AppProps): JSX.Element {
+  const { i18n, lang } = props;
   const admin = resolver.resolve(Entry.Admin, {});
-  const about = resolver.resolve(Entry.About, { lang: props.lang });
+  const about = resolver.resolve(Entry.About, { lang });
+
+  const { t } = i18n;
 
   return (
-    <div id="root">
+    <main>
+      <title>{t("home.title")}</title>
+
       <div>
-        {/* <Button>Label</Button> */}
         <a href={admin ?? undefined}>Admin</a>
         <a href={about ?? undefined}>About</a>
       </div>
-    </div>
+    </main>
   );
 }
