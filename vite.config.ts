@@ -55,6 +55,23 @@ export default defineConfig(({ command }) => ({
     rscAssets,
     manifest,
     outDirResolve,
+    {
+      name: "workaround-process-env",
+      enforce: "pre",
+      transform(code, id): string | undefined {
+        if (
+          id.endsWith("env.ts") &&
+          code.includes("@TRANSFORM_PROCESS_ENV_TO_DENO_ENV")
+        ) {
+          const replaced = code.replaceAll(
+            /process\.env\["(.*?)\"]/g,
+            `Deno.env.get("$1")`,
+          );
+
+          return replaced;
+        }
+      },
+    },
     perEnvironmentPlugin("inject", (env) => {
       if (env.name === "client") {
         // This is deno bug
