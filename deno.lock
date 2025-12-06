@@ -19,6 +19,7 @@
     "jsr:@std/regexp@0.221": "0.221.0",
     "jsr:@std/streams@^1.0.14": "1.0.14",
     "npm:@rollup/plugin-inject@^5.0.5": "5.0.5_rollup@4.53.3",
+    "npm:@sentry/core@^10.29.0": "10.29.0",
     "npm:@sentry/deno@^10.29.0": "10.29.0",
     "npm:@sentry/react@^10.29.0": "10.29.0_react@19.2.1",
     "npm:@types/dom-navigation@^1.0.6": "1.0.6",
@@ -2132,6 +2133,7 @@
     "packageJson": {
       "dependencies": [
         "npm:@rollup/plugin-inject@^5.0.5",
+        "npm:@sentry/core@^10.29.0",
         "npm:@sentry/deno@^10.29.0",
         "npm:@sentry/react@^10.29.0",
         "npm:@types/dom-navigation@^1.0.6",

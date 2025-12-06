@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@rollup/plugin-inject": "^5.0.5",
+    "@sentry/core": "^10.29.0",
     "@sentry/deno": "^10.29.0",
     "@sentry/react": "^10.29.0",
     "@types/dom-navigation": "^1.0.6",
