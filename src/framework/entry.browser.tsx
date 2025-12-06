@@ -111,11 +111,6 @@ async function main(): Promise<void> {
   });
 }
 
-// TODO(miyauci) use URLPattern if stable.
-function isAdminPage(url: URL): boolean {
-  return url.pathname.startsWith("/admin/");
-}
-
 function shouldNotIntercept(ev: NavigateEvent): boolean {
   return !ev.canIntercept ||
     // If this is just a hashChange,
@@ -126,9 +121,7 @@ function shouldNotIntercept(ev: NavigateEvent): boolean {
     ev.downloadRequest !== null ||
     // If this is a form submission,
     // let that go to the server.
-    !!ev.formData ||
-    // Sanity Studio has own navigation method.
-    isAdminPage(new URL(ev.destination.url));
+    !!ev.formData;
 }
 
 // a little helper to setup events interception for client side navigation

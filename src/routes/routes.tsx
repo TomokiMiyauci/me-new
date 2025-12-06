@@ -7,13 +7,8 @@ import { i18n } from "@/language.ts";
 export enum Entry {
   About,
   Home,
-  Admin,
 }
 
-const Admin = /* @__PURE__ */ lazy(() => import("@/routes/(sanity)/admin.tsx"));
-const AdminLayout = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(sanity)/_layout.tsx")
-);
 const About = /* @__PURE__ */ lazy(() =>
   import("@/routes/(website)/about.tsx")
 );
@@ -38,14 +33,6 @@ export default {
     }),
     i18n,
   ),
-  [Entry.Admin]: route({
-    entries: [
-      { pathname: () => "/admin" },
-
-      // TODO(miuyauci) use params slug
-      { pathname: () => "/admin/*" },
-    ],
-  }),
 } satisfies Record<Entry, Route>;
 
 export const components = {
@@ -58,10 +45,5 @@ export const components = {
     <Layout {...props}>
       <About {...props} />
     </Layout>
-  ),
-  [Entry.Admin]: (props) => (
-    <AdminLayout {...props}>
-      <Admin />
-    </AdminLayout>
   ),
 } satisfies Record<Entry, FunctionComponent<AppProps>>;
