@@ -1,5 +1,5 @@
 import { GetAllPostDocument } from "@/gql/graphql.ts";
-import ArticleFragment from "../../../components/article/article.tsx";
+import ArticleFragment from "@/components/article/article.tsx";
 import client from "@/services/graphql.ts";
 import type { JSX } from "react";
 import resolver, { Entry } from "@/services/link.ts";

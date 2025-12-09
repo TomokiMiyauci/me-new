@@ -11,22 +11,14 @@ export enum Entry {
   Post,
 }
 
-const About = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(website)/about.tsx")
-);
-const Index = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(website)/index.tsx")
-);
-const Posts = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(website)/posts/index.tsx")
-);
+const About = /* @__PURE__ */ lazy(() => import("@/routes/about.tsx"));
+const Index = /* @__PURE__ */ lazy(() => import("@/routes/index.tsx"));
+const Posts = /* @__PURE__ */ lazy(() => import("@/routes/posts/index.tsx"));
 
 const Post = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(website)/posts//[slug]/index.tsx")
+  import("@/routes/posts//[slug]/index.tsx")
 );
-const Layout = /* @__PURE__ */ lazy(() =>
-  import("@/routes/(website)/_layout.tsx")
-);
+const Layout = /* @__PURE__ */ lazy(() => import("@/routes/_layout.tsx"));
 
 export default {
   [Entry.About]: withLang(
