@@ -103,6 +103,10 @@
         "no-useless-rename",
         "prefer-ascii"
       ]
-    }
+    },
+    "exclude": ["./src/gql"]
+  },
+  "fmt": {
+    "exclude": ["./src/gql"]
   }
 }
