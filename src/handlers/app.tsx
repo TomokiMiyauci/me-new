@@ -30,7 +30,7 @@ import routes from "@/routes/routes.tsx";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
-interface HanderContext extends Partial<NonceContext> {
+export interface HanderContext extends Partial<NonceContext> {
   renderHtmlStream: typeof ssr["renderHtmlStream"];
   noJs?: boolean;
   bootstrapScriptContent: string;
