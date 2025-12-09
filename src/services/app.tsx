@@ -22,4 +22,5 @@ export interface AppProps {
   lang: string;
   entry: Entry;
   i18n: typeof i18n;
+  params: Record<string, string>;
 }
