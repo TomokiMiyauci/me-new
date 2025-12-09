@@ -1,6 +1,9 @@
 {
   "type": "module",
   "dependencies": {
+    "@graphql-codegen/cli": "^6.1.0",
+    "@graphql-codegen/near-operation-file-preset": "^4.0.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@rollup/plugin-inject": "^5.0.5",
     "@sentry/core": "^10.29.0",
     "@sentry/deno": "^10.29.0",
@@ -8,6 +11,8 @@
     "@types/dom-navigation": "^1.0.6",
     "babel-plugin-react-compiler": "^1.0.0",
     "github-slugid": "^1.0.1",
+    "graphql": "^16.12.0",
+    "graphql-request": "^7.3.5",
     "i18next": "^25.7.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
@@ -23,6 +28,9 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "@vitejs/plugin-rsc": "^0.5.5",
-    "rsc-html-stream": "^0.0.7"
+    "rsc-html-stream": "^0.0.7",
+    "@graphql-codegen/introspection": "5.0.0",
+    "@graphql-codegen/cli": "6.1.0",
+    "@graphql-codegen/client-preset": "5.2.1"
   }
 }

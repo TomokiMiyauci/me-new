@@ -31,7 +31,8 @@
     },
     "dev": "deno run -P=dev --allow-net --env-file vite dev",
     "build": "deno run -P=build vite build --manifest",
-    "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js"
+    "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
+    "generate:graphql": "deno run -A @graphql-codegen/cli/graphql-codegen-esm"
   },
   "permissions": {
     "dev": {
