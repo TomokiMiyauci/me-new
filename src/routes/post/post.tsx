@@ -5,7 +5,7 @@ import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/services/app.tsx";
 
-export default async function PostPage(props: AppProps): Promise<JSX.Element> {
+export default async function Post(props: AppProps): Promise<JSX.Element> {
   const { lang, params } = props;
   const slug = params["slug"];
 

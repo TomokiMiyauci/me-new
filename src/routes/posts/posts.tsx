@@ -4,7 +4,7 @@ import client from "@/services/graphql.ts";
 import type { JSX } from "react";
 import resolver, { Entry } from "@/services/link.ts";
 
-export default async function PostPage(): Promise<JSX.Element> {
+export default async function Posts(): Promise<JSX.Element> {
   const result = await client.request(GetAllPostDocument);
 
   return (

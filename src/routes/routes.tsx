@@ -1,8 +1,13 @@
-import { type FunctionComponent, lazy } from "react";
+import { type FunctionComponent, JSX } from "react";
 import { type Route, route } from "route-kit";
 import { withLang } from "route-kit/lang";
 import { type AppProps } from "@/services/app.tsx";
 import { i18n } from "@/language.ts";
+import LayoutEntry from "./_layout.tsx";
+import HomeEntry from "./home/home.tsx";
+import AboutEntry from "./about/about.tsx";
+import PostsEntry from "./posts/posts.tsx";
+import PostEntry from "./post/post.tsx";
 
 export enum Entry {
   About,
@@ -11,14 +16,37 @@ export enum Entry {
   Post,
 }
 
-const About = /* @__PURE__ */ lazy(() => import("@/routes/about.tsx"));
-const Index = /* @__PURE__ */ lazy(() => import("@/routes/index.tsx"));
-const Posts = /* @__PURE__ */ lazy(() => import("@/routes/posts/index.tsx"));
+function About(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <AboutEntry {...props} />
+    </LayoutEntry>
+  );
+}
 
-const Post = /* @__PURE__ */ lazy(() =>
-  import("@/routes/posts//[slug]/index.tsx")
-);
-const Layout = /* @__PURE__ */ lazy(() => import("@/routes/_layout.tsx"));
+function Home(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <HomeEntry {...props} />
+    </LayoutEntry>
+  );
+}
+
+function Posts(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <PostsEntry />
+    </LayoutEntry>
+  );
+}
+
+function Post(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <PostEntry {...props} />
+    </LayoutEntry>
+  );
+}
 
 export default {
   [Entry.About]: withLang(
@@ -49,24 +77,8 @@ export default {
 } satisfies Record<Entry, Route>;
 
 export const components = {
-  [Entry.Home]: (props) => (
-    <Layout {...props}>
-      <Index {...props} />
-    </Layout>
-  ),
-  [Entry.About]: (props) => (
-    <Layout {...props}>
-      <About {...props} />
-    </Layout>
-  ),
-  [Entry.Posts]: (props) => (
-    <Layout {...props}>
-      <Posts />
-    </Layout>
-  ),
-  [Entry.Post]: (props) => (
-    <Layout {...props}>
-      <Post {...props} />
-    </Layout>
-  ),
+  [Entry.Home]: Home,
+  [Entry.About]: About,
+  [Entry.Posts]: Posts,
+  [Entry.Post]: Post,
 } satisfies Record<Entry, FunctionComponent<AppProps>>;
