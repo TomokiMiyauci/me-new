@@ -1,0 +1,3 @@
+fragment Article_article on PostPage {
+  _id
+}
