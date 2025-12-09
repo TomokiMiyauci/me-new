@@ -1,0 +1,9 @@
+query GetAllPost {
+  allPostPage {
+    ...Article_article
+    key: _id
+    slug {
+      current
+    }
+  }
+}
