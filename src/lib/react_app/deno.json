@@ -1,6 +1,6 @@
 {
   "name": "react-app",
   "exports": {
-    ".": "./mod.ts"
+    ".": "./src/mod.ts"
   }
 }
