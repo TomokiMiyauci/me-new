@@ -20,8 +20,8 @@ import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import sentryConfig from "@/sentry.config.ts";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
-import { Fallback } from "@/services/app.tsx";
 import { ErrorBoundary } from "react-error-boundary";
+import GlobalError from "@/routes/_global_error.tsx";
 
 async function fetchRscPayload(
   href = globalThis.location.href,
@@ -88,7 +88,7 @@ async function main(): Promise<void> {
       <StrictMode>
         <ErrorBoundary
           key={globalThis.location.href}
-          FallbackComponent={Fallback}
+          fallback={<GlobalError />}
         >
           <Rsc payload={payload} />
         </ErrorBoundary>
