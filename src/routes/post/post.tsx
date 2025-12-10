@@ -1,9 +1,10 @@
 import type { JSX } from "react";
-import resolver, { Entry } from "@/services/link.ts";
+import resolver from "@/services/link.ts";
 import client from "@/services/graphql.ts";
 import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/services/app.tsx";
+import Entry from "@/entry.ts";
 
 export default async function Post(props: AppProps): Promise<JSX.Element> {
   const { lang, params } = props;

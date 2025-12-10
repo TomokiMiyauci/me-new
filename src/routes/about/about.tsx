@@ -1,6 +1,7 @@
-import resolver, { Entry } from "@/services/link.ts";
+import resolver from "@/services/link.ts";
 import { type AppProps } from "@/services/app.tsx";
 import type { JSX } from "react";
+import Entry from "@/entry.ts";
 
 export default function About(props: AppProps): JSX.Element {
   const href = resolver.resolve(Entry.Home, { lang: props.lang });

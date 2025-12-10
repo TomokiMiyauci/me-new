@@ -17,7 +17,7 @@ import {
 import { isNotFoundErrorLike, NotFound } from "react-app";
 import { captureException } from "@sentry/deno";
 import { NonceContext } from "router/csp";
-import { components } from "@/routes/routes.tsx";
+import components from "@/component.ts";
 import { URLResolver } from "route-kit";
 import { i18n as langConfig } from "@/language.ts";
 import i18nConfig from "@/i18next.config.ts";
@@ -26,7 +26,7 @@ import { injectRSCPayload } from "rsc-html-stream/server";
 import { HTMLInjectionStream } from "html-stream";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
-import routes from "@/routes/routes.tsx";
+import routes from "@/route.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
