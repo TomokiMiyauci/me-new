@@ -5,7 +5,7 @@ import Entry from "@/entry.ts";
 
 export default function Home(props: AppProps): JSX.Element {
   const { i18n, lang } = props;
-  const about = resolver.resolve(Entry.About, { lang });
+  const post = resolver.resolve(Entry.Posts, { lang });
 
   const { t } = i18n;
 
@@ -14,7 +14,7 @@ export default function Home(props: AppProps): JSX.Element {
       <title>{t("home.title")}</title>
 
       <div>
-        <a href={about ?? undefined}>About</a>
+        <a href={post ?? undefined}>Posts</a>
       </div>
     </main>
   );
