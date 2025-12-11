@@ -2,6 +2,7 @@ import { createFromReadableStream } from "@vitejs/plugin-rsc/ssr";
 import { renderToReadableStream } from "react-dom/server.edge";
 import type { RenderToReadableStreamOptions } from "react-dom/server";
 import { type RscPayload, RscPromise } from "rsc-protocol";
+import { HtmlShell } from "react-app";
 
 export async function renderHtmlStream(
   rscStream: ReadableStream<Uint8Array>,
@@ -12,7 +13,9 @@ export async function renderHtmlStream(
   const stream: ReadableStream<BufferSource> = await renderToReadableStream(
     <RscPromise promise={promise} />,
     options,
-  );
+  ).catch(() => {
+    return renderToReadableStream(<HtmlShell />, options);
+  });
 
   return stream;
 }

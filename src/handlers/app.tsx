@@ -14,7 +14,7 @@ import {
   type RscPayload,
   RscResponse,
 } from "rsc-protocol";
-import { HtmlShell, isNotFoundErrorLike } from "react-app";
+import { isNotFoundErrorLike } from "react-app";
 import { captureException } from "@sentry/deno";
 import { NonceContext } from "router/csp";
 import { URLResolver } from "route-kit";
@@ -27,7 +27,6 @@ import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import routes from "@/route.ts";
 import AppShell from "@/routes/app_shell.tsx";
-import { Suspense } from "react";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -92,11 +91,7 @@ export default async function handler(
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
   const rscPayload = {
-    root: (
-      <Suspense fallback={<HtmlShell />}>
-        <AppShell url={url} i18n={i18n} params={{}} />
-      </Suspense>
-    ),
+    root: <AppShell url={url} i18n={i18n} params={{}} />,
     formState,
     returnValue,
   } satisfies RscPayload;
