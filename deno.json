@@ -82,7 +82,6 @@
     "src/lib/vite_plugin_deno"
   ],
   "lint": {
-    "plugins": ["./src/lib/deno_lint_plugin_pure/mod.ts"],
     "rules": {
       "exclude": [
         "no-slow-types"
