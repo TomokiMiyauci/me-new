@@ -14,10 +14,9 @@ import {
   type RscPayload,
   RscResponse,
 } from "rsc-protocol";
-import { isNotFoundErrorLike, NotFound } from "react-app";
+import { HtmlShell, isNotFoundErrorLike } from "react-app";
 import { captureException } from "@sentry/deno";
 import { NonceContext } from "router/csp";
-import components from "@/component.ts";
 import { URLResolver } from "route-kit";
 import { i18n as langConfig } from "@/language.ts";
 import i18nConfig from "@/i18next.config.ts";
@@ -27,6 +26,8 @@ import { HTMLInjectionStream } from "html-stream";
 import { source } from "@/services/source.ts";
 import { PUBLIC } from "@/env.ts";
 import routes from "@/route.ts";
+import AppShell from "@/routes/app_shell.tsx";
+import { Suspense } from "react";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -87,23 +88,15 @@ export default async function handler(
 
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
-  const Component = resolved ? components[resolved.key] : NotFound;
   const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
-
   const rscPayload = {
-    root: resolved
-      ? (
-        <Component
-          url={url}
-          lang={lang}
-          params={resolved.params as Record<string, string>}
-          i18n={i18n}
-          entry={resolved.key}
-        />
-      )
-      : <NotFound />,
+    root: (
+      <Suspense fallback={<HtmlShell />}>
+        <AppShell url={url} i18n={i18n} params={{}} />
+      </Suspense>
+    ),
     formState,
     returnValue,
   } satisfies RscPayload;
@@ -150,7 +143,7 @@ export default async function handler(
   });
 
   const headers = new Headers(result.headers);
-  headers.set("content-type", "text/html");
+  headers.set("content-type", "text/html;charset=utf-8");
 
   const finalStream = nojs ? htmlStream : htmlStream
     .pipeThrough(new TextDecoderStream())

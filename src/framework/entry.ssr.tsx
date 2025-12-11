@@ -12,14 +12,7 @@ export async function renderHtmlStream(
   const stream: ReadableStream<BufferSource> = await renderToReadableStream(
     <RscPromise promise={promise} />,
     options,
-  ).catch(() => {
-    return renderToReadableStream(
-      <html>
-        <head></head>
-      </html>,
-      options,
-    );
-  });
+  );
 
   return stream;
 }
