@@ -65,7 +65,7 @@ async function main(): Promise<void> {
           fetch(request),
           { temporaryReferences },
         );
-        startTransition(() => setPayload(promise));
+        startTransition(() => setPayload(payload));
 
         const { returnValue } = payload;
         if (returnValue) {
