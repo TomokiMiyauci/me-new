@@ -1,8 +1,8 @@
 import { Router } from "router";
 import { init } from "@sentry/deno";
-import { CSP_ENDPOINT } from "@/env.ts";
+import { CSP_ENDPOINT } from "~env";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
-import sentryConfig from "@/sentry.config.ts";
+import sentryConfig from "~config/sentry";
 import { App, createAssetMiddleware } from "./utils.ts";
 
 init(sentryConfig);

@@ -18,7 +18,7 @@ import {
 import { hydrateRoot } from "react-dom/client";
 import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
-import sentryConfig from "@/sentry.config.ts";
+import sentryConfig from "~config/sentry";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "@/routes/_global_error.tsx";

@@ -24,7 +24,7 @@ import { createInstance } from "i18next";
 import { injectRSCPayload } from "rsc-html-stream/server";
 import { HTMLInjectionStream } from "html-stream";
 import { source } from "@/services/source.ts";
-import { PUBLIC } from "@/env.ts";
+import { PUBLIC } from "~env";
 import routes from "@/route.ts";
 import AppShell from "@/routes/app_shell.tsx";
 
