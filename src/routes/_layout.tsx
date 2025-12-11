@@ -2,11 +2,12 @@ import "./index.css";
 import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/services/app.tsx";
 import resolver from "@/services/link.ts";
-import { localeMap } from "@/language.ts";
+import Entry from "@/entry.ts";
+// import { localeMap } from "@/language.ts";
 
 export default function App(props: PropsWithChildren<AppProps>): JSX.Element {
-  const { children, lang, entry } = props;
-
+  const { children, lang } = props;
+  const href = resolver.resolve(Entry.Home, { lang });
   return (
     <html lang={lang}>
       <head>
@@ -15,22 +16,9 @@ export default function App(props: PropsWithChildren<AppProps>): JSX.Element {
       </head>
       <body>
         <header>
-          <ul>
-            <li>
-              <a
-                href={resolver.resolve(entry, { lang: "en" }) ?? undefined}
-              >
-                {localeMap["en"]}
-              </a>
-            </li>
-            <li>
-              <a
-                href={resolver.resolve(entry, { lang: "ja" }) ?? undefined}
-              >
-                {localeMap["ja"]}
-              </a>
-            </li>
-          </ul>
+          <a href={href ?? undefined}>
+            Home
+          </a>
         </header>
         {children}
       </body>
