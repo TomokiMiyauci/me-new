@@ -22,6 +22,9 @@ import sentryConfig from "~config/sentry";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "@/routes/_global_error.tsx";
+import createPubSub, { type PubSub } from "nano-pubsub";
+
+const pubsub = createPubSub<RscPayload>();
 
 async function fetchRscPayload(
   href = globalThis.location.href,
@@ -33,6 +36,25 @@ async function fetchRscPayload(
   return payload;
 }
 
+setServerCallback(async (id, args) => {
+  const temporaryReferences = createTemporaryReferenceSet();
+  const request = new RscRequest(globalThis.location.href, {
+    body: await encodeReply(args, { temporaryReferences }),
+    action: { id },
+  });
+  const payload = await createFromFetch<RscPayload>(
+    fetch(request),
+    { temporaryReferences },
+  );
+
+  const { returnValue } = payload;
+  if (returnValue) {
+    const { ok, data } = returnValue;
+    if (!ok) throw data;
+    pubsub.publish(payload);
+  }
+});
+
 async function main(): Promise<void> {
   // deserialize RSC stream back to React VDOM for CSR
   const initialPayload = await createFromReadableStream<RscPayload>(
@@ -40,7 +62,15 @@ async function main(): Promise<void> {
     rscStream,
   );
 
-  function Root({ promise }: { promise: RscPayload }): JSX.Element {
+  interface RootProps {
+    promise: RscPayload;
+    pubsub: PubSub<RscPayload>;
+  }
+
+  function Root(
+    props: RootProps,
+  ): JSX.Element {
+    const { promise, pubsub } = props;
     const [payload, setPayload] = useState(promise);
 
     // re-fetch RSC and trigger re-rendering
@@ -53,62 +83,40 @@ async function main(): Promise<void> {
     }, []);
 
     useEffect(() => {
-      // register a handler which will be internally called by React
-      // on server function request after hydration.
-      setServerCallback(async (id, args) => {
-        const temporaryReferences = createTemporaryReferenceSet();
-        const request = new RscRequest(globalThis.location.href, {
-          body: await encodeReply(args, { temporaryReferences }),
-          action: { id },
-        });
-        const payload = await createFromFetch<RscPayload>(
-          fetch(request),
-          { temporaryReferences },
-        );
+      const unsubscribe = pubsub.subscribe((payload) => {
         startTransition(() => setPayload(payload));
-
-        const { returnValue } = payload;
-        if (returnValue) {
-          const { ok, data } = returnValue;
-          if (!ok) throw data;
-          return data;
-        }
       });
 
-      // implement server HMR by trigering re-fetch/render of RSC upon server code change
-      if (import.meta.hot) {
-        import.meta.hot.on("rsc:update", async () => {
-          const payload = await fetchRscPayload();
-          startTransition(() => setPayload(payload));
-        });
-      }
-    }, []);
+      return unsubscribe;
+    }, [pubsub]);
 
-    return (
-      <StrictMode>
-        <ErrorBoundary
-          key={globalThis.location.href}
-          fallback={<GlobalError />}
-        >
-          <Rsc payload={payload} />
-        </ErrorBoundary>
-      </StrictMode>
-    );
+    return <Rsc payload={payload} />;
   }
 
-  hydrateRoot(document, <Root promise={initialPayload} />, {
-    formState: initialPayload.formState,
-    // Callback called when an error is thrown and not caught by an ErrorBoundary.
-    onUncaughtError: reactErrorHandler((error, errorInfo) => {
-      console.error("Uncaught error", error, errorInfo.componentStack);
-    }),
-    // Callback called when React catches an error in an ErrorBoundary.
-    onCaughtError: () => {
-      // noop
+  hydrateRoot(
+    document,
+    <StrictMode>
+      <ErrorBoundary
+        key={globalThis.location.href}
+        fallback={<GlobalError />}
+      >
+        <Root promise={initialPayload} pubsub={pubsub} />
+      </ErrorBoundary>
+    </StrictMode>,
+    {
+      formState: initialPayload.formState,
+      // Callback called when an error is thrown and not caught by an ErrorBoundary.
+      onUncaughtError: reactErrorHandler((error, errorInfo) => {
+        console.error("Uncaught error", error, errorInfo.componentStack);
+      }),
+      // Callback called when React catches an error in an ErrorBoundary.
+      onCaughtError: () => {
+        // noop
+      },
+      // Callback called when React automatically recovers from errors.
+      onRecoverableError: reactErrorHandler(),
     },
-    // Callback called when React automatically recovers from errors.
-    onRecoverableError: reactErrorHandler(),
-  });
+  );
 }
 
 function shouldNotIntercept(ev: NavigateEvent): boolean {
@@ -148,3 +156,12 @@ function listenNavigation(onNavigation: () => void): VoidFunction {
 
 init(sentryConfig);
 main();
+
+// implement server HMR by trigering re-fetch/render of RSC upon server code change
+if (import.meta.hot) {
+  import.meta.hot.on("rsc:update", async () => {
+    const payload = await fetchRscPayload();
+
+    pubsub.publish(payload);
+  });
+}
