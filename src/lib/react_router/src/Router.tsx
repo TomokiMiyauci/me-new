@@ -1,22 +1,33 @@
 import type { ReactNode } from "react";
 
-export interface RouterProps {
+export interface RouterProps<T = unknown> {
   url: URL;
   fallback?: ReactNode;
-  routes: Route[];
+  routes: Route<T>[];
+  context: T;
 }
 
-export interface Route {
+interface RoutingProps<T = unknown> {
+  params: Record<string, string>;
+  context: T;
+}
+
+export interface Route<T = unknown> {
   pattern: URLPattern;
-  component: ReactNode;
+  component(props: RoutingProps<T>): ReactNode;
 }
 
-export default function Router(props: RouterProps): ReactNode {
-  const { routes, url, fallback } = props;
+export default function Router<T = unknown>(props: RouterProps<T>): ReactNode {
+  const { routes, url, fallback, context } = props;
 
   for (const route of routes) {
-    if (route.pattern.test(url)) {
-      return route.component;
+    const result = route.pattern.exec(url);
+    if (result) {
+      const params = result.pathname.groups as Record<string, string>;
+
+      if (route.component) {
+        return route.component({ context, params });
+      }
     }
   }
 
