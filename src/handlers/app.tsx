@@ -91,7 +91,7 @@ export default async function handler(
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
   const rscPayload = {
-    root: <AppShell url={url} i18n={i18n} params={{}} />,
+    root: <AppShell lang="en" url={url} i18n={i18n} params={{}} />,
     formState,
     returnValue,
   } satisfies RscPayload;
