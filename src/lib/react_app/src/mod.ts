@@ -8,3 +8,4 @@ export {
   notFound,
   type NotFoundErrorLike,
 } from "./not_found/utils.ts";
+export { default as HtmlShell } from "./html_shell.tsx";
