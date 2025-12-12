@@ -1,7 +1,7 @@
 {
   "name": "rsc-protocol",
   "exports": {
-    ".": "./mod.ts"
+    ".": "./src/mod.ts"
   },
   "compilerOptions": {
     "lib": [
