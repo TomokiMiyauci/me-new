@@ -1,6 +1,8 @@
 import { createFromReadableStream } from "@vitejs/plugin-rsc/ssr";
-import { renderToReadableStream } from "react-dom/server.edge";
-import type { RenderToReadableStreamOptions } from "react-dom/server";
+import {
+  renderToReadableStream,
+  type RenderToReadableStreamOptions,
+} from "react-dom/server";
 import { type RscPayload, RscPromise } from "rsc-protocol";
 import { HtmlShell } from "react-app";
 
