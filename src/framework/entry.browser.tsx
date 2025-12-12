@@ -9,13 +9,7 @@ import {
   encodeReply,
   setServerCallback,
 } from "@vitejs/plugin-rsc/browser";
-import {
-  type JSX,
-  startTransition,
-  StrictMode,
-  useEffect,
-  useState,
-} from "react";
+import { type JSX, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import sentryConfig from "~config/sentry";
@@ -23,9 +17,6 @@ import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "@/routes/_global_error.tsx";
-import createPubSub, { type PubSub } from "nano-pubsub";
-
-const pubsub = createPubSub<RscPayload>();
 
 init(sentryConfig);
 
@@ -45,7 +36,8 @@ setServerCallback(async (id, args) => {
   if (returnValue) {
     const { ok, data } = returnValue;
     if (!ok) throw data;
-    pubsub.publish(payload);
+
+    root.render(<Root payload={payload} />);
   }
 });
 
@@ -61,13 +53,7 @@ const initialPayload = await createFromReadableStream<RscPayload>(
 
 const root = hydrateRoot(
   document,
-  <StrictMode>
-    <ErrorBoundary
-      fallback={<GlobalError />}
-    >
-      <Root payload={initialPayload} pubsub={pubsub} />
-    </ErrorBoundary>
-  </StrictMode>,
+  <Root payload={initialPayload} />,
   {
     formState: initialPayload.formState,
     // Callback called when an error is thrown and not caught by an ErrorBoundary.
@@ -92,28 +78,25 @@ if (import.meta.hot) {
   import.meta.hot.on("rsc:update", async () => {
     const payload = await fetchRscPayload(globalThis.location.href);
 
-    pubsub.publish(payload);
+    root.render(<Root payload={payload} />);
   });
 }
 
 interface RootProps {
   payload: RscPayload;
-  pubsub: PubSub<RscPayload>;
 }
 
 export function Root(props: RootProps): JSX.Element {
-  const { payload: _payload, pubsub } = props;
-  const [payload, setPayload] = useState(_payload);
-
-  useEffect(() => {
-    const unsubscribe = pubsub.subscribe((payload) => {
-      startTransition(() => setPayload(payload));
-    });
-
-    return unsubscribe;
-  }, [pubsub]);
-
-  return <Rsc payload={payload} />;
+  const { payload } = props;
+  return (
+    <StrictMode>
+      <ErrorBoundary
+        fallback={<GlobalError />}
+      >
+        <Rsc payload={payload} />
+      </ErrorBoundary>
+    </StrictMode>
+  );
 }
 
 async function fetchRscPayload(
@@ -147,7 +130,7 @@ function handleNavigation(navigateEvent: NavigateEvent): void {
       const dest = navigateEvent.destination.url;
       const payload = await fetchRscPayload(dest);
 
-      pubsub.publish(payload);
+      root.render(<Root payload={payload} />);
     },
   });
 }
