@@ -77,7 +77,7 @@ export function denoPlugin(options: DenoPluginOptions = {}): Plugin {
         if (!isSupported(resolved)) return;
 
         if (isNodeScheme(resolved)) {
-          return { id: source, external: true };
+          return { id: resolved, external: true };
         }
 
         if (isFileScheme(resolved)) {
