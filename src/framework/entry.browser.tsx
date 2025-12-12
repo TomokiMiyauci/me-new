@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
 /// <reference types="@types/dom-navigation" />
+// deno-lint-ignore-file no-window
 
 import {
   createFromFetch,
@@ -16,36 +17,29 @@ import {
   useState,
 } from "react";
 import { hydrateRoot } from "react-dom/client";
-import { rscStream } from "rsc-html-stream/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import sentryConfig from "~config/sentry";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
+import { getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "@/routes/_global_error.tsx";
 import createPubSub, { type PubSub } from "nano-pubsub";
 
 const pubsub = createPubSub<RscPayload>();
 
-async function fetchRscPayload(
-  href = globalThis.location.href,
-): Promise<RscPayload> {
-  const request = new RscRequest(href);
-  const response = fetch(request);
-  const payload = await createFromFetch<RscPayload>(response);
-
-  return payload;
-}
+init(sentryConfig);
 
 setServerCallback(async (id, args) => {
   const temporaryReferences = createTemporaryReferenceSet();
+  const body = await encodeReply(args, { temporaryReferences });
   const request = new RscRequest(globalThis.location.href, {
-    body: await encodeReply(args, { temporaryReferences }),
+    body,
     action: { id },
   });
-  const payload = await createFromFetch<RscPayload>(
-    fetch(request),
-    { temporaryReferences },
-  );
+  const response = fetch(request);
+  const payload = await createFromFetch<RscPayload>(response, {
+    temporaryReferences,
+  });
 
   const { returnValue } = payload;
   if (returnValue) {
@@ -55,68 +49,81 @@ setServerCallback(async (id, args) => {
   }
 });
 
-async function main(): Promise<void> {
-  // deserialize RSC stream back to React VDOM for CSR
-  const initialPayload = await createFromReadableStream<RscPayload>(
-    // initial RSC stream is injected in SSR stream as <script>...FLIGHT_DATA...</script>
-    rscStream,
-  );
+// TODO(miyauci) Use globalThis instead of window.
+// Switch @types/dom-navigation
+window.navigation?.addEventListener("navigate", handleNavigation);
 
-  interface RootProps {
-    promise: RscPayload;
-    pubsub: PubSub<RscPayload>;
-  }
+// deserialize RSC stream back to React VDOM for CSR
+const initialPayload = await createFromReadableStream<RscPayload>(
+  // initial RSC stream is injected in SSR stream as <script>...FLIGHT_DATA...</script>
+  getRSCStream(),
+);
 
-  function Root(
-    props: RootProps,
-  ): JSX.Element {
-    const { promise, pubsub } = props;
-    const [payload, setPayload] = useState(promise);
-
-    // re-fetch RSC and trigger re-rendering
-    useEffect(() => {
-      return listenNavigation(async () => {
-        const promise = await fetchRscPayload();
-
-        startTransition(() => setPayload(promise));
-      });
-    }, []);
-
-    useEffect(() => {
-      const unsubscribe = pubsub.subscribe((payload) => {
-        startTransition(() => setPayload(payload));
-      });
-
-      return unsubscribe;
-    }, [pubsub]);
-
-    return <Rsc payload={payload} />;
-  }
-
-  hydrateRoot(
-    document,
-    <StrictMode>
-      <ErrorBoundary
-        key={globalThis.location.href}
-        fallback={<GlobalError />}
-      >
-        <Root promise={initialPayload} pubsub={pubsub} />
-      </ErrorBoundary>
-    </StrictMode>,
-    {
-      formState: initialPayload.formState,
-      // Callback called when an error is thrown and not caught by an ErrorBoundary.
-      onUncaughtError: reactErrorHandler((error, errorInfo) => {
-        console.error("Uncaught error", error, errorInfo.componentStack);
-      }),
-      // Callback called when React catches an error in an ErrorBoundary.
-      onCaughtError: () => {
-        // noop
-      },
-      // Callback called when React automatically recovers from errors.
-      onRecoverableError: reactErrorHandler(),
+const root = hydrateRoot(
+  document,
+  <StrictMode>
+    <ErrorBoundary
+      fallback={<GlobalError />}
+    >
+      <Root payload={initialPayload} pubsub={pubsub} />
+    </ErrorBoundary>
+  </StrictMode>,
+  {
+    formState: initialPayload.formState,
+    // Callback called when an error is thrown and not caught by an ErrorBoundary.
+    onUncaughtError: reactErrorHandler((error, errorInfo) => {
+      console.error("Uncaught error", error, errorInfo.componentStack);
+    }),
+    // Callback called when React catches an error in an ErrorBoundary.
+    onCaughtError: () => {
+      // noop
     },
-  );
+    // Callback called when React automatically recovers from errors.
+    onRecoverableError: reactErrorHandler(),
+  },
+);
+
+if (import.meta.hot) {
+  import.meta.hot.on("vite:beforeUpdate", () => {
+    window.navigation?.removeEventListener("navigate", handleNavigation);
+    root.unmount();
+  });
+
+  import.meta.hot.on("rsc:update", async () => {
+    const payload = await fetchRscPayload(globalThis.location.href);
+
+    pubsub.publish(payload);
+  });
+}
+
+interface RootProps {
+  payload: RscPayload;
+  pubsub: PubSub<RscPayload>;
+}
+
+export function Root(props: RootProps): JSX.Element {
+  const { payload: _payload, pubsub } = props;
+  const [payload, setPayload] = useState(_payload);
+
+  useEffect(() => {
+    const unsubscribe = pubsub.subscribe((payload) => {
+      startTransition(() => setPayload(payload));
+    });
+
+    return unsubscribe;
+  }, [pubsub]);
+
+  return <Rsc payload={payload} />;
+}
+
+async function fetchRscPayload(
+  url: string | URL,
+): Promise<RscPayload> {
+  const request = new RscRequest(url);
+  const response = fetch(request);
+  const payload = await createFromFetch<RscPayload>(response);
+
+  return payload;
 }
 
 function shouldNotIntercept(ev: NavigateEvent): boolean {
@@ -132,36 +139,15 @@ function shouldNotIntercept(ev: NavigateEvent): boolean {
     !!ev.formData;
 }
 
-// a little helper to setup events interception for client side navigation
-function listenNavigation(onNavigation: () => void): VoidFunction {
-  function handler(navigateEvent: NavigateEvent): void {
-    if (shouldNotIntercept(navigateEvent)) return;
+function handleNavigation(navigateEvent: NavigateEvent): void {
+  if (shouldNotIntercept(navigateEvent)) return;
 
-    navigateEvent.intercept({
-      handler(): Promise<void> {
-        // return Promise.resolve();
-        return Promise.resolve(onNavigation());
-      },
-    });
-  }
+  navigateEvent.intercept({
+    async handler(): Promise<void> {
+      const dest = navigateEvent.destination.url;
+      const payload = await fetchRscPayload(dest);
 
-  // deno-lint-ignore no-window
-  window.navigation?.addEventListener("navigate", handler);
-
-  return () => {
-    // deno-lint-ignore no-window
-    window.navigation?.removeEventListener("navigate", handler);
-  };
-}
-
-init(sentryConfig);
-main();
-
-// implement server HMR by trigering re-fetch/render of RSC upon server code change
-if (import.meta.hot) {
-  import.meta.hot.on("rsc:update", async () => {
-    const payload = await fetchRscPayload();
-
-    pubsub.publish(payload);
+      pubsub.publish(payload);
+    },
   });
 }
