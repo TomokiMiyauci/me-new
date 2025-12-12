@@ -1,22 +1,15 @@
 import rsc from "@vitejs/plugin-rsc";
 import react from "@vitejs/plugin-react";
 import { defineConfig, perEnvironmentPlugin } from "vite";
-import { cjsInterop } from "vite-plugin-cjs-interop";
 import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import {
-  type ModuleNameWithoutNodePrefix,
-  nodePolyfills,
-} from "vite-plugin-node-polyfills";
 import { nodeScheme } from "vite-node-scheme";
-import { builtinModules } from "node:module";
-import renameNodeModules from "rollup-plugin-rename-node-modules";
 import deno from "vite-plugin-deno";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   server: { port: 8000 },
   envDir: false,
   plugins: [
@@ -50,11 +43,6 @@ export default defineConfig(({ command }) => ({
     deno(),
     nodeEnv(),
     nodeScheme(),
-    cjsInterop({
-      dependencies: [
-        "prop-types",
-      ],
-    }),
     rscAssets,
     manifest,
     outDirResolve,
@@ -75,22 +63,10 @@ export default defineConfig(({ command }) => ({
         { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
       ],
     }),
-
-    // Polyfill for global symbols like Buffer.
-    nodePolyfills({
-      exclude: [...builtinModules] as ModuleNameWithoutNodePrefix[],
-      protocolImports: false,
-    }),
-    // Rename node_modules to vendor directory. The platform may treat `node_modules` specially and ignore uploads.
-    // This is deno bug
-    // deno-lint-ignore no-explicit-any
-    (renameNodeModules as any)("vendor"),
   ],
 
   resolve: {
     noExternal: true,
-    // The tranform of cjs fails in dev.
-    external: command === "build" ? undefined : ["readable-stream"],
   },
 
   build: {
@@ -173,7 +149,7 @@ export default defineConfig(({ command }) => ({
       },
     },
   },
-}));
+});
 
 function parsePkg(input: string): { name: string; version: string } {
   const lastAt = input.lastIndexOf("@");
