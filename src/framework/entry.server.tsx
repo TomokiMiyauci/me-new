@@ -7,7 +7,7 @@ import { App, createAssetMiddleware } from "./utils.ts";
 
 init(sentryConfig);
 
-const router = /* /@__PURE__/ */ new Router<NonceContext>();
+const router = new Router<NonceContext>();
 router
   .use(new NonceProvider())
   .use(
