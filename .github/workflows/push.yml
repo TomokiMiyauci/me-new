@@ -40,7 +40,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v5
-      
+
       - uses: denoland/setup-deno@v2
 
       - name: Download artifact
