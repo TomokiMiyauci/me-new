@@ -1,5 +1,5 @@
 declare global {
-  var __FLIGHT_DATA: unknown[];
+  var __FLIGHT_DATA: unknown[] | undefined;
 }
 
 export function getRSCStream(): ReadableStream<Uint8Array> {

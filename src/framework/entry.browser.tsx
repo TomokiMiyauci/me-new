@@ -13,7 +13,12 @@ import { type JSX, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import sentryConfig from "~config/sentry";
-import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
+import {
+  Rsc,
+  type RscPayload,
+  RscRequest,
+  type RscRequestInit,
+} from "rsc-protocol";
 import { getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "@/routes/_global_error.tsx";
@@ -23,12 +28,10 @@ init(sentryConfig);
 setServerCallback(async (id, args) => {
   const temporaryReferences = createTemporaryReferenceSet();
   const body = await encodeReply(args, { temporaryReferences });
-  const request = new RscRequest(globalThis.location.href, {
-    body,
-    action: { id },
-  });
-  const response = fetch(request);
-  const payload = await createFromFetch<RscPayload>(response, {
+  const init = { body, action: { id } } satisfies RscRequestInit;
+  const request = new RscRequest(globalThis.location.href, init);
+  const promiseResponse = fetch(request);
+  const payload = await createFromFetch<RscPayload>(promiseResponse, {
     temporaryReferences,
   });
 
