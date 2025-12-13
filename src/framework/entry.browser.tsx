@@ -34,11 +34,9 @@ setServerCallback(async (id, args) => {
 
   const { returnValue } = payload;
   if (returnValue) {
-    const { ok, data } = returnValue;
-    if (!ok) throw data;
-
-    root.render(<Root payload={payload} />);
+    if (!returnValue.ok) throw returnValue.error;
   }
+  root.render(<Root payload={payload} />);
 });
 
 // TODO(miyauci) Use globalThis instead of window.

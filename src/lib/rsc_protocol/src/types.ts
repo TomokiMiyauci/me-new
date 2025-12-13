@@ -5,9 +5,15 @@ export interface Action {
   id: string;
 }
 
-export interface ReturnValue {
-  ok: boolean;
-  data: unknown;
+export type ReturnValue = SuccessReturnValue | FailureReturnValue;
+
+export interface SuccessReturnValue {
+  ok: true;
+}
+
+export interface FailureReturnValue {
+  ok: false;
+  error: unknown;
 }
 
 export interface RscPayload {

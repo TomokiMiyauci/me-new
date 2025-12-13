@@ -59,10 +59,10 @@ export default async function handler(
       const args = await decodeReply(body, { temporaryReferences });
       const action = await loadServerAction(result.action.id);
       try {
-        const data = await action.apply(null, args);
-        returnValue = { ok: true, data };
+        await action.apply(null, args);
+        returnValue = { ok: true };
       } catch (e) {
-        returnValue = { ok: false, data: e };
+        returnValue = { ok: false, error: e };
         actionStatus = 500;
         captureException(e);
         console.error("Uncatch error", e);
