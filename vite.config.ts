@@ -5,7 +5,6 @@ import { nodeEnv } from "vite-node-env";
 import rscAssets from "vite-plugin-rsc-assets-manifest";
 import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
-import { viteStaticCopy } from "vite-plugin-static-copy";
 import { nodeScheme } from "vite-node-scheme";
 import deno from "vite-plugin-deno";
 
@@ -57,11 +56,6 @@ export default defineConfig({
         });
       }
       return false;
-    }),
-    viteStaticCopy({
-      targets: [
-        { src: "./deno.prod.json", dest: ".", rename: "deno.json" },
-      ],
     }),
   ],
 
