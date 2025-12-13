@@ -1,6 +1,6 @@
 import { type ReactNode, use } from "react";
 import type { RscPayload } from "../types.ts";
-import Rsc from "./Rsc.tsx";
+import Rsc from "./rsc.tsx";
 
 export interface RscPromiseProps {
   promise: Promise<RscPayload>;
