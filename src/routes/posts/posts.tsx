@@ -6,7 +6,8 @@ import resolver from "@/services/link.ts";
 import Entry from "@/entry.ts";
 
 export default async function Posts(): Promise<JSX.Element> {
-  const result = await client.request(GetAllPostDocument);
+  const lang = "en";
+  const result = await client.request(GetAllPostDocument, { lang });
 
   return (
     <main>
@@ -17,7 +18,7 @@ export default async function Posts(): Promise<JSX.Element> {
         return (
           <li key={article.key}>
             <a href={href ?? undefined}>
-              <ArticleFragment fragment={article} />
+              <ArticleFragment lang={lang} fragment={article} />
             </a>
           </li>
         );

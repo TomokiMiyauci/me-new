@@ -14,14 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "fragment Article_article on PostPage {\n  _id\n}": typeof types.Article_ArticleFragmentDoc,
+    "fragment Article_article on PostPage {\n  _id\n  post {\n    title\n    description\n    createdAt\n  }\n  _createdAt\n}": typeof types.Article_ArticleFragmentDoc,
     "query PostBySlug($slug: String!) {\n  allPostPage(where: {slug: {current: {eq: $slug}}}) {\n    _id\n  }\n}": typeof types.PostBySlugDocument,
-    "query GetAllPost {\n  allPostPage {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": typeof types.GetAllPostDocument,
+    "query GetAllPost($lang: String!) {\n  allPostPage(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": typeof types.GetAllPostDocument,
 };
 const documents: Documents = {
-    "fragment Article_article on PostPage {\n  _id\n}": types.Article_ArticleFragmentDoc,
+    "fragment Article_article on PostPage {\n  _id\n  post {\n    title\n    description\n    createdAt\n  }\n  _createdAt\n}": types.Article_ArticleFragmentDoc,
     "query PostBySlug($slug: String!) {\n  allPostPage(where: {slug: {current: {eq: $slug}}}) {\n    _id\n  }\n}": types.PostBySlugDocument,
-    "query GetAllPost {\n  allPostPage {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": types.GetAllPostDocument,
+    "query GetAllPost($lang: String!) {\n  allPostPage(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": types.GetAllPostDocument,
 };
 
 /**
@@ -41,7 +41,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment Article_article on PostPage {\n  _id\n}"): (typeof documents)["fragment Article_article on PostPage {\n  _id\n}"];
+export function graphql(source: "fragment Article_article on PostPage {\n  _id\n  post {\n    title\n    description\n    createdAt\n  }\n  _createdAt\n}"): (typeof documents)["fragment Article_article on PostPage {\n  _id\n  post {\n    title\n    description\n    createdAt\n  }\n  _createdAt\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -49,7 +49,7 @@ export function graphql(source: "query PostBySlug($slug: String!) {\n  allPostPa
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetAllPost {\n  allPostPage {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"): (typeof documents)["query GetAllPost {\n  allPostPage {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"];
+export function graphql(source: "query GetAllPost($lang: String!) {\n  allPostPage(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"): (typeof documents)["query GetAllPost($lang: String!) {\n  allPostPage(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

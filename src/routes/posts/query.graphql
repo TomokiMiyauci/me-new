@@ -1,5 +1,5 @@
-query GetAllPost {
-  allPostPage {
+query GetAllPost($lang: String!) {
+  allPostPage(where: { language: { eq: $lang } }) {
     ...Article_article
     key: _id
     slug {
