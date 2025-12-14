@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/build.yml
 
   build-storybook:
-    uses: ./.github/workflows/build-artifact.yml
+    uses: ./.github/workflows/build_storybook.yml
 
   deploy-storybook:
     runs-on: ubuntu-latest
@@ -17,6 +17,10 @@ jobs:
       contents: read
 
     steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
       - name: Download artifact
         uses: actions/download-artifact@v7
         with:

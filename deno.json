@@ -34,7 +34,7 @@
     "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
     "generate:graphql": "deno run -A @graphql-codegen/cli/graphql-codegen-esm",
     "storybook": "deno x storybook dev",
-    "storybook:build": "deno x storybook build"
+    "build:storybook": "deno x storybook build"
   },
   "permissions": {
     "dev": {

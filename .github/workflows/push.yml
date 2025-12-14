@@ -9,13 +9,23 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
 
-  deploy-staging:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - environment: staging
+            prod: false
+          - environment: production
+            prod: true
+
     environment:
-      name: staging
+      name: ${{ matrix.environment }}
+
     permissions:
       contents: read
+
     steps:
       - uses: actions/checkout@v5
 
@@ -29,34 +39,17 @@ jobs:
           path: dist
 
       - name: Deploy
-        run: deno deploy --org=${{ vars.ORG }} --app=${{ vars.APP }} --token=${{ secrets.DEPLOY_TOKEN }} ${{ steps.download-artifact.outputs.download-path }}
-
-  deploy-production:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: denoland/setup-deno@v2
-
-      - name: Download artifact
-        id: download-artifact
-        uses: actions/download-artifact@v6
-        with:
-          name: ${{ needs.build.outputs.artifact-name }}
-          path: dist
-
-      - name: Deploy
-        run: deno deploy --org=${{ vars.ORG }} --app=${{ vars.APP }} --token=${{ secrets.DEPLOY_TOKEN }} --prod ${{ steps.download-artifact.outputs.download-path }}
+        run: |
+          deno deploy \
+            --org=${{ vars.ORG }} \
+            --app=${{ vars.APP }} \
+            --token=${{ secrets.DEPLOY_TOKEN }} \
+            ${{ matrix.prod && '--prod' || '' }} \
+            ${{ steps.download-artifact.outputs.download-path }}
 
   publish:
-    needs: [build, deploy-production]
+    needs: [build, deploy]
     runs-on: ubuntu-latest
-    if: ${{ success() }}
     permissions:
       contents: write
     steps:
