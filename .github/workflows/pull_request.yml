@@ -7,20 +7,24 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
 
-  deploy:
+  build-storybook:
+    uses: ./.github/workflows/build-artifact.yml
+
+  deploy-storybook:
     runs-on: ubuntu-latest
-    environment: development
-    needs: [build]
+    needs: [build-storybook]
     permissions:
       contents: read
 
     steps:
-      - uses: denoland/setup-deno@v2
-
       - name: Download artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
-          name: ${{ needs.build.outputs.artifact-name }}
+          artifact-ids: ${{ needs.build-storybook.outputs.artifact-id }}
+          path: storybook-static
 
-      - name: Deploy
-        run: deno deploy --org=${{ vars.ORG }} --app=${{ vars.APP }} --token=${{ secrets.DEPLOY_TOKEN }}
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: storybook-static

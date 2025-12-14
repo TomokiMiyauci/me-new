@@ -1,0 +1,31 @@
+on:
+  workflow_call:
+    outputs:
+      artifact-id:
+        description: "The ID of the built artifact"
+        value: ${{ jobs.build.outputs.artifact-id }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      artifact-id: ${{ steps.upload-artifact.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - run: deno install
+
+      - name: Build
+        run: deno task build:storybook
+
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: storybook
+          path: storybook-static
