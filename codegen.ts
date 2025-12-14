@@ -9,13 +9,15 @@ const config: CodegenConfig = {
       preset: "client",
       plugins: [],
     },
-    "src/": {
-      preset: "near-operation-file",
-      presetConfig: { baseTypesPath: "gql/graphql.ts" },
-    },
   },
   importExtension: ".ts",
   emitLegacyCommonJSImports: false,
+  config: {
+    scalars: {
+      Date: "string",
+      DateTime: "string",
+    },
+  },
 };
 
 export default config;
