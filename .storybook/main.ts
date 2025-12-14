@@ -12,13 +12,18 @@ export default {
   framework: "@storybook/react-vite",
   viteFinal: (config) => {
     const plugins = config.plugins?.filter((plugin) => {
-      // Fileter All array plugin. it is rsc plugins
       if (Array.isArray(plugin)) {
-        return false;
+        // Fileter rsc plugin
+        const [first] = plugin;
+
+        if (first && "name" in first && first.name.includes("rsc")) {
+          return false;
+        }
       }
 
       return plugin;
     });
+    console.log(plugins);
 
     // Disabled Environment API and rsc plugins
     config.environments = {};
