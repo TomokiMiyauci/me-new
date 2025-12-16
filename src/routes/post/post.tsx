@@ -23,9 +23,13 @@ export default async function Post(props: AppProps): Promise<JSX.Element> {
 
   if (!postPage) notFound();
 
+  const title = postPage.post?.title || "Untitled";
+
   return (
     <main>
-      <a href={href ?? undefined}>Post</a>
+      <a href={href ?? undefined}>Back to Post</a>
+
+      <h1>{title}</h1>
     </main>
   );
 }
