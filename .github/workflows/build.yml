@@ -1,16 +1,16 @@
 on:
   workflow_call:
     outputs:
-      artifact-name:
-        description: "The name of the built artifact"
-        value: ${{ jobs.build.outputs.artifact-name }}
+      artifact-id:
+        description: "The ID of the built artifact"
+        value: ${{ jobs.build.outputs.artifact-id }}
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
-      artifact-name: ${{ steps.set-output.outputs.artifact-name }}
+      artifact-id: ${{ steps.upload-artifact.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v5
 
@@ -24,12 +24,9 @@ jobs:
         run: deno task build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        id: upload-artifact
+        uses: actions/upload-artifact@v6
         with:
           include-hidden-files: true
           name: artifact
           path: dist
-
-      - name: Set workflow output
-        id: set-output
-        run: echo "artifact-name=artifact" >> $GITHUB_OUTPUT

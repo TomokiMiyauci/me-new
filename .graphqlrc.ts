@@ -1,6 +1,6 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
-const config: CodegenConfig = {
+export default {
   overwrite: true,
   schema: "https://flrzu0ln.api.sanity.io/v2023-08-01/graphql/dev/default",
   documents: "src/**/*.graphql",
@@ -18,6 +18,4 @@ const config: CodegenConfig = {
       DateTime: "string",
     },
   },
-};
-
-export default config;
+} satisfies CodegenConfig;
