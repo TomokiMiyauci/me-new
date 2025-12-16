@@ -1,3 +1,49 @@
+# [1.6.0](https://github.com/TomokiMiyauci/me-new/compare/1.5.0...1.6.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* add escape for url pattern ([b708aef](https://github.com/TomokiMiyauci/me-new/commit/b708aef16538e78e1f974898ac6f82d410f7e4ad))
+* change resolveId id to unique ([c41c9ec](https://github.com/TomokiMiyauci/me-new/commit/c41c9ec68bbdc9496e8a63669518ed54dea27ea8))
+* create i18n instance for each request ([e425da0](https://github.com/TomokiMiyauci/me-new/commit/e425da0a1f53f59cd90727302ff59b849db35cbe))
+* fix browser entry typo ([4973eb0](https://github.com/TomokiMiyauci/me-new/commit/4973eb01b205711e9b775b85a399d21d77c5b1b7))
+* remove root level suspense ([73a6ce0](https://github.com/TomokiMiyauci/me-new/commit/73a6ce005352e1559a4548b15cd2d086c3f435ee))
+* remove to refer module info ([6e18333](https://github.com/TomokiMiyauci/me-new/commit/6e183337f02c494942b570945e678934721676aa))
+* **vite-plugin-deno:** fix typo ([d8d6a62](https://github.com/TomokiMiyauci/me-new/commit/d8d6a621e5a37f3e75d0d1f4de54ee33455d4234))
+
+
+### Features
+
+* add app-router lib ([e8c1d93](https://github.com/TomokiMiyauci/me-new/commit/e8c1d9361066e32611d4f69659b7007ccf8db54c))
+* add build deps, change server side artifact to unboundle ([caf54e7](https://github.com/TomokiMiyauci/me-new/commit/caf54e779adf1897c014a19fc9d6b6ceb3088635))
+* add deps ([add1a74](https://github.com/TomokiMiyauci/me-new/commit/add1a740647e933a8cb9ea87cfaadb10accf6e15))
+* add global error component ([3107508](https://github.com/TomokiMiyauci/me-new/commit/310750884413b2f6a5c28cfcec830cc0103af610))
+* add i18n field to app props ([4333e22](https://github.com/TomokiMiyauci/me-new/commit/4333e22e29d79e14af5ac4b60c4c05dff0c0e8e3))
+* add not found boundary to react-app ([462bf20](https://github.com/TomokiMiyauci/me-new/commit/462bf20ecb160bd2681cf36219515cb58f02526a))
+* add NotFound function to react app ([317d19c](https://github.com/TomokiMiyauci/me-new/commit/317d19cce96b10d2a908eaa1a6be6ca038d7114e))
+* add posts and post page ([f12080f](https://github.com/TomokiMiyauci/me-new/commit/f12080f07694e782e481f2bb2706a572adc89cb2))
+* add pubsub module for browser entry ([2c8b89f](https://github.com/TomokiMiyauci/me-new/commit/2c8b89f3a2e3fb9990133f00ae7e328b80ae8e33))
+* add route-lit lib ([8a7e0d3](https://github.com/TomokiMiyauci/me-new/commit/8a7e0d3051834684ee3c09d030d0d7cc59c8704e))
+* add vite plugin for deno ([4b71b54](https://github.com/TomokiMiyauci/me-new/commit/4b71b5491db5ab6e3c40c29c65f6c296a724f647))
+* change app props to accept current entry ([14047cc](https://github.com/TomokiMiyauci/me-new/commit/14047cc728a5502eb11b52699274198b86746539))
+* change csp policy for sanity studio ([1e567fc](https://github.com/TomokiMiyauci/me-new/commit/1e567fcee68d7b0967ca6fd2e90e6296b922efdf))
+* change return value interface, rename data to error ([2f3a546](https://github.com/TomokiMiyauci/me-new/commit/2f3a546608e3cab98fc2106364c5bc5b397eb5ea))
+* extend app props ([a21044b](https://github.com/TomokiMiyauci/me-new/commit/a21044b9498f531118413734defd01fab43245d6))
+* init i18next, use it ([d19a416](https://github.com/TomokiMiyauci/me-new/commit/d19a4163c1081bc6385901390b1901dabe2c1d04))
+* **react-app:** add not found shell component ([c3d5df8](https://github.com/TomokiMiyauci/me-new/commit/c3d5df86bc9941cc18f3558a1e96a33a3b91567b))
+* **react-app:** export html shell component ([7a2020e](https://github.com/TomokiMiyauci/me-new/commit/7a2020e8b360c48a45244c1c0124c7ccae62d39a))
+* **react-router:** change route component field to function ([4a54f07](https://github.com/TomokiMiyauci/me-new/commit/4a54f07ad6cabbe0044417f594e4aa869e929934))
+* remove all sanity related code ([9101ffc](https://github.com/TomokiMiyauci/me-new/commit/9101ffc3850f601c1c3be0e936636b6fc120bf55))
+* **rsc-protocol:** add rsc stream utility ([6a9e7df](https://github.com/TomokiMiyauci/me-new/commit/6a9e7dfb77797f9d0688f34e2316f406c998e622))
+* update deps ([3524628](https://github.com/TomokiMiyauci/me-new/commit/3524628fcabf289760cc2cc25863c493c2b408ef))
+* use entry resolver for internal localized pathname ([dcecdc1](https://github.com/TomokiMiyauci/me-new/commit/dcecdc1a2130f6fce866dfe1b832d62fa1766dd6))
+* use Navigation API instead of History API ([9235f98](https://github.com/TomokiMiyauci/me-new/commit/9235f98403448f2ade0c97dc83d118d4814af20a))
+
+
+### Performance Improvements
+
+* add manual chunk per package ([12f4924](https://github.com/TomokiMiyauci/me-new/commit/12f4924d7ac71dfd4eb76a458a7a076793bdb1c2))
+
 # [1.5.0](https://github.com/TomokiMiyauci/me-new/compare/1.4.0...1.5.0) (2025-11-25)
 
 
