@@ -11,10 +11,10 @@ export default function ArticleFragment(
   props: ArticleFragmentProps,
 ): JSX.Element {
   const { fragment, lang } = props;
-  const { post, _createdAt } = fragment;
-  const title = post?.title ?? "";
-  const excerpt = post?.description ?? undefined;
-  const createdAt = (post?.createdAt ?? _createdAt) ?? undefined;
+  const { title, _createdAt, description, createdAt: specifiedCreatedAt } =
+    fragment;
+  const excerpt = description ?? undefined;
+  const createdAt = (specifiedCreatedAt ?? _createdAt) ?? undefined;
   const date = createdAt
     ? {
       dateTime: new Date(createdAt).toISOString(),
@@ -27,7 +27,7 @@ export default function ArticleFragment(
     : undefined;
 
   const articleSummaryProps = {
-    title,
+    title: title ?? "",
     excerpt,
     date,
   } satisfies ArticleSummaryProps;

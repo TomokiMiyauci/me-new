@@ -116,7 +116,7 @@ export type CategoryFilter = {
   slug?: InputMaybe<SlugFilter>;
 };
 
-export type CategoryOrPostPage = Category | PostPage;
+export type CategoryOrPost = Category | Post;
 
 export type CategorySorting = {
   _createdAt?: InputMaybe<SortOrder>;
@@ -412,7 +412,7 @@ export type InternationalizedArrayReferenceValue = {
   __typename?: 'InternationalizedArrayReferenceValue';
   _key?: Maybe<Scalars['String']['output']>;
   _type?: Maybe<Scalars['String']['output']>;
-  value?: Maybe<CategoryOrPostPage>;
+  value?: Maybe<CategoryOrPost>;
 };
 
 export type InternationalizedArrayReferenceValueFilter = {
@@ -489,33 +489,8 @@ export type PolicySorting = {
   updatedAt?: InputMaybe<SortOrder>;
 };
 
-export type Post = {
+export type Post = Document & {
   __typename?: 'Post';
-  _key?: Maybe<Scalars['String']['output']>;
-  _type?: Maybe<Scalars['String']['output']>;
-  authors?: Maybe<Array<Maybe<Author>>>;
-  bodyRaw?: Maybe<Scalars['JSON']['output']>;
-  categories?: Maybe<Array<Maybe<Category>>>;
-  coverImage?: Maybe<Image>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Maybe<Tag>>>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type PostFilter = {
-  _key?: InputMaybe<StringFilter>;
-  _type?: InputMaybe<StringFilter>;
-  coverImage?: InputMaybe<ImageFilter>;
-  createdAt?: InputMaybe<DatetimeFilter>;
-  description?: InputMaybe<StringFilter>;
-  title?: InputMaybe<StringFilter>;
-  updatedAt?: InputMaybe<DatetimeFilter>;
-};
-
-export type PostPage = Document & {
-  __typename?: 'PostPage';
   /** Date the document was created */
   _createdAt?: Maybe<Scalars['DateTime']['output']>;
   /** Document ID */
@@ -527,12 +502,20 @@ export type PostPage = Document & {
   _type?: Maybe<Scalars['String']['output']>;
   /** Date the document was last modified */
   _updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  authors?: Maybe<Array<Maybe<Author>>>;
+  bodyRaw?: Maybe<Scalars['JSON']['output']>;
+  categories?: Maybe<Array<Maybe<Category>>>;
+  coverImage?: Maybe<Image>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   language?: Maybe<Scalars['String']['output']>;
-  post?: Maybe<Post>;
   slug?: Maybe<Slug>;
+  tags?: Maybe<Array<Maybe<Tag>>>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type PostPageFilter = {
+export type PostFilter = {
   /** Apply filters on document level */
   _?: InputMaybe<Sanity_DocumentFilter>;
   _createdAt?: InputMaybe<DatetimeFilter>;
@@ -541,29 +524,27 @@ export type PostPageFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
+  coverImage?: InputMaybe<ImageFilter>;
+  createdAt?: InputMaybe<DatetimeFilter>;
+  description?: InputMaybe<StringFilter>;
   language?: InputMaybe<StringFilter>;
-  post?: InputMaybe<PostFilter>;
   slug?: InputMaybe<SlugFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
-export type PostPageSorting = {
+export type PostSorting = {
   _createdAt?: InputMaybe<SortOrder>;
   _id?: InputMaybe<SortOrder>;
   _key?: InputMaybe<SortOrder>;
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
-  language?: InputMaybe<SortOrder>;
-  post?: InputMaybe<PostSorting>;
-  slug?: InputMaybe<SlugSorting>;
-};
-
-export type PostSorting = {
-  _key?: InputMaybe<SortOrder>;
-  _type?: InputMaybe<SortOrder>;
   coverImage?: InputMaybe<ImageSorting>;
   createdAt?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  language?: InputMaybe<SortOrder>;
+  slug?: InputMaybe<SlugSorting>;
   title?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
 };
@@ -574,7 +555,7 @@ export type RootQuery = {
   Category?: Maybe<Category>;
   Document?: Maybe<Document>;
   Policy?: Maybe<Policy>;
-  PostPage?: Maybe<PostPage>;
+  Post?: Maybe<Post>;
   SanityFileAsset?: Maybe<SanityFileAsset>;
   SanityImageAsset?: Maybe<SanityImageAsset>;
   Tag?: Maybe<Tag>;
@@ -583,7 +564,7 @@ export type RootQuery = {
   allCategory: Array<Category>;
   allDocument: Array<Document>;
   allPolicy: Array<Policy>;
-  allPostPage: Array<PostPage>;
+  allPost: Array<Post>;
   allSanityFileAsset: Array<SanityFileAsset>;
   allSanityImageAsset: Array<SanityImageAsset>;
   allTag: Array<Tag>;
@@ -611,7 +592,7 @@ export type RootQueryPolicyArgs = {
 };
 
 
-export type RootQueryPostPageArgs = {
+export type RootQueryPostArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -668,11 +649,11 @@ export type RootQueryAllPolicyArgs = {
 };
 
 
-export type RootQueryAllPostPageArgs = {
+export type RootQueryAllPostArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Array<PostPageSorting>>;
-  where?: InputMaybe<PostPageFilter>;
+  sort?: InputMaybe<Array<PostSorting>>;
+  where?: InputMaybe<PostFilter>;
 };
 
 
@@ -1206,25 +1187,25 @@ export type TranslationMetadataSorting = {
   _updatedAt?: InputMaybe<SortOrder>;
 };
 
-export type Article_ArticleFragment = { __typename?: 'PostPage', _id?: string | null, _createdAt?: string | null, post?: { __typename?: 'Post', title?: string | null, description?: string | null, createdAt?: string | null } | null } & { ' $fragmentName'?: 'Article_ArticleFragment' };
+export type Article_ArticleFragment = { __typename?: 'Post', _id?: string | null, title?: string | null, description?: string | null, createdAt?: string | null, _createdAt?: string | null } & { ' $fragmentName'?: 'Article_ArticleFragment' };
 
 export type PostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type PostBySlugQuery = { __typename?: 'RootQuery', allPostPage: Array<{ __typename?: 'PostPage', _id?: string | null, post?: { __typename?: 'Post', title?: string | null } | null }> };
+export type PostBySlugQuery = { __typename?: 'RootQuery', allPost: Array<{ __typename?: 'Post', _id?: string | null, title?: string | null }> };
 
 export type GetAllPostQueryVariables = Exact<{
   lang: Scalars['String']['input'];
 }>;
 
 
-export type GetAllPostQuery = { __typename?: 'RootQuery', allPostPage: Array<(
-    { __typename?: 'PostPage', key?: string | null, slug?: { __typename?: 'Slug', current?: string | null } | null }
+export type GetAllPostQuery = { __typename?: 'RootQuery', allPost: Array<(
+    { __typename?: 'Post', key?: string | null, slug?: { __typename?: 'Slug', current?: string | null } | null }
     & { ' $fragmentRefs'?: { 'Article_ArticleFragment': Article_ArticleFragment } }
   )> };
 
-export const Article_ArticleFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PostPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}}]}}]} as unknown as DocumentNode<Article_ArticleFragment, unknown>;
-export const PostBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPostPage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"current"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<PostBySlugQuery, PostBySlugQueryVariables>;
-export const GetAllPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lang"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPostPage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lang"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Article_article"}},{"kind":"Field","alias":{"kind":"Name","value":"key"},"name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PostPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}}]}}]} as unknown as DocumentNode<GetAllPostQuery, GetAllPostQueryVariables>;
+export const Article_ArticleFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}}]}}]} as unknown as DocumentNode<Article_ArticleFragment, unknown>;
+export const PostBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"current"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<PostBySlugQuery, PostBySlugQueryVariables>;
+export const GetAllPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lang"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lang"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Article_article"}},{"kind":"Field","alias":{"kind":"Name","value":"key"},"name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}}]}}]} as unknown as DocumentNode<GetAllPostQuery, GetAllPostQueryVariables>;

@@ -16,15 +16,14 @@ export default async function Post(props: AppProps): Promise<JSX.Element> {
 
   const decodedSlug = decodeURIComponent(slug);
   const href = resolver.resolve(Entry.Posts, { lang });
-  const { allPostPage } = await client.request(PostBySlugDocument, {
+  const { allPost } = await client.request(PostBySlugDocument, {
     slug: decodedSlug,
   });
-  const postPage = allPostPage[0];
+  const postPage = allPost[0];
 
   if (!postPage) notFound();
 
-  const title = postPage.post?.title || "Untitled";
-
+  const title = postPage.title || "Untitled";
   return (
     <main>
       <a href={href ?? undefined}>Back to Post</a>

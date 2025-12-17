@@ -2,7 +2,8 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 export default {
   overwrite: true,
-  schema: "https://flrzu0ln.api.sanity.io/v2023-08-01/graphql/dev/default",
+  schema:
+    "https://qruzdhzp.api.sanity.io/v2023-08-01/graphql/development/default",
   documents: "src/**/*.graphql",
   generates: {
     "src/gql/": {

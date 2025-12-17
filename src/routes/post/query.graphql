@@ -1,8 +1,6 @@
 query PostBySlug($slug: String!) {
-  allPostPage(where: { slug: { current: { eq: $slug } } }) {
+  allPost(where: { slug: { current: { eq: $slug } } }) {
     _id
-    post {
-      title
-    }
+    title
   }
 }
