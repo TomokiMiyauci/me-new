@@ -8,7 +8,15 @@ export default {
   generates: {
     "src/gql/": {
       preset: "client",
-      plugins: [],
+      plugins: [
+        {
+          add: {
+            content: [
+              `import type { TypedObject } from "@portabletext/types";`,
+            ],
+          },
+        },
+      ],
     },
   },
   importExtension: ".ts",
@@ -17,6 +25,7 @@ export default {
     scalars: {
       Date: "string",
       DateTime: "string",
+      JSON: "TypedObject[]",
     },
   },
 } satisfies CodegenConfig;
