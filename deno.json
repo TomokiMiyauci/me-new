@@ -51,7 +51,8 @@
       "sys": true,
       "ffi": true,
       "run": true,
-      "write": true
+      "write": true,
+      "net": true
     },
     "preview": {
       "read": ["dist"],

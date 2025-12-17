@@ -15,12 +15,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n}": typeof types.Article_ArticleFragmentDoc,
-    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n  }\n}": typeof types.PostBySlugDocument,
+    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n    bodyRaw\n  }\n}": typeof types.PostBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": typeof types.GetAllPostDocument,
 };
 const documents: Documents = {
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n}": types.Article_ArticleFragmentDoc,
-    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n  }\n}": types.PostBySlugDocument,
+    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n    bodyRaw\n  }\n}": types.PostBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": types.GetAllPostDocument,
 };
 
@@ -45,7 +45,7 @@ export function graphql(source: "fragment Article_article on Post {\n  _id\n  ti
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n  }\n}"): (typeof documents)["query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n  }\n}"];
+export function graphql(source: "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n    bodyRaw\n  }\n}"): (typeof documents)["query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    _id\n    title\n    bodyRaw\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

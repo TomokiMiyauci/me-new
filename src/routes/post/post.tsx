@@ -5,6 +5,7 @@ import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/services/app.tsx";
 import Entry from "@/entry.ts";
+import { PortableText } from "@portabletext/react";
 
 export default async function Post(props: AppProps): Promise<JSX.Element> {
   const { lang, params } = props;
@@ -26,9 +27,17 @@ export default async function Post(props: AppProps): Promise<JSX.Element> {
   const title = postPage.title || "Untitled";
   return (
     <main>
-      <a href={href ?? undefined}>Back to Post</a>
+      <article>
+        <a href={href ?? undefined}>Back to Post</a>
 
-      <h1>{title}</h1>
+        <h1>{title}</h1>
+
+        {postPage.bodyRaw && (
+          <section>
+            <PortableText value={postPage.bodyRaw} />
+          </section>
+        )}
+      </article>
     </main>
   );
 }
