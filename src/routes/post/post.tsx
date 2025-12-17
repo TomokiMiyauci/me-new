@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
-import client from "@/lib/graphql_request.ts";
+import client from "~lib/graphql-request";
 import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";

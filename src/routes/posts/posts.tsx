@@ -1,6 +1,6 @@
 import { GetAllPostDocument } from "@/gql/graphql.ts";
 import ArticleFragment from "@/components/article/article.tsx";
-import client from "@/lib/graphql_request.ts";
+import client from "~lib/graphql-request";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/entry.ts";
