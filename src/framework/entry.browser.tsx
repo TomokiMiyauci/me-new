@@ -71,7 +71,7 @@ const root = hydrateRoot(
 );
 
 if (import.meta.hot) {
-  import.meta.hot.on("vite:beforeUpdate", () => {
+  import.meta.hot.dispose(() => {
     window.navigation?.removeEventListener("navigate", handleNavigation);
     root.unmount();
   });
