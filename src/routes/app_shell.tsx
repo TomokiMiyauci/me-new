@@ -10,7 +10,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { NotFoundBoundary, NotFoundShell } from "react-app";
 import ServerError from "./_500.tsx";
 import GlobalError from "./_global_error.tsx";
-import { type AppProps } from "@/services/app.tsx";
+import { type AppProps } from "@/lib/app.tsx";
 
 const routes = [
   {

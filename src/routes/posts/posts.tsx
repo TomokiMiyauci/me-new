@@ -1,8 +1,8 @@
 import { GetAllPostDocument } from "@/gql/graphql.ts";
 import ArticleFragment from "@/components/article/article.tsx";
-import client from "@/services/graphql_request.ts";
+import client from "@/lib/graphql_request.ts";
 import type { JSX } from "react";
-import resolver from "@/services/link.ts";
+import resolver from "@/lib/link.ts";
 import Entry from "@/entry.ts";
 
 export default async function Posts(): Promise<JSX.Element> {

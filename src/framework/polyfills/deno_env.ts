@@ -1,5 +1,5 @@
 import { DenoEnv } from "deno-env";
-import { source } from "@/services/source.ts";
+import { source } from "@/lib/source.ts";
 
 const data = /* /@__PURE__/ */ JSON.parse(source.consume());
 

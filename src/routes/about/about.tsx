@@ -1,5 +1,5 @@
-import resolver from "@/services/link.ts";
-import { type AppProps } from "@/services/app.tsx";
+import resolver from "@/lib/link.ts";
+import { type AppProps } from "@/lib/app.tsx";
 import type { JSX } from "react";
 import Entry from "@/entry.ts";
 
