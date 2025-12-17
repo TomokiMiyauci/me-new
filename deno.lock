@@ -39,12 +39,12 @@
     "npm:@types/node@*": "24.2.0",
     "npm:@types/react-dom@^19.2.3": "19.2.3_@types+react@19.2.7",
     "npm:@types/react@^19.2.7": "19.2.7",
+    "npm:@urql/core@^6.0.1": "6.0.1_graphql@16.12.0",
     "npm:@vitejs/plugin-react@^5.1.2": "5.1.2_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@babel+core@7.28.5_@types+node@24.2.0",
     "npm:@vitejs/plugin-rsc@~0.5.9": "0.5.9_react@19.2.3_react-dom@19.2.3__react@19.2.3_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@types+node@24.2.0",
     "npm:babel-plugin-react-compiler@1": "1.0.0",
     "npm:chromatic@*": "13.3.4",
     "npm:github-slugid@^1.0.1": "1.0.1",
-    "npm:graphql-request@^7.4.0": "7.4.0_graphql@16.12.0",
     "npm:graphql@^16.12.0": "16.12.0",
     "npm:i18next@^25.7.3": "25.7.3",
     "npm:magic-string@~0.30.21": "0.30.21",
@@ -139,6 +139,15 @@
     }
   },
   "npm": {
+    "@0no-co/graphql.web@1.2.0_graphql@16.12.0": {
+      "integrity": "sha512-/1iHy9TTr63gE1YcR5idjx8UREz1s0kFhydf3bBLCXyqjhkIc6igAzTOx3zPifCwFR87tsh/4Pa9cNts6d2otw==",
+      "dependencies": [
+        "graphql"
+      ],
+      "optionalPeers": [
+        "graphql"
+      ]
+    },
     "@adobe/css-tools@4.4.4": {
       "integrity": "sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg=="
     },
@@ -1720,6 +1729,13 @@
         "@types/node"
       ]
     },
+    "@urql/core@6.0.1_graphql@16.12.0": {
+      "integrity": "sha512-FZDiQk6jxbj5hixf2rEPv0jI+IZz0EqqGW8mJBEug68/zHTtT+f34guZDmyjJZyiWbj0vL165LoMr/TkeDHaug==",
+      "dependencies": [
+        "@0no-co/graphql.web",
+        "wonka"
+      ]
+    },
     "@vitejs/plugin-react@5.1.2_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@babel+core@7.28.5_@types+node@24.2.0": {
       "integrity": "sha512-EcA07pHJouywpzsoTUqNh5NwGayl2PPVEJKUSinGGSxFGYn+shYbqMGBg6FXDqgXum9Ou/ecb+411ssw8HImJQ==",
       "dependencies": [
@@ -2397,13 +2413,6 @@
         "minimatch@9.0.5",
         "string-env-interpolation",
         "tslib@2.8.1"
-      ]
-    },
-    "graphql-request@7.4.0_graphql@16.12.0": {
-      "integrity": "sha512-xfr+zFb/QYbs4l4ty0dltqiXIp07U6sl+tOKAb0t50/EnQek6CVVBLjETXi+FghElytvgaAWtIOt3EV7zLzIAQ==",
-      "dependencies": [
-        "@graphql-typed-document-node/core",
-        "graphql"
       ]
     },
     "graphql-tag@2.12.6_graphql@16.12.0": {
@@ -3481,6 +3490,9 @@
       ],
       "bin": true
     },
+    "wonka@6.3.5": {
+      "integrity": "sha512-SSil+ecw6B4/Dm7Pf2sAshKQ5hWFvfyGlfPbEd6A14dOH6VDjrmbY86u6nZvy9omGwwIPFR8V41+of1EezgoUw=="
+    },
     "wrap-ansi@6.2.0": {
       "integrity": "sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==",
       "dependencies": [
@@ -3585,11 +3597,11 @@
         "npm:@types/dom-navigation@^1.0.6",
         "npm:@types/react-dom@^19.2.3",
         "npm:@types/react@^19.2.7",
+        "npm:@urql/core@^6.0.1",
         "npm:@vitejs/plugin-react@^5.1.2",
         "npm:@vitejs/plugin-rsc@~0.5.9",
         "npm:babel-plugin-react-compiler@1",
         "npm:github-slugid@^1.0.1",
-        "npm:graphql-request@^7.4.0",
         "npm:graphql@^16.12.0",
         "npm:i18next@^25.7.3",
         "npm:prop-types@^15.8.1",

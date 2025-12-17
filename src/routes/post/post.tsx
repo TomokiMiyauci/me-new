@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import resolver from "@/services/link.ts";
-import client from "@/services/graphql.ts";
+import client from "@/services/urql.ts";
 import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/services/app.tsx";
@@ -17,10 +17,19 @@ export default async function Post(props: AppProps): Promise<JSX.Element> {
 
   const decodedSlug = decodeURIComponent(slug);
   const href = resolver.resolve(Entry.Posts, { lang });
-  const { allPost } = await client.request(PostBySlugDocument, {
+  const result = await client.query(PostBySlugDocument, {
     slug: decodedSlug,
   });
-  const postPage = allPost[0];
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  if (!result.data) {
+    notFound();
+  }
+
+  const postPage = result.data.allPost[0];
 
   if (!postPage) notFound();
 
