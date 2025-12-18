@@ -1,8 +1,8 @@
 import { GetAllPostDocument } from "@/gql/graphql.ts";
 import ArticleFragment from "@/components/article/article.tsx";
-import client from "@/services/graphql.ts";
+import client from "~lib/graphql-request";
 import type { JSX } from "react";
-import resolver from "@/services/link.ts";
+import resolver from "@/lib/link.ts";
 import Entry from "@/entry.ts";
 
 export default async function Posts(): Promise<JSX.Element> {
@@ -11,7 +11,7 @@ export default async function Posts(): Promise<JSX.Element> {
 
   return (
     <main>
-      {result.allPostPage.map((article) => {
+      {result.allPost.map((article) => {
         const slug = article.slug?.current ?? "";
         const href = resolver.resolve(Entry.Post, { slug });
 

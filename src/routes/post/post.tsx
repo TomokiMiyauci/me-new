@@ -1,10 +1,11 @@
 import type { JSX } from "react";
-import resolver from "@/services/link.ts";
-import client from "@/services/graphql.ts";
+import resolver from "@/lib/link.ts";
+import client from "~lib/graphql-request";
 import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
-import type { AppProps } from "@/services/app.tsx";
+import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/entry.ts";
+import { PortableText } from "@portabletext/react";
 
 export default async function Post(props: AppProps): Promise<JSX.Element> {
   const { lang, params } = props;
@@ -16,20 +17,28 @@ export default async function Post(props: AppProps): Promise<JSX.Element> {
 
   const decodedSlug = decodeURIComponent(slug);
   const href = resolver.resolve(Entry.Posts, { lang });
-  const { allPostPage } = await client.request(PostBySlugDocument, {
+  const result = await client.request(PostBySlugDocument, {
     slug: decodedSlug,
   });
-  const postPage = allPostPage[0];
+
+  const postPage = result.allPost[0];
 
   if (!postPage) notFound();
 
-  const title = postPage.post?.title || "Untitled";
-
+  const title = postPage.title || "Untitled";
   return (
     <main>
-      <a href={href ?? undefined}>Back to Post</a>
+      <article>
+        <a href={href ?? undefined}>Back to Post</a>
 
-      <h1>{title}</h1>
+        <h1>{title}</h1>
+
+        {postPage.bodyRaw && (
+          <section>
+            <PortableText value={postPage.bodyRaw} />
+          </section>
+        )}
+      </article>
     </main>
   );
 }

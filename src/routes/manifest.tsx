@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { type AppProps } from "@/services/app.tsx";
+import { type AppProps } from "@/lib/app.tsx";
 import AboutEntry from "@/routes/about/about.tsx";
 import IndexEntry from "@/routes/home/home.tsx";
 import PostsEntry from "@/routes/posts//posts.tsx";

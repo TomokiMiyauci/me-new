@@ -1,5 +1,5 @@
 import { type FunctionComponent } from "react";
-import { type AppProps } from "@/services/app.tsx";
+import { type AppProps } from "@/lib/app.tsx";
 import Entry from "@/entry.ts";
 import { About, Home, Post, Posts } from "@/routes/manifest.tsx";
 

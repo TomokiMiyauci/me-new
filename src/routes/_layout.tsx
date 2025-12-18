@@ -1,7 +1,7 @@
 import "./index.css";
 import { JSX, PropsWithChildren } from "react";
-import { type AppProps } from "@/services/app.tsx";
-import resolver from "@/services/link.ts";
+import { type AppProps } from "@/lib/app.tsx";
+import resolver from "@/lib/link.ts";
 import Entry from "@/entry.ts";
 // import { localeMap } from "@/language.ts";
 

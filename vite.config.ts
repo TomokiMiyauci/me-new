@@ -7,6 +7,8 @@ import { manifest, outDirResolve } from "vite-plugin-manifest";
 import inject from "@rollup/plugin-inject";
 import { nodeScheme } from "vite-node-scheme";
 import deno from "vite-plugin-deno";
+import codegen from "vite-plugin-graphql-codegen";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   server: { port: 8000 },
@@ -57,8 +59,11 @@ export default defineConfig({
       }
       return false;
     }),
+    codegen({
+      configFilePathOverride: "./.graphqlrc.ts",
+    }),
+    tailwindcss(),
   ],
-
   resolve: {
     noExternal: true,
   },

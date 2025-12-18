@@ -1,9 +1,7 @@
-fragment Article_article on PostPage {
+fragment Article_article on Post {
   _id
-  post {
-    title
-    description
-    createdAt
-  }
+  title
+  description
+  createdAt
   _createdAt
 }
