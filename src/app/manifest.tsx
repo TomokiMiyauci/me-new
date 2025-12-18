@@ -27,7 +27,7 @@ export function Home(props: AppProps): JSX.Element {
 export function Posts(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <PostsEntry />
+      <PostsEntry {...props} />
     </LayoutEntry>
   );
 }

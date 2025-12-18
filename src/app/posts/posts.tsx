@@ -4,9 +4,10 @@ import client from "~lib/graphql-request";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
+import { AppProps } from "@/lib/app.tsx";
 
-export default async function Posts(): Promise<JSX.Element> {
-  const lang = "en";
+export default async function Posts(props: AppProps): Promise<JSX.Element> {
+  const { lang } = props;
   const result = await client.request(GetAllPostDocument, { lang });
 
   return (
