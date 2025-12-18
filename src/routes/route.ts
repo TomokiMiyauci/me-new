@@ -1,7 +1,7 @@
 import { type Route, route } from "route-kit";
 import { withLang } from "route-kit/lang";
 import { i18n } from "@/language.ts";
-import Entry from "@/entry.ts";
+import Entry from "./entry.ts";
 
 export default {
   [Entry.About]: withLang(

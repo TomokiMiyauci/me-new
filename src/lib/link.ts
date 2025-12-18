@@ -1,4 +1,4 @@
 import { EntryResolver } from "route-kit";
-import routes from "@/route.ts";
+import routes from "../routes/route.ts";
 
 export default new EntryResolver(routes);
