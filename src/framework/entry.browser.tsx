@@ -21,7 +21,7 @@ import {
 } from "rsc-protocol";
 import { getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
-import GlobalError from "@/routes/_global_error.tsx";
+import GlobalError from "../app/global_error.tsx";
 
 init(sentryConfig);
 

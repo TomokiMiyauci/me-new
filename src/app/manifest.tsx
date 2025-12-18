@@ -1,15 +1,17 @@
 import { JSX } from "react";
 import { type AppProps } from "@/lib/app.tsx";
-import AboutEntry from "@/routes/about/about.tsx";
-import IndexEntry from "@/routes/home/home.tsx";
-import PostsEntry from "@/routes/posts//posts.tsx";
-import PostEntry from "@/routes/post/post.tsx";
-import LayoutEntry from "@/routes/_layout.tsx";
+import AboutEntry from "./about/about.tsx";
+import IndexEntry from "./home/home.tsx";
+import PostsEntry from "./posts//posts.tsx";
+import PostEntry from "./post/post.tsx";
+import LayoutEntry from "./layout.tsx";
+import NotFoundEntry from "./not_found.tsx";
+import ServerErrorEntry from "./server_error.tsx";
 
 export function About(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <AboutEntry {...props} />
+      <AboutEntry />
     </LayoutEntry>
   );
 }
@@ -34,6 +36,22 @@ export function Post(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
       <PostEntry {...props} />
+    </LayoutEntry>
+  );
+}
+
+export function NotFound(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <NotFoundEntry />
+    </LayoutEntry>
+  );
+}
+
+export function ServerError(props: AppProps): JSX.Element {
+  return (
+    <LayoutEntry {...props}>
+      <ServerErrorEntry />
     </LayoutEntry>
   );
 }

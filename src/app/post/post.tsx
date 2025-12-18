@@ -4,10 +4,12 @@ import client from "~lib/graphql-request";
 import { PostBySlugDocument } from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
-import Entry from "@/entry.ts";
+import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 
-export default async function Post(props: AppProps): Promise<JSX.Element> {
+export default async function Post(
+  props: AppProps,
+): Promise<JSX.Element> {
   const { lang, params } = props;
   const slug = params["slug"];
 

@@ -25,8 +25,8 @@ import { injectRSCPayload } from "rsc-html-stream/server";
 import { HTMLInjectionStream } from "html-stream";
 import { source } from "@/lib/source.ts";
 import { PUBLIC } from "~env";
-import routes from "@/route.ts";
-import AppShell from "@/routes/app_shell.tsx";
+import AppShell from "../routes/app_shell.tsx";
+import routes from "../routes/route.ts";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -87,11 +87,13 @@ export default async function handler(
 
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
+  const entry = resolved?.key;
   const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
+  const params = resolved?.params ?? {};
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
   const rscPayload = {
-    root: <AppShell lang="en" url={url} i18n={i18n} params={{}} />,
+    root: <AppShell entry={entry} lang={lang} params={params} />,
     formState,
     returnValue,
   } satisfies RscPayload;

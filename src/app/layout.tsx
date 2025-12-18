@@ -2,7 +2,7 @@ import "./index.css";
 import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
-import Entry from "@/entry.ts";
+import Entry from "@/routes/entry.ts";
 // import { localeMap } from "@/language.ts";
 
 export default function App(props: PropsWithChildren<AppProps>): JSX.Element {
