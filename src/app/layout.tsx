@@ -5,7 +5,9 @@ import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 // import { localeMap } from "@/language.ts";
 
-export default function App(props: PropsWithChildren<AppProps>): JSX.Element {
+export default function Layout(
+  props: PropsWithChildren<AppProps>,
+): JSX.Element {
   const { children, lang } = props;
   const href = resolver.resolve(Entry.Home, { lang });
   return (

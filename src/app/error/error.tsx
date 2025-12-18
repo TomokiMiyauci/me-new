@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-export default function ServerError(): JSX.Element {
+export default function Error(): JSX.Element {
   return (
     <main>
       <h1>Server Error</h1>

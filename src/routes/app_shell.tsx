@@ -1,6 +1,6 @@
 import { JSX } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { ServerError } from "@/app/manifest.tsx";
+import { Error } from "@/app/manifest.tsx";
 import GlobalError from "../app/global_error.tsx";
 import Entry from "./entry.ts";
 import Router from "./router.tsx";
@@ -18,7 +18,7 @@ export default function AppShell(
 
   return (
     <ErrorBoundary fallback={<GlobalError />}>
-      <ErrorBoundary fallback={<ServerError {...appProps} />}>
+      <ErrorBoundary fallback={<Error {...appProps} />}>
         <Router
           entry={entry}
           map={component}
