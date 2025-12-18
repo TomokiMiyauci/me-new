@@ -4,9 +4,9 @@ import AboutEntry from "./about/about.tsx";
 import IndexEntry from "./home/home.tsx";
 import PostsEntry from "./posts//posts.tsx";
 import PostEntry from "./post/post.tsx";
-import LayoutEntry from "./_layout.tsx";
-import NotFoundEntry from "./_404.tsx";
-import ServerErrorEntry from "./_500.tsx";
+import LayoutEntry from "./layout.tsx";
+import NotFoundEntry from "./not_found.tsx";
+import ServerErrorEntry from "./server_error.tsx";
 
 export function About(props: AppProps): JSX.Element {
   return (

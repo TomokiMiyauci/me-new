@@ -1,5 +1,5 @@
 // import Entry from "@/entry.ts";
-import type i18n from "i18next";
+// import type i18n from "i18next";
 
 export interface AppProps {
   // url: URL;
