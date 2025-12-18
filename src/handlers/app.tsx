@@ -26,7 +26,7 @@ import { HTMLInjectionStream } from "html-stream";
 import { source } from "@/lib/source.ts";
 import { PUBLIC } from "~env";
 import routes from "@/route.ts";
-import AppShell from "@/routes/app_shell.tsx";
+import AppShell from "@/app/app_shell.tsx";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 

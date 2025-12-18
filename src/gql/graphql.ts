@@ -1188,8 +1188,6 @@ export type TranslationMetadataSorting = {
   _updatedAt?: InputMaybe<SortOrder>;
 };
 
-export type Article_ArticleFragment = { __typename?: 'Post', _id?: string | null, title?: string | null, description?: string | null, createdAt?: string | null, _createdAt?: string | null } & { ' $fragmentName'?: 'Article_ArticleFragment' };
-
 export type PostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
@@ -1206,6 +1204,8 @@ export type GetAllPostQuery = { __typename?: 'RootQuery', allPost: Array<(
     { __typename?: 'Post', key?: string | null, slug?: { __typename?: 'Slug', current?: string | null } | null }
     & { ' $fragmentRefs'?: { 'Article_ArticleFragment': Article_ArticleFragment } }
   )> };
+
+export type Article_ArticleFragment = { __typename?: 'Post', _id?: string | null, title?: string | null, description?: string | null, createdAt?: string | null, _createdAt?: string | null } & { ' $fragmentName'?: 'Article_ArticleFragment' };
 
 export const Article_ArticleFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}}]}}]} as unknown as DocumentNode<Article_ArticleFragment, unknown>;
 export const PostBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"current"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"bodyRaw"}}]}}]}}]} as unknown as DocumentNode<PostBySlugQuery, PostBySlugQueryVariables>;
