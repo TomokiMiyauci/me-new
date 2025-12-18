@@ -1,0 +1,15 @@
+{
+  "name": "react-ogp",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "jsxImportSourceTypes": "@types/react"
+  },
+  "imports": {
+    "@types/react": "npm:@types/react@^19.2.7",
+    "react": "npm:react@^19.2.3"
+  }
+}

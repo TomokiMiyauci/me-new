@@ -86,7 +86,8 @@
     "src/packages/rsc_protocol",
     "src/packages/react_app",
     "src/packages/routekit",
-    "src/packages/vite_plugin_deno"
+    "src/packages/vite_plugin_deno",
+    "src/packages/react_ogp"
   ],
   "lint": {
     "rules": {
