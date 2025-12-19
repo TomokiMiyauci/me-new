@@ -20,7 +20,7 @@ import { localeMap } from "@/language.ts";
 export default async function Post(
   props: AppProps,
 ): Promise<JSX.Element> {
-  const { lang, params } = props;
+  const { lang, params, url } = props;
   const slug = params["slug"];
 
   if (!slug) {
@@ -85,6 +85,17 @@ export default async function Post(
         }}
       >
       </JsonLd>
+
+      {alternatives.map(({ location, lang }) => {
+        return (
+          <link
+            key={lang}
+            rel="alternate"
+            hrefLang={lang}
+            href={new URL(location, url).toString()}
+          />
+        );
+      })}
 
       <main className="px-4 space-y-2">
         <p>
