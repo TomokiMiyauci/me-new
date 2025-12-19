@@ -52,9 +52,7 @@ export default defineConfig({
         // This is deno bug
         // deno-lint-ignore no-explicit-any
         return (inject as any)({
-          // TODO(miyauci) There may be a bug in how relative paths for plugins are resolved.
-          // Expected "./src/framework/polyfills/deno_env.ts"
-          "Deno.env": "./framework/polyfills/deno_env.ts",
+          "Deno.env": "@/framework/polyfills/deno_env.ts",
         });
       }
       return false;
