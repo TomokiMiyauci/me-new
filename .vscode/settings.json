@@ -36,5 +36,11 @@
   "deno.codeLens.references": true,
   "deno.codeLens.implementations": true,
   "deno.codeLens.referencesAllFunctions": true,
-  "deno.disablePaths": ["./dist"]
+  "deno.disablePaths": ["./dist"],
+  "json.schemas": [
+    {
+      "fileMatch": [".graphqlrc"],
+      "url": "https://the-guild.dev/graphql/codegen/config.schema.json"
+    }
+  ]
 }
