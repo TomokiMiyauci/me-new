@@ -1,1 +1,1 @@
-export { default as Ogp } from "./ogp.tsx"
+export { default as Ogp } from "./ogp.tsx";
