@@ -5,10 +5,18 @@ import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 // import { localeMap } from "@/language.ts";
 
-export default function Layout(
-  props: PropsWithChildren<AppProps>,
-): JSX.Element {
-  const { children, lang } = props;
+export interface Translation {
+  location: string;
+  label: string;
+  lang: string;
+}
+
+interface LayoutProps extends PropsWithChildren<AppProps> {
+  translations?: Translation[];
+}
+
+export default function Layout(props: LayoutProps): JSX.Element {
+  const { children, lang, translations } = props;
   const href = resolver.resolve(Entry.Home, { lang });
 
   return (
@@ -22,6 +30,17 @@ export default function Layout(
           <a href={href ?? undefined}>
             Home
           </a>
+
+          {translations?.map((translation) => {
+            const { label, lang, location } = translation;
+            return (
+              <li key={lang}>
+                <a href={location}>
+                  {label}
+                </a>
+              </li>
+            );
+          })}
         </header>
         {children}
       </body>

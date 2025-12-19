@@ -1,0 +1,15 @@
+query TranslationBySlug($id: ID!) {
+  allTranslationMetadata(where: { _: { references: $id } }) {
+    translations {
+      value {
+        __typename
+        ... on Post {
+          slug {
+            current
+          }
+          language
+        }
+      }
+    }
+  }
+}

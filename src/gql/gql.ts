@@ -14,12 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": typeof types.PostBySlugDocument,
+    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": typeof types.PostBySlugDocument,
+    "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": typeof types.TranslationBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": typeof types.GetAllPostDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n}": typeof types.Article_ArticleFragmentDoc,
 };
 const documents: Documents = {
-    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": types.PostBySlugDocument,
+    "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": types.PostBySlugDocument,
+    "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": types.TranslationBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": types.GetAllPostDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n}": types.Article_ArticleFragmentDoc,
 };
@@ -41,7 +43,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}"): (typeof documents)["query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

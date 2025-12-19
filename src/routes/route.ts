@@ -23,10 +23,13 @@ export default {
     }),
     i18n,
   ),
-  [Entry.Post]: route({
-    params: {
-      slug: "required",
-    },
-    pathname: ({ slug }) => `/posts/${slug}`,
-  }),
+  [Entry.Post]: withLang(
+    route({
+      params: {
+        slug: "required",
+      },
+      pathname: ({ slug }) => `/posts/${slug}`,
+    }),
+    i18n,
+  ),
 } satisfies Record<Entry, Route>;

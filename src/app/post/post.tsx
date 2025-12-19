@@ -1,7 +1,11 @@
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import client from "~lib/graphql-request";
-import { PostBySlugDocument } from "@/gql/graphql.ts";
+import {
+  PostBySlugDocument,
+  TranslationBySlugDocument,
+  TranslationBySlugQuery,
+} from "@/gql/graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
@@ -10,6 +14,8 @@ import { Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
 import { type TechArticle } from "schema-dts";
 import Article from "~ui/article";
+import Layout, { type Translation } from "@/app/layout.tsx";
+import { localeMap } from "@/language.ts";
 
 export default async function Post(
   props: AppProps,
@@ -28,8 +34,13 @@ export default async function Post(
   });
 
   const postPage = result.allPost[0];
+  const id = postPage?.id;
 
-  if (!postPage) notFound();
+  if (!postPage || !id) notFound();
+
+  const translationsQuery = await client.request(TranslationBySlugDocument, {
+    id,
+  });
 
   const title = postPage.title ?? undefined;
   const description = postPage.description ?? undefined;
@@ -38,8 +49,19 @@ export default async function Post(
   const createdDate = createdAt ? new Date(createdAt) : undefined;
   const updatedDate = updatedAt ? new Date(updatedAt) : undefined;
 
+  const normalized = normalizeTranslation(translationsQuery);
+
+  const alternatives = normalized.map(({ slug, language }) => {
+    return {
+      location: resolver.resolve(Entry.Post, { lang: language, slug }),
+      lang: language,
+    };
+  }).filter(isTranslationAlternation);
+
+  const translations = toTranslations(alternatives, localeMap);
+
   return (
-    <>
+    <Layout translations={translations} {...props}>
       <SeoMeta title={title} description={description} />
       <Ogp
         title={title}
@@ -74,7 +96,7 @@ export default async function Post(
           body={postPage.bodyRaw && <PortableText value={postPage.bodyRaw} />}
         />
       </main>
-    </>
+    </Layout>
   );
 }
 
@@ -96,4 +118,65 @@ function SeoMeta(props: SeoMetaProps): JSX.Element {
       )}
     </>
   );
+}
+
+interface NormalizedTranslation {
+  slug: string;
+  language: string;
+}
+
+interface TranslationAlternation {
+  location: string;
+  lang: string;
+}
+
+function isTranslationAlternation(
+  _: object,
+): _ is TranslationAlternation {
+  return true;
+}
+
+function toTranslations(
+  alternatives: TranslationAlternation[],
+  labelMap: Record<string, string>,
+): Translation[] {
+  return Object.entries(labelMap).map(([lang, label]) => {
+    const alt = alternatives.find((alt) => alt.lang === lang);
+
+    if (!alt) return;
+
+    return {
+      location: alt.location,
+      label,
+      lang,
+    };
+  }).filter(isNonNullable);
+}
+
+function normalizeTranslation(
+  query: TranslationBySlugQuery,
+): NormalizedTranslation[] {
+  const result = query.allTranslationMetadata.flatMap((t) => {
+    return t.translations?.map((t) => {
+      switch (t?.value?.__typename) {
+        case "Post": {
+          const value = t.value;
+          return {
+            language: value.language,
+            slug: value.slug?.current,
+          };
+        }
+      }
+
+      return {};
+    }).filter(isNormalizedTranslation) ?? [];
+  });
+
+  return result;
+}
+
+function isNormalizedTranslation(
+  value: object,
+): value is NormalizedTranslation {
+  return value !== null && "slug" in value && "language" in value;
 }

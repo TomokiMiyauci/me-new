@@ -32,13 +32,7 @@ export function Posts(props: AppProps): JSX.Element {
   );
 }
 
-export function Post(props: AppProps): JSX.Element {
-  return (
-    <LayoutEntry {...props}>
-      <PostEntry {...props} />
-    </LayoutEntry>
-  );
-}
+export const Post = PostEntry;
 
 export function NotFound(props: AppProps): JSX.Element {
   return (
