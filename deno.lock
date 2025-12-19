@@ -35,6 +35,7 @@
     "npm:@storybook/addon-a11y@^10.1.9": "10.1.9_storybook@10.1.9__react@19.2.3__react-dom@19.2.3___react@19.2.3_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@storybook/addon-docs@^10.1.9": "10.1.9_storybook@10.1.9__react@19.2.3__react-dom@19.2.3___react@19.2.3_@types+react@19.2.7_react@19.2.3_rollup@4.53.3_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_react-dom@19.2.3__react@19.2.3_@types+node@24.2.0",
     "npm:@storybook/react-vite@^10.1.9": "10.1.9_react@19.2.3_react-dom@19.2.3__react@19.2.3_storybook@10.1.9__react@19.2.3__react-dom@19.2.3___react@19.2.3_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_rollup@4.53.3_@types+node@24.2.0",
+    "npm:@tailwindcss/typography@~0.5.19": "0.5.19_tailwindcss@4.1.18",
     "npm:@tailwindcss/vite@^4.1.18": "4.1.18_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@types+node@24.2.0",
     "npm:@types/dom-navigation@^1.0.6": "1.0.6",
     "npm:@types/node@*": "24.2.0",
@@ -1691,6 +1692,13 @@
         "@tailwindcss/oxide-win32-x64-msvc"
       ]
     },
+    "@tailwindcss/typography@0.5.19_tailwindcss@4.1.18": {
+      "integrity": "sha512-w31dd8HOx3k9vPtcQh5QHP9GwKcgbMp87j58qi6xgiBnFFtKEAgCWnDw4qUT8aHwkCp8bKvb/KGKWWHedP0AAg==",
+      "dependencies": [
+        "postcss-selector-parser",
+        "tailwindcss"
+      ]
+    },
     "@tailwindcss/vite@4.1.18_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@types+node@24.2.0": {
       "integrity": "sha512-jVA+/UpKL1vRLg6Hkao5jldawNmRo7mQYrZtNHMIVpLfLhDml5nMRUo/8MwoX2vNXvnaXNNMedrMfMugAVX1nA==",
       "dependencies": [
@@ -2196,6 +2204,10 @@
     },
     "css.escape@1.5.1": {
       "integrity": "sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg=="
+    },
+    "cssesc@3.0.0": {
+      "integrity": "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==",
+      "bin": true
     },
     "csstype@3.2.3": {
       "integrity": "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ=="
@@ -3115,6 +3127,13 @@
     "picomatch@4.0.3": {
       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q=="
     },
+    "postcss-selector-parser@6.0.10": {
+      "integrity": "sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==",
+      "dependencies": [
+        "cssesc",
+        "util-deprecate"
+      ]
+    },
     "postcss@8.5.6": {
       "integrity": "sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==",
       "dependencies": [
@@ -3621,6 +3640,9 @@
         "react"
       ]
     },
+    "util-deprecate@1.0.2": {
+      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
+    },
     "vite-plugin-graphql-codegen@3.7.0_@graphql-codegen+cli@6.1.0__graphql@16.12.0__@types+node@24.2.0_graphql@16.12.0_vite@7.3.0__@types+node@24.2.0__picomatch@4.0.3_@types+node@24.2.0": {
       "integrity": "sha512-6TXkpUPZunV+RHP+A5R6ohar6WWjfWxTN8OpBsrZmGlJlVEpwc+2FaquAtUwO1B6kzxEomqJ7q5Idnns57hTxg==",
       "dependencies": [
@@ -3784,6 +3806,7 @@
         "npm:@storybook/addon-a11y@^10.1.9",
         "npm:@storybook/addon-docs@^10.1.9",
         "npm:@storybook/react-vite@^10.1.9",
+        "npm:@tailwindcss/typography@~0.5.19",
         "npm:@tailwindcss/vite@^4.1.18",
         "npm:@types/dom-navigation@^1.0.6",
         "npm:@types/react-dom@^19.2.3",

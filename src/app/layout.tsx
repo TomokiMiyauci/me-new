@@ -10,6 +10,7 @@ export default function Layout(
 ): JSX.Element {
   const { children, lang } = props;
   const href = resolver.resolve(Entry.Home, { lang });
+
   return (
     <html lang={lang}>
       <head>
@@ -17,7 +18,7 @@ export default function Layout(
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <header>
+        <header className="px-4 py-6">
           <a href={href ?? undefined}>
             Home
           </a>

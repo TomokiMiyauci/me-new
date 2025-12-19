@@ -67,6 +67,7 @@
     "~config/sentry": "./src/sentry.config.ts",
     "~env": "./src/env.ts",
     "~ui/article-summary": "./src/ui/article_summary/article_summary.tsx",
+    "~ui/article": "./src/ui/article/article.tsx",
     "~lib/graphql-request": "./src/lib/graphql_request.ts"
   },
   "nodeModulesDir": "auto",

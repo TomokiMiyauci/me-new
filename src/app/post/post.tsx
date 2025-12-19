@@ -8,7 +8,8 @@ import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import { Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
-import { Article } from "schema-dts";
+import { type TechArticle } from "schema-dts";
+import Article from "~ui/article";
 
 export default async function Post(
   props: AppProps,
@@ -51,10 +52,10 @@ export default async function Post(
           modifiedTime: updatedDate?.toISOString(),
         }}
       />
-      <JsonLd<Article>
+      <JsonLd<TechArticle>
         item={{
           "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": "TechArticle",
           headline: title,
           description: description,
           datePublished: createdDate?.toISOString(),
@@ -63,18 +64,15 @@ export default async function Post(
       >
       </JsonLd>
 
-      <main>
-        <article>
+      <main className="px-4 space-y-2">
+        <p>
           <a href={href ?? undefined}>Back to Post</a>
+        </p>
 
-          <h1>{title}</h1>
-
-          {postPage.bodyRaw && (
-            <section>
-              <PortableText value={postPage.bodyRaw} />
-            </section>
-          )}
-        </article>
+        <Article
+          title={title ?? ""}
+          body={postPage.bodyRaw && <PortableText value={postPage.bodyRaw} />}
+        />
       </main>
     </>
   );
