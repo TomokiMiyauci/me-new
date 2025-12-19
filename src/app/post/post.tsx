@@ -7,6 +7,8 @@ import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import { Ogp } from "react-ogp";
+import { JsonLd } from "react-schemaorg";
+import { Article } from "schema-dts";
 
 export default async function Post(
   props: AppProps,
@@ -49,6 +51,17 @@ export default async function Post(
           modifiedTime: updatedDate?.toISOString(),
         }}
       />
+      <JsonLd<Article>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: title,
+          description: description,
+          datePublished: createdDate?.toISOString(),
+          dateModified: updatedDate?.toISOString(),
+        }}
+      >
+      </JsonLd>
 
       <main>
         <article>
