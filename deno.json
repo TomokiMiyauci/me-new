@@ -32,7 +32,7 @@
     "dev": "deno run -P=dev --allow-net --env-file vite dev",
     "build": "deno run -P=build vite build --manifest",
     "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
-    "generate:graphql": "deno run -A @graphql-codegen/cli/graphql-codegen-esm --config .graphqlrc.ts",
+    "generate:graphql": "deno run -A @graphql-codegen/cli/graphql-codegen-esm --config .graphqlrc",
     "storybook": "deno x storybook dev",
     "build:storybook": "deno x storybook build"
   },
@@ -67,6 +67,7 @@
     "~config/sentry": "./src/sentry.config.ts",
     "~env": "./src/env.ts",
     "~ui/article-summary": "./src/ui/article_summary/article_summary.tsx",
+    "~ui/article": "./src/ui/article/article.tsx",
     "~lib/graphql-request": "./src/lib/graphql_request.ts"
   },
   "nodeModulesDir": "auto",
@@ -86,7 +87,8 @@
     "src/packages/rsc_protocol",
     "src/packages/react_app",
     "src/packages/routekit",
-    "src/packages/vite_plugin_deno"
+    "src/packages/vite_plugin_deno",
+    "src/packages/react_ogp"
   ],
   "lint": {
     "rules": {

@@ -60,7 +60,7 @@ export default defineConfig({
       return false;
     }),
     codegen({
-      configFilePathOverride: "./.graphqlrc.ts",
+      configFilePathOverride: "./.graphqlrc",
     }),
     tailwindcss(),
   ],

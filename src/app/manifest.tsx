@@ -5,8 +5,8 @@ import IndexEntry from "./home/home.tsx";
 import PostsEntry from "./posts//posts.tsx";
 import PostEntry from "./post/post.tsx";
 import LayoutEntry from "./layout.tsx";
-import NotFoundEntry from "./not_found.tsx";
-import ServerErrorEntry from "./server_error.tsx";
+import NotFoundEntry from "./not_found/not_found.tsx";
+import ErrorEntry from "./error/error.tsx";
 
 export function About(props: AppProps): JSX.Element {
   return (
@@ -27,18 +27,12 @@ export function Home(props: AppProps): JSX.Element {
 export function Posts(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <PostsEntry />
+      <PostsEntry {...props} />
     </LayoutEntry>
   );
 }
 
-export function Post(props: AppProps): JSX.Element {
-  return (
-    <LayoutEntry {...props}>
-      <PostEntry {...props} />
-    </LayoutEntry>
-  );
-}
+export const Post = PostEntry;
 
 export function NotFound(props: AppProps): JSX.Element {
   return (
@@ -48,10 +42,10 @@ export function NotFound(props: AppProps): JSX.Element {
   );
 }
 
-export function ServerError(props: AppProps): JSX.Element {
+export function Error(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <ServerErrorEntry />
+      <ErrorEntry />
     </LayoutEntry>
   );
 }

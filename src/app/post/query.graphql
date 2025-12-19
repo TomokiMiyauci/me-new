@@ -1,7 +1,18 @@
 query PostBySlug($slug: String!) {
   allPost(where: { slug: { current: { eq: $slug } } }) {
-    _id
+    id: _id
     title
     bodyRaw
+    description
+    categories {
+      name
+    }
+    tags {
+      name
+    }
+    _createdAt
+    _updatedAt
+    createdAt
+    updatedAt
   }
 }
