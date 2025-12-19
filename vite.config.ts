@@ -52,9 +52,7 @@ export default defineConfig({
         // This is deno bug
         // deno-lint-ignore no-explicit-any
         return (inject as any)({
-          // TODO(miyauci) There may be a bug in how relative paths for plugins are resolved.
-          // Expected "./src/framework/polyfills/deno_env.ts"
-          "Deno.env": "./framework/polyfills/deno_env.ts",
+          "Deno.env": "@/framework/polyfills/deno_env.ts",
         });
       }
       return false;
@@ -70,28 +68,6 @@ export default defineConfig({
 
   build: {
     license: true,
-    rollupOptions: {
-      output: {
-        manualChunks(id): string | undefined {
-          if (id.includes("node_modules")) {
-            const result = /node_modules\/\.deno\/(.+?)\//.exec(id);
-
-            const pkgName = result?.[1];
-            if (!pkgName) return;
-            const { name } = parsePkg(pkgName);
-
-            switch (name) {
-              case "react":
-              case "@vitejs+plugin-rsc":
-              case "react-dom":
-                return "react_react_dom_@vitejs+plugin-rsc";
-            }
-
-            return name;
-          }
-        },
-      },
-    },
   },
   // specify entry point for each environment.
   // (currently the plugin assumes `rollupOptions.input.index` for some features.)
@@ -149,15 +125,3 @@ export default defineConfig({
     },
   },
 });
-
-function parsePkg(input: string): { name: string; version: string } {
-  const lastAt = input.lastIndexOf("@");
-  if (lastAt <= 0) {
-    throw new Error("Invalid package string: " + input);
-  }
-
-  const name = input.slice(0, lastAt);
-  const version = input.slice(lastAt + 1);
-
-  return { name, version };
-}
