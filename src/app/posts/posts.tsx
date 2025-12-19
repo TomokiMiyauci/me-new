@@ -14,7 +14,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
     <main>
       {result.allPost.map((article) => {
         const slug = article.slug?.current ?? "";
-        const href = resolver.resolve(Entry.Post, { slug });
+        const href = resolver.resolve(Entry.Post, { slug, lang });
 
         return (
           <li key={article.key}>
