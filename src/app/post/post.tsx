@@ -59,7 +59,7 @@ export default async function Post(
       <main className="space-y-2">
         <p>
           <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
-            {t("action.navigation.posts")}
+            {t("action.navigation.blog")}
           </a>
         </p>
 

@@ -10,6 +10,8 @@ interface LayoutProps extends PropsWithChildren<AppProps> {
   translations?: Translation[];
 }
 
+export { type Translation };
+
 export default function Layout(props: LayoutProps): JSX.Element {
   const { children, lang, translations, i18n } = props;
   const { t } = i18n;
@@ -34,7 +36,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
         <Footer
           navigation={[
             {
-              name: t("group.legal"),
+              name: t("category.legal"),
               items: [
                 {
                   name: t("document.privacy_policy"),

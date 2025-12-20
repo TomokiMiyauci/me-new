@@ -1,55 +1,40 @@
 {
   "action": {
     "navigation": {
-      "home": "Go to home",
-      "posts": "Go to blog"
+      "home": "Go to Home",
+      "blog": "Go to Blog"
     }
   },
   "document": {
     "privacy_policy": "Privacy Policy"
   },
-  "group": {
+  "category": {
     "legal": "Legal"
   },
   "error": {
-    "404": {
-      "title": "page not found",
-      "description": "Sorry, we couldn’t find the page you’re looking for."
+    "not_found": {
+      "message": "Page not found",
+      "details": "Sorry, we couldn’t find the page you’re looking for."
     }
   },
-  "languageSwitcher": {
-    "ariaLabel": "open language selection menu",
-    "menu": {
-      "title": "translation"
+  "resource": {
+    "blog": "Blog",
+    "home": "Home"
+  },
+
+  "content": {
+    "blog": {
+      "summary": "Browse our latest blog posts covering web development, design, and tech trends. Updated regularly with helpful insights.",
+      "toc_label": "In this article"
     }
   },
-  "blog": {
-    "title": "Blog",
-    "description": "Browse our latest blog posts covering web development, design, and tech trends. Updated regularly with helpful insights.",
-    "toc": {
-      "title": "In this article"
+
+  "ui": {
+    "language_menu": {
+      "label": "Translation",
+      "description": "Open language selection menu"
     }
   },
-  "home": {
-    "title": "Home"
-  },
-  "footer": {
-    "navigation": {
-      "blog": {
-        "title": "blog"
-      },
-      "privacy-policy": {
-        "title": "privacy policy"
-      }
-    },
-    "navigationGroup": {
-      "media": {
-        "title": "media"
-      },
-      "legal": {
-        "title": "legal"
-      }
-    }
-  },
-  "copyright": "@2025 Tomoki Miyauchi. All right reserved."
+
+  "copyright": "@2025 All right reserved."
 }
