@@ -1,0 +1,14 @@
+fragment Post_post_meta on Post {
+  title
+  description
+  categories {
+    name
+  }
+  tags {
+    name
+  }
+  createdAt
+  _createdAt
+  updatedAt
+  _updatedAt
+}

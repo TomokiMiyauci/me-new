@@ -3,25 +3,24 @@ import { NotFoundBoundary } from "react-app";
 import Entry from "./entry.ts";
 import c from "./component.ts";
 import { NotFound } from "@/app/manifest.tsx";
+import { type AppProps } from "@/lib/app.tsx";
 
 export interface RouterProps {
   entry: Entry | undefined;
   map: typeof c;
-  lang: string;
-  params: Record<string, string | undefined>;
+  app: AppProps;
 }
 
 export default function Router(props: RouterProps): JSX.Element {
-  const { entry, map, lang, params } = props;
-  const appProps = { lang, params };
+  const { entry, map, app } = props;
 
-  if (!entry) return <NotFound {...appProps} />;
+  if (!entry) return <NotFound {...app} />;
 
   const Component = map[entry];
 
   return (
-    <NotFoundBoundary fallback={<NotFound {...appProps} />}>
-      <Component {...appProps} />
+    <NotFoundBoundary fallback={<NotFound {...app} />}>
+      <Component {...app} />
     </NotFoundBoundary>
   );
 }

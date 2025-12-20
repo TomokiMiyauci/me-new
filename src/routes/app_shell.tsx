@@ -5,25 +5,25 @@ import GlobalError from "../app/global_error.tsx";
 import Entry from "./entry.ts";
 import Router from "./router.tsx";
 import component from "./component.ts";
+import { type AppProps } from "@/lib/app.tsx";
+
+export interface AppShellProps {
+  app: AppProps;
+  entry: Entry | undefined;
+}
 
 export default function AppShell(
-  props: {
-    entry: Entry | undefined;
-    lang: string;
-    params: Record<string, string | undefined>;
-  },
+  props: AppShellProps,
 ): JSX.Element {
-  const { entry, lang, params } = props;
-  const appProps = { lang, params };
+  const { entry, app } = props;
 
   return (
     <ErrorBoundary fallback={<GlobalError />}>
-      <ErrorBoundary fallback={<Error {...appProps} />}>
+      <ErrorBoundary fallback={<Error {...app} />}>
         <Router
           entry={entry}
+          app={app}
           map={component}
-          lang={lang}
-          params={params}
         />
       </ErrorBoundary>
     </ErrorBoundary>

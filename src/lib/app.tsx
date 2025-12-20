@@ -1,10 +1,10 @@
 // import Entry from "@/entry.ts";
-// import type i18n from "i18next";
+import type i18n from "i18next";
 
 export interface AppProps {
-  // url: URL;
+  url: URL;
   lang: string;
   // entry: Entry;
-  // i18n: typeof i18n;
+  i18n: typeof i18n;
   params: Record<string, string | undefined>;
 }
