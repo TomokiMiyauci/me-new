@@ -29,7 +29,11 @@ export default function PostMetaFragment(
 
   return (
     <>
-      <SeoMeta title={title} description={description} />
+      <SeoMeta
+        title={title}
+        description={description}
+        canonical={new URL(url.pathname, url).toString()}
+      />
       <Ogp
         title={title}
         description={description}
@@ -70,15 +74,16 @@ export default function PostMetaFragment(
 interface SeoMetaProps {
   title?: string;
   description?: string;
+  canonical?: string;
 }
 
 function SeoMeta(props: SeoMetaProps): JSX.Element {
+  const { title, description, canonical } = props;
   return (
     <>
-      {props.title && <title>{props.title}</title>}
-      {props.description && (
-        <meta name="description" content={props.description}></meta>
-      )}
+      {title && <title>{title}</title>}
+      {description && <meta name="description" content={description}></meta>}
+      {canonical && <link rel="canonical" href={canonical} />}
     </>
   );
 }
