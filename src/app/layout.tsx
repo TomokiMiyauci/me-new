@@ -3,14 +3,14 @@ import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-import Header, { type Translation } from "~ui/header";
+import Header, { type TranslationItem } from "~ui/header";
 import Footer from "~ui/footer";
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
-  translations?: Translation[];
+  translations?: TranslationItem[];
 }
 
-export { type Translation };
+export { type TranslationItem };
 
 export default function Layout(props: LayoutProps): JSX.Element {
   const { children, lang, translations, i18n } = props;
@@ -26,7 +26,10 @@ export default function Layout(props: LayoutProps): JSX.Element {
       <body>
         <Header
           logo={<a href={href ?? undefined}>Home</a>}
-          translations={translations}
+          translation={{
+            title: t("ui.language_menu.label"),
+            items: translations ?? [],
+          }}
         />
 
         <div className="px-4">

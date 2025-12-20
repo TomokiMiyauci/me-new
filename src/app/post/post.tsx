@@ -11,7 +11,7 @@ import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import Article from "~ui/article";
-import Layout, { type Translation } from "@/app/layout.tsx";
+import Layout, { type TranslationItem } from "@/app/layout.tsx";
 import { localeMap } from "@/language.ts";
 import PostMeta from "./post_meta.tsx";
 
@@ -95,7 +95,7 @@ function isTranslationAlternation(
 function toTranslations(
   alternatives: TranslationAlternation[],
   labelMap: Record<string, string>,
-): Translation[] {
+): TranslationItem[] {
   return Object.entries(labelMap).map(([lang, label]) => {
     const alt = alternatives.find((alt) => alt.lang === lang);
 
