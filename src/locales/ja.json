@@ -9,7 +9,8 @@
     "privacy_policy": "プライバシーポリシー"
   },
   "category": {
-    "legal": "法的"
+    "legal": "法的事項",
+    "resource": "リソース"
   },
   "error": {
     "not_found": {

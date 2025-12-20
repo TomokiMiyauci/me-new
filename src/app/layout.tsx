@@ -30,14 +30,26 @@ export default function Layout(props: LayoutProps): JSX.Element {
             title: t("ui.language_menu.label"),
             items: translations ?? [],
           }}
+          lang={lang}
+          className="px-4 md:px-8 lg:px-16"
         />
 
-        <div className="px-4">
+        <div className="px-4 md:px-8 lg:px-16">
           {children}
         </div>
 
         <Footer
+          logo={<a href={href ?? undefined}>Home</a>}
           navigation={[
+            {
+              name: t("category.resource"),
+              items: [
+                {
+                  name: t("resource.blog"),
+                  location: resolver.resolve(Entry.Posts, { lang }) ?? "",
+                },
+              ],
+            },
             {
               name: t("category.legal"),
               items: [
@@ -49,7 +61,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
             },
           ]}
           copyright={t("copyright")}
-          className="px-4 my-16"
+          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-16 mb-4"
         />
       </body>
     </html>

@@ -9,7 +9,8 @@
     "privacy_policy": "Privacy Policy"
   },
   "category": {
-    "legal": "Legal"
+    "legal": "Legal",
+    "resource": "Resource"
   },
   "error": {
     "not_found": {
