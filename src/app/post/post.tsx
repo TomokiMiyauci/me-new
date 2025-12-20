@@ -18,7 +18,7 @@ import PostMeta from "./post_meta.tsx";
 export default async function Post(
   props: AppProps,
 ): Promise<JSX.Element> {
-  const { lang, params, url } = props;
+  const { lang, params, url, i18n } = props;
   const slug = params["slug"];
 
   if (!slug) {
@@ -51,7 +51,7 @@ export default async function Post(
   }).filter(isTranslationAlternation);
 
   const translations = toTranslations(alternatives, localeMap);
-
+  const { t } = i18n;
   return (
     <Layout translations={translations} {...props}>
       <PostMeta url={url} fragment={postPage} translations={alternatives} />
@@ -59,7 +59,7 @@ export default async function Post(
       <main className="px-4 space-y-2">
         <p>
           <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
-            Back to Post
+            {t("action.navigation.posts")}
           </a>
         </p>
 
