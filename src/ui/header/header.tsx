@@ -1,4 +1,4 @@
-import type { JSX, ReactNode } from "react";
+import type { DetailedHTMLProps, HTMLAttributes, JSX, ReactNode } from "react";
 import { MdGTranslate } from "react-icons/md";
 import clsx from "clsx";
 
@@ -19,10 +19,18 @@ export interface TranslationItem {
   lang: string;
 }
 
-export default function Header(props: HeaderProps): JSX.Element {
-  const { logo, translation, lang: currentLang } = props;
+export default function Header(
+  props:
+    & HeaderProps
+    & DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
+): JSX.Element {
+  const { logo, translation, lang: currentLang, ...rest } = props;
+  const { className, ...restProps } = rest;
   return (
-    <header className="px-4 py-6 justify-between flex items-center">
+    <header
+      className={clsx(className, "py-4 justify-between flex items-center")}
+      {...restProps}
+    >
       {logo}
 
       <div>
