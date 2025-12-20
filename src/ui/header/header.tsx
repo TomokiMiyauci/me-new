@@ -1,9 +1,11 @@
 import type { JSX, ReactNode } from "react";
 import { MdGTranslate } from "react-icons/md";
+import clsx from "clsx";
 
 export interface HeaderProps {
   logo: ReactNode;
   translation?: Translation;
+  lang: string;
 }
 
 export interface Translation {
@@ -18,7 +20,7 @@ export interface TranslationItem {
 }
 
 export default function Header(props: HeaderProps): JSX.Element {
-  const { logo, translation } = props;
+  const { logo, translation, lang: currentLang } = props;
   return (
     <header className="px-4 py-6 justify-between flex items-center">
       {logo}
@@ -31,7 +33,7 @@ export default function Header(props: HeaderProps): JSX.Element {
             popoverTarget="popover-1"
             style={{ anchorName: "--anchor-1" }}
           >
-            <MdGTranslate size={16} />
+            <MdGTranslate size={24} />
           </button>
         )}
 
@@ -52,7 +54,10 @@ export default function Header(props: HeaderProps): JSX.Element {
 
                   return (
                     <li key={lang}>
-                      <a href={location}>
+                      <a
+                        className={clsx(currentLang === lang && "menu-active")}
+                        href={location}
+                      >
                         {label}
                       </a>
                     </li>

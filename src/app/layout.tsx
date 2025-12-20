@@ -30,6 +30,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
             title: t("ui.language_menu.label"),
             items: translations ?? [],
           }}
+          lang={lang}
         />
 
         <div className="px-4">
