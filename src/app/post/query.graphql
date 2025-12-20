@@ -1,5 +1,6 @@
 query PostBySlug($slug: String!) {
   allPost(where: { slug: { current: { eq: $slug } } }) {
+    ...Post_post_meta
     id: _id
     title
     bodyRaw

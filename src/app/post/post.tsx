@@ -10,12 +10,10 @@ import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
-import { Ogp } from "react-ogp";
-import { JsonLd } from "react-schemaorg";
-import { type TechArticle } from "schema-dts";
 import Article from "~ui/article";
 import Layout, { type Translation } from "@/app/layout.tsx";
 import { localeMap } from "@/language.ts";
+import PostMeta from "./post_meta.tsx";
 
 export default async function Post(
   props: AppProps,
@@ -28,7 +26,6 @@ export default async function Post(
   }
 
   const decodedSlug = decodeURIComponent(slug);
-  const href = resolver.resolve(Entry.Posts, { lang });
   const result = await client.request(PostBySlugDocument, {
     slug: decodedSlug,
   });
@@ -42,12 +39,7 @@ export default async function Post(
     id,
   });
 
-  const title = postPage.title ?? undefined;
-  const description = postPage.description ?? undefined;
-  const createdAt = postPage.createdAt ?? postPage._createdAt ?? undefined;
-  const updatedAt = postPage.updatedAt ?? postPage._updatedAt ?? undefined;
-  const createdDate = createdAt ? new Date(createdAt) : undefined;
-  const updatedDate = updatedAt ? new Date(updatedAt) : undefined;
+  const title = postPage.title ?? "";
 
   const normalized = normalizeTranslation(translationsQuery);
 
@@ -62,48 +54,17 @@ export default async function Post(
 
   return (
     <Layout translations={translations} {...props}>
-      <SeoMeta title={title} description={description} />
-      <Ogp
-        title={title}
-        description={description}
-        type="article"
-        article={{
-          section: postPage.categories?.[0]?.name ?? undefined,
-          tags: postPage.tags?.map((tag) => tag?.name).filter(isNonNullable),
-          publishedTime: createdDate?.toISOString(),
-          modifiedTime: updatedDate?.toISOString(),
-        }}
-      />
-      <JsonLd<TechArticle>
-        item={{
-          "@context": "https://schema.org",
-          "@type": "TechArticle",
-          headline: title,
-          description: description,
-          datePublished: createdDate?.toISOString(),
-          dateModified: updatedDate?.toISOString(),
-        }}
-      >
-      </JsonLd>
-
-      {alternatives.map(({ location, lang }) => {
-        return (
-          <link
-            key={lang}
-            rel="alternate"
-            hrefLang={lang}
-            href={new URL(location, url).toString()}
-          />
-        );
-      })}
+      <PostMeta url={url} fragment={postPage} translations={alternatives} />
 
       <main className="px-4 space-y-2">
         <p>
-          <a href={href ?? undefined}>Back to Post</a>
+          <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
+            Back to Post
+          </a>
         </p>
 
         <Article
-          title={title ?? ""}
+          title={title}
           body={postPage.bodyRaw && <PortableText value={postPage.bodyRaw} />}
         />
       </main>
@@ -113,22 +74,6 @@ export default async function Post(
 
 function isNonNullable<T>(value: T): value is NonNullable<T> {
   return !!value;
-}
-
-interface SeoMetaProps {
-  title?: string;
-  description?: string;
-}
-
-function SeoMeta(props: SeoMetaProps): JSX.Element {
-  return (
-    <>
-      {props.title && <title>{props.title}</title>}
-      {props.description && (
-        <meta name="description" content={props.description}></meta>
-      )}
-    </>
-  );
 }
 
 interface NormalizedTranslation {
