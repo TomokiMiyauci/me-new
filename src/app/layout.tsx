@@ -3,20 +3,18 @@ import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-// import { localeMap } from "@/language.ts";
-
-export interface Translation {
-  location: string;
-  label: string;
-  lang: string;
-}
+import Header, { type TranslationItem } from "~ui/header";
+import Footer from "~ui/footer";
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
-  translations?: Translation[];
+  translations?: TranslationItem[];
 }
 
+export { type TranslationItem };
+
 export default function Layout(props: LayoutProps): JSX.Element {
-  const { children, lang, translations } = props;
+  const { children, lang, translations, i18n } = props;
+  const { t } = i18n;
   const href = resolver.resolve(Entry.Home, { lang });
 
   return (
@@ -26,23 +24,33 @@ export default function Layout(props: LayoutProps): JSX.Element {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <header className="px-4 py-6">
-          <a href={href ?? undefined}>
-            Home
-          </a>
+        <Header
+          logo={<a href={href ?? undefined}>Home</a>}
+          translation={{
+            title: t("ui.language_menu.label"),
+            items: translations ?? [],
+          }}
+        />
 
-          {translations?.map((translation) => {
-            const { label, lang, location } = translation;
-            return (
-              <li key={lang}>
-                <a href={location}>
-                  {label}
-                </a>
-              </li>
-            );
-          })}
-        </header>
-        {children}
+        <div className="px-4">
+          {children}
+        </div>
+
+        <Footer
+          navigation={[
+            {
+              name: t("category.legal"),
+              items: [
+                {
+                  name: t("document.privacy_policy"),
+                  location: "/privacy-policy",
+                },
+              ],
+            },
+          ]}
+          copyright={t("copyright")}
+          className="px-4 my-16"
+        />
       </body>
     </html>
   );

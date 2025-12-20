@@ -15,7 +15,7 @@ router
       "default-src": ["'none'"],
       "script-src": [`'nonce-${nonce}'`, "'unsafe-eval'", "'self'"],
       "style-src": ["'self'", `'unsafe-inline'`],
-      "img-src": ["https:"],
+      "img-src": ["https:", "data:"],
       "report-uri": CSP_ENDPOINT ? [CSP_ENDPOINT] : [],
       "connect-src": ["ws:", "https:", "http:"],
     })),

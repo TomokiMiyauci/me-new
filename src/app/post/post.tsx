@@ -11,7 +11,7 @@ import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import Article from "~ui/article";
-import Layout, { type Translation } from "@/app/layout.tsx";
+import Layout, { type TranslationItem } from "@/app/layout.tsx";
 import { localeMap } from "@/language.ts";
 import PostMeta from "./post_meta.tsx";
 
@@ -56,10 +56,10 @@ export default async function Post(
     <Layout translations={translations} {...props}>
       <PostMeta url={url} fragment={postPage} translations={alternatives} />
 
-      <main className="px-4 space-y-2">
+      <main className="space-y-2">
         <p>
           <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
-            {t("action.navigation.posts")}
+            {t("action.navigation.blog")}
           </a>
         </p>
 
@@ -95,7 +95,7 @@ function isTranslationAlternation(
 function toTranslations(
   alternatives: TranslationAlternation[],
   labelMap: Record<string, string>,
-): Translation[] {
+): TranslationItem[] {
   return Object.entries(labelMap).map(([lang, label]) => {
     const alt = alternatives.find((alt) => alt.lang === lang);
 
