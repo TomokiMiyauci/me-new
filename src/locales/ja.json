@@ -5,6 +5,12 @@
       "posts": "ブログへ戻る"
     }
   },
+  "document": {
+    "privacy_policy": "プライバシーポリシー"
+  },
+  "group": {
+    "legal": "法的"
+  },
   "error": {
     "404": {
       "title": "ページが見つかりません",

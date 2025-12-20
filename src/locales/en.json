@@ -5,6 +5,12 @@
       "posts": "Go to blog"
     }
   },
+  "document": {
+    "privacy_policy": "Privacy Policy"
+  },
+  "group": {
+    "legal": "Legal"
+  },
   "error": {
     "404": {
       "title": "page not found",
