@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { JSX, ReactNode } from "react";
 
 export interface ArticleSummaryProps {
   /**
@@ -12,20 +12,28 @@ export interface ArticleSummaryProps {
   excerpt?: string;
 
   date?: FormmattedDateProps;
+  img?: ReactNode;
 }
 
 export default function ArticleSummary(
   props: ArticleSummaryProps,
 ): JSX.Element {
-  const { title, excerpt, date } = props;
+  const { title, excerpt, date, img } = props;
 
   return (
-    <article>
-      <span>{title}</span>
-
-      {excerpt && <p>{excerpt}</p>}
-
-      {date && <FormmattedDate dateTime={date.dateTime} label={date.label} />}
+    <article className="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none">
+      <div className="p-6 max-sm:pb-0 sm:max-w-48 sm:pe-0">
+        {img}
+      </div>
+      <div className="card-body">
+        <h2 className="card-title font-title">{title}</h2>
+        <p className="text-xs opacity-60">{excerpt}</p>
+        <p>
+          <small>
+            {date && <FormmattedDate {...date}></FormmattedDate>}
+          </small>
+        </p>
+      </div>
     </article>
   );
 }

@@ -3,10 +3,8 @@ export const i18n = {
   alternatives: ["ja"] as const,
 };
 
-type Locale = typeof i18n["defaultLang"] | typeof i18n.alternatives[number];
+export const languages = [i18n.defaultLang, ...i18n.alternatives];
 
-export const localeMap = {
-  en: "English",
-  // deno-lint-ignore prefer-ascii
-  ja: "日本語",
-} satisfies Record<Locale, string>;
+export type Locale =
+  | typeof i18n["defaultLang"]
+  | typeof i18n.alternatives[number];

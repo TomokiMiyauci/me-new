@@ -37,5 +37,9 @@
     }
   },
 
-  "copyright": "@2025 All right reserved."
+  "copyright": "@2025 All right reserved.",
+  "locale": {
+    "en": "English",
+    "ja": "日本語"
+  }
 }

@@ -33,5 +33,10 @@
       "label": "翻訳",
       "description": "言語切替メニューを開く"
     }
+  },
+  "copyright": "@2025 All right reserved.",
+  "locale": {
+    "en": "English",
+    "ja": "日本語"
   }
 }

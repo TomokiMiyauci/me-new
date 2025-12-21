@@ -16,21 +16,9 @@ export function About(props: AppProps): JSX.Element {
   );
 }
 
-export function Home(props: AppProps): JSX.Element {
-  return (
-    <LayoutEntry {...props}>
-      <IndexEntry {...props} />
-    </LayoutEntry>
-  );
-}
+export const Home = IndexEntry;
 
-export function Posts(props: AppProps): JSX.Element {
-  return (
-    <LayoutEntry {...props}>
-      <PostsEntry {...props} />
-    </LayoutEntry>
-  );
-}
+export const Posts = PostsEntry;
 
 export const Post = PostEntry;
 

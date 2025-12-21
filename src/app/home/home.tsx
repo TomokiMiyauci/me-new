@@ -2,6 +2,8 @@ import { type JSX } from "react";
 import resolver from "@/lib/link.ts";
 import { type AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
+import Layout from "../layout.tsx";
+import { languages } from "@/language.ts";
 
 export default function Home(props: AppProps): JSX.Element {
   const { lang } = props;
@@ -10,12 +12,20 @@ export default function Home(props: AppProps): JSX.Element {
   // const { t } = i18n;
 
   return (
-    <main>
-      {/* <title>{t("home.title")}</title> */}
+    <Layout
+      {...props}
+      translations={languages.map((lang) => ({
+        lang,
+        location: resolver.resolve(Entry.Home, { lang }) ?? undefined,
+      }))}
+    >
+      <main>
+        {/* <title>{t("home.title")}</title> */}
 
-      <div>
-        <a href={post ?? undefined}>Posts</a>
-      </div>
-    </main>
+        <div>
+          <a href={post ?? undefined}>Posts</a>
+        </div>
+      </main>
+    </Layout>
   );
 }
