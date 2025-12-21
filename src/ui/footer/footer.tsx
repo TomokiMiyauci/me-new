@@ -27,7 +27,10 @@ export default function Footer(
 
   return (
     <footer
-      className={clsx(className, "space-y-8 md:space-y-24")}
+      className={clsx(
+        className,
+        "space-y-8 md:space-y-24 bg-base-200 pt-8 md:pt-16",
+      )}
       {...restProps}
     >
       <div className="sm:grid grid-cols-3">
