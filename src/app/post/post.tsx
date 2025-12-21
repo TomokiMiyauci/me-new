@@ -56,7 +56,7 @@ export default async function Post(
     <Layout translations={translations} {...props}>
       <PostMeta url={url} fragment={postPage} translations={alternatives} />
 
-      <main className="space-y-2">
+      <main className="space-y-2 lg:max-w-[65ch] mx-auto">
         <p>
           <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
             {t("action.navigation.blog")}
