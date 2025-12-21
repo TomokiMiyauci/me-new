@@ -1,0 +1,15 @@
+fragment Image_image on Image {
+  asset {
+    _id
+    assetId
+    path
+    url
+    metadata {
+      dimensions {
+        width
+        height
+      }
+      lqip
+    }
+  }
+}
