@@ -5,6 +5,7 @@
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/near-operation-file-preset": "^4.0.0",
     "@graphql-typed-document-node/core": "^3.2.0",
+    "@lingual/i18n-check": "^0.8.16",
     "@portabletext/react": "^6.0.0",
     "@portabletext/types": "^4.0.0",
     "@rollup/plugin-inject": "^5.0.5",

@@ -29,6 +29,10 @@
       "command": "deno fmt --check",
       "description": "Format check"
     },
+    "lint:i18n": {
+      "command": "deno x @lingual/i18n-check -s en --locales src/locales",
+      "description": "Lint for i18n locales"
+    },
     "dev": "deno run -P=dev --allow-net --env-file vite dev",
     "build": "deno run -P=build vite build --manifest",
     "preview": "deno serve -P=preview --allow-net --env-file --no-npm --no-remote dist/server/main.js",
