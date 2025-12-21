@@ -5,25 +5,35 @@ import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import { AppProps } from "@/lib/app.tsx";
+import Layout from "../layout.tsx";
+import { languages } from "@/language.ts";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
   const { lang } = props;
   const result = await client.request(GetAllPostDocument, { lang });
 
   return (
-    <main>
-      {result.allPost.map((article) => {
-        const slug = article.slug?.current ?? "";
-        const href = resolver.resolve(Entry.Post, { slug, lang });
+    <Layout
+      {...props}
+      translations={languages.map((lang) => ({
+        lang,
+        location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
+      }))}
+    >
+      <main>
+        {result.allPost.map((article) => {
+          const slug = article.slug?.current ?? "";
+          const href = resolver.resolve(Entry.Post, { slug, lang });
 
-        return (
-          <li key={article.key}>
-            <a href={href ?? undefined}>
-              <ArticleFragment lang={lang} fragment={article} />
-            </a>
-          </li>
-        );
-      })}
-    </main>
+          return (
+            <li key={article.key}>
+              <a href={href ?? undefined}>
+                <ArticleFragment lang={lang} fragment={article} />
+              </a>
+            </li>
+          );
+        })}
+      </main>
+    </Layout>
   );
 }
