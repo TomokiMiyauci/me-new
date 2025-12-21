@@ -1,6 +1,7 @@
 import type { Article_ArticleFragment } from "@/gql/graphql.ts";
 import type { JSX } from "react";
 import ArticleSummary, { type ArticleSummaryProps } from "~ui/article-summary";
+import Image from "../image/image.tsx";
 
 export interface ArticleFragmentProps {
   lang: string;
@@ -28,6 +29,7 @@ function articleFragmentToArticleSummaryProps(
     _createdAt,
     description,
     createdAt: specifiedCreatedAt,
+    coverImage,
   } = fragment;
   const excerpt = description ?? undefined;
   const createdAt = (specifiedCreatedAt ?? _createdAt) ?? undefined;
@@ -46,6 +48,13 @@ function articleFragmentToArticleSummaryProps(
     title: title ?? "",
     excerpt,
     date,
+    img: (
+      coverImage && (
+        <figure>
+          <Image fragment={coverImage} />
+        </figure>
+      )
+    ),
   } satisfies ArticleSummaryProps;
 
   return props;

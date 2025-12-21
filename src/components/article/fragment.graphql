@@ -4,4 +4,7 @@ fragment Article_article on Post {
   description
   createdAt
   _createdAt
+  coverImage {
+    ...Image_image
+  }
 }
