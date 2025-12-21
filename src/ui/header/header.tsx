@@ -14,7 +14,7 @@ export interface Translation {
 }
 
 export interface TranslationItem {
-  location: string;
+  location: string | undefined;
   label: string;
   lang: string;
 }
@@ -61,9 +61,16 @@ export default function Header(
                   const { label, lang, location } = translation;
 
                   return (
-                    <li key={lang}>
+                    <li
+                      className={clsx(
+                        location === undefined && "menu-disabled",
+                      )}
+                      key={lang}
+                    >
                       <a
-                        className={clsx(currentLang === lang && "menu-active")}
+                        className={clsx(
+                          currentLang === lang && "menu-active",
+                        )}
                         href={location}
                       >
                         {label}

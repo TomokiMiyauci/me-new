@@ -3,19 +3,34 @@ import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-import Header, { type TranslationItem } from "~ui/header";
+import Header from "~ui/header";
 import Footer from "~ui/footer";
+import { languages } from "@/language.ts";
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
   translations?: TranslationItem[];
 }
 
-export { type TranslationItem };
+interface TranslationItem {
+  location: string | undefined;
+  lang: string;
+}
 
 export default function Layout(props: LayoutProps): JSX.Element {
   const { children, lang, translations, i18n } = props;
   const { t } = i18n;
   const href = resolver.resolve(Entry.Home, { lang });
+
+  const translationItems = languages.map((lang) => {
+    const location = translations?.find((item) => item.lang === lang)
+      ?.location;
+    return {
+      // deno-lint-ignore no-explicit-any
+      label: t(`locale.${lang}` as any),
+      lang,
+      location,
+    };
+  });
 
   return (
     <html lang={lang}>
@@ -28,7 +43,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
           logo={<a href={href ?? undefined}>Home</a>}
           translation={{
             title: t("ui.language_menu.label"),
-            items: translations ?? [],
+            items: translationItems,
           }}
           lang={lang}
           className="px-4 md:px-8 lg:px-16"

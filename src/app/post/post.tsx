@@ -11,8 +11,7 @@ import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import Article from "~ui/article";
-import Layout, { type TranslationItem } from "@/app/layout.tsx";
-import { localeMap } from "@/language.ts";
+import Layout from "@/app/layout.tsx";
 import PostMeta from "./post_meta.tsx";
 
 export default async function Post(
@@ -50,10 +49,9 @@ export default async function Post(
     };
   }).filter(isTranslationAlternation);
 
-  const translations = toTranslations(alternatives, localeMap);
   const { t } = i18n;
   return (
-    <Layout translations={translations} {...props}>
+    <Layout translations={alternatives} {...props}>
       <PostMeta url={url} fragment={postPage} translations={alternatives} />
 
       <main className="space-y-2 lg:max-w-[65ch] mx-auto">
@@ -72,10 +70,6 @@ export default async function Post(
   );
 }
 
-function isNonNullable<T>(value: T): value is NonNullable<T> {
-  return !!value;
-}
-
 interface NormalizedTranslation {
   slug: string;
   language: string;
@@ -90,23 +84,6 @@ function isTranslationAlternation(
   _: object,
 ): _ is TranslationAlternation {
   return true;
-}
-
-function toTranslations(
-  alternatives: TranslationAlternation[],
-  labelMap: Record<string, string>,
-): TranslationItem[] {
-  return Object.entries(labelMap).map(([lang, label]) => {
-    const alt = alternatives.find((alt) => alt.lang === lang);
-
-    if (!alt) return;
-
-    return {
-      location: alt.location,
-      label,
-      lang,
-    };
-  }).filter(isNonNullable);
 }
 
 function normalizeTranslation(
