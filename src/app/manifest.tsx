@@ -25,7 +25,7 @@ export const Post = PostEntry;
 export function NotFound(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <NotFoundEntry />
+      <NotFoundEntry {...props} />
     </LayoutEntry>
   );
 }
