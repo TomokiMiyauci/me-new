@@ -18,6 +18,7 @@ type Documents = {
     "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    ...Post_post_meta\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": typeof types.PostBySlugDocument,
     "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": typeof types.TranslationBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": typeof types.GetAllPostDocument,
+    "query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}": typeof types.PrivacyPolicyDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n  coverImage {\n    ...Image_image\n  }\n}": typeof types.Article_ArticleFragmentDoc,
     "fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}": typeof types.Image_ImageFragmentDoc,
 };
@@ -26,6 +27,7 @@ const documents: Documents = {
     "query PostBySlug($slug: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}}) {\n    ...Post_post_meta\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": types.PostBySlugDocument,
     "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": types.TranslationBySlugDocument,
     "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}": types.GetAllPostDocument,
+    "query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}": types.PrivacyPolicyDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n  coverImage {\n    ...Image_image\n  }\n}": types.Article_ArticleFragmentDoc,
     "fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}": types.Image_ImageFragmentDoc,
 };
@@ -60,6 +62,10 @@ export function graphql(source: "query TranslationBySlug($id: ID!) {\n  allTrans
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"): (typeof documents)["query GetAllPost($lang: String!) {\n  allPost(where: {language: {eq: $lang}}) {\n    ...Article_article\n    key: _id\n    slug {\n      current\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}"): (typeof documents)["query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

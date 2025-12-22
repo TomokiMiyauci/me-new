@@ -54,6 +54,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
         </div>
 
         <Footer
+          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-40"
           logo={<a href={href ?? undefined}>Home</a>}
           navigation={[
             {
@@ -70,13 +71,13 @@ export default function Layout(props: LayoutProps): JSX.Element {
               items: [
                 {
                   name: t("document.privacy_policy"),
-                  location: "/privacy-policy",
+                  location: resolver.resolve(Entry.PrivacyPolicy, { lang }) ??
+                    "",
                 },
               ],
             },
           ]}
           copyright={t("copyright")}
-          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-16"
         />
       </body>
     </html>

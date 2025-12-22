@@ -1,0 +1,7 @@
+query PrivacyPolicy($lang: String!) {
+  allLegalDocument(
+    where: { type: { eq: "privacy_policy" }, language: { eq: $lang } }
+  ) {
+    bodyRaw
+  }
+}

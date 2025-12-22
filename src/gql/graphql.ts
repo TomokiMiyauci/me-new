@@ -117,7 +117,7 @@ export type CategoryFilter = {
   slug?: InputMaybe<SlugFilter>;
 };
 
-export type CategoryOrPostOrTag = Category | Post | Tag;
+export type CategoryOrLegalDocumentOrPostOrTag = Category | LegalDocument | Post | Tag;
 
 export type CategorySorting = {
   _createdAt?: InputMaybe<SortOrder>;
@@ -413,7 +413,7 @@ export type InternationalizedArrayReferenceValue = {
   __typename?: 'InternationalizedArrayReferenceValue';
   _key?: Maybe<Scalars['String']['output']>;
   _type?: Maybe<Scalars['String']['output']>;
-  value?: Maybe<CategoryOrPostOrTag>;
+  value?: Maybe<CategoryOrLegalDocumentOrPostOrTag>;
 };
 
 export type InternationalizedArrayReferenceValueFilter = {
@@ -443,6 +443,51 @@ export type InternationalizedArrayStringValueSorting = {
   _key?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   value?: InputMaybe<SortOrder>;
+};
+
+export type LegalDocument = Document & {
+  __typename?: 'LegalDocument';
+  /** Date the document was created */
+  _createdAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Document ID */
+  _id?: Maybe<Scalars['ID']['output']>;
+  _key?: Maybe<Scalars['String']['output']>;
+  /** Current document revision */
+  _rev?: Maybe<Scalars['String']['output']>;
+  /** Document type */
+  _type?: Maybe<Scalars['String']['output']>;
+  /** Date the document was last modified */
+  _updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  bodyRaw?: Maybe<Scalars['JSON']['output']>;
+  effectiveAt?: Maybe<Scalars['DateTime']['output']>;
+  language?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+export type LegalDocumentFilter = {
+  /** Apply filters on document level */
+  _?: InputMaybe<Sanity_DocumentFilter>;
+  _createdAt?: InputMaybe<DatetimeFilter>;
+  _id?: InputMaybe<IdFilter>;
+  _key?: InputMaybe<StringFilter>;
+  _rev?: InputMaybe<StringFilter>;
+  _type?: InputMaybe<StringFilter>;
+  _updatedAt?: InputMaybe<DatetimeFilter>;
+  effectiveAt?: InputMaybe<DatetimeFilter>;
+  language?: InputMaybe<StringFilter>;
+  type?: InputMaybe<StringFilter>;
+};
+
+export type LegalDocumentSorting = {
+  _createdAt?: InputMaybe<SortOrder>;
+  _id?: InputMaybe<SortOrder>;
+  _key?: InputMaybe<SortOrder>;
+  _rev?: InputMaybe<SortOrder>;
+  _type?: InputMaybe<SortOrder>;
+  _updatedAt?: InputMaybe<SortOrder>;
+  effectiveAt?: InputMaybe<SortOrder>;
+  language?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
 };
 
 export type Policy = Document & {
@@ -555,6 +600,7 @@ export type RootQuery = {
   Author?: Maybe<Author>;
   Category?: Maybe<Category>;
   Document?: Maybe<Document>;
+  LegalDocument?: Maybe<LegalDocument>;
   Policy?: Maybe<Policy>;
   Post?: Maybe<Post>;
   SanityFileAsset?: Maybe<SanityFileAsset>;
@@ -564,6 +610,7 @@ export type RootQuery = {
   allAuthor: Array<Author>;
   allCategory: Array<Category>;
   allDocument: Array<Document>;
+  allLegalDocument: Array<LegalDocument>;
   allPolicy: Array<Policy>;
   allPost: Array<Post>;
   allSanityFileAsset: Array<SanityFileAsset>;
@@ -584,6 +631,11 @@ export type RootQueryCategoryArgs = {
 
 
 export type RootQueryDocumentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootQueryLegalDocumentArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -639,6 +691,14 @@ export type RootQueryAllDocumentArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Array<DocumentSorting>>;
   where?: InputMaybe<DocumentFilter>;
+};
+
+
+export type RootQueryAllLegalDocumentArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Array<LegalDocumentSorting>>;
+  where?: InputMaybe<LegalDocumentFilter>;
 };
 
 
@@ -1217,6 +1277,7 @@ export type TranslationBySlugQueryVariables = Exact<{
 
 export type TranslationBySlugQuery = { __typename?: 'RootQuery', allTranslationMetadata: Array<{ __typename?: 'TranslationMetadata', translations?: Array<{ __typename?: 'InternationalizedArrayReferenceValue', value?:
         | { __typename: 'Category' }
+        | { __typename: 'LegalDocument' }
         | { __typename: 'Post', language?: string | null, slug?: { __typename?: 'Slug', current?: string | null } | null }
         | { __typename: 'Tag' }
        | null } | null> | null }> };
@@ -1231,6 +1292,13 @@ export type GetAllPostQuery = { __typename?: 'RootQuery', allPost: Array<(
     & { ' $fragmentRefs'?: { 'Article_ArticleFragment': Article_ArticleFragment } }
   )> };
 
+export type PrivacyPolicyQueryVariables = Exact<{
+  lang: Scalars['String']['input'];
+}>;
+
+
+export type PrivacyPolicyQuery = { __typename?: 'RootQuery', allLegalDocument: Array<{ __typename?: 'LegalDocument', bodyRaw?: TypedObject[] | null }> };
+
 export type Article_ArticleFragment = { __typename?: 'Post', _id?: string | null, title?: string | null, description?: string | null, createdAt?: string | null, _createdAt?: string | null, coverImage?: (
     { __typename?: 'Image' }
     & { ' $fragmentRefs'?: { 'Image_ImageFragment': Image_ImageFragment } }
@@ -1244,3 +1312,4 @@ export const Article_ArticleFragmentDoc = {"kind":"Document","definitions":[{"ki
 export const PostBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"current"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Post_post_meta"}},{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"bodyRaw"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Post_post_meta"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"_updatedAt"}}]}}]} as unknown as DocumentNode<PostBySlugQuery, PostBySlugQueryVariables>;
 export const TranslationBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TranslationBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allTranslationMetadata"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"references"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"}}]}},{"kind":"Field","name":{"kind":"Name","value":"language"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<TranslationBySlugQuery, TranslationBySlugQueryVariables>;
 export const GetAllPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lang"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lang"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Article_article"}},{"kind":"Field","alias":{"kind":"Name","value":"key"},"name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Image_image"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Article_article"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Image_image"}}]}}]}}]} as unknown as DocumentNode<GetAllPostQuery, GetAllPostQueryVariables>;
+export const PrivacyPolicyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PrivacyPolicy"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lang"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allLegalDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"StringValue","value":"privacy_policy","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lang"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bodyRaw"}}]}}]}}]} as unknown as DocumentNode<PrivacyPolicyQuery, PrivacyPolicyQueryVariables>;
