@@ -1,3 +1,26 @@
+# [1.7.0](https://github.com/TomokiMiyauci/me-new/compare/1.6.0...1.7.0) (2025-12-22)
+
+
+### Bug Fixes
+
+* fix to use dispose hook ([15eae16](https://github.com/TomokiMiyauci/me-new/commit/15eae16391ffe68b565816a000bd5e34037cff29))
+
+
+### Features
+
+* add alternative links to each components ([1a27ebf](https://github.com/TomokiMiyauci/me-new/commit/1a27ebf293e2f0186e9d4ef611f7f96299cfe510))
+* add daisy ui and icons ([5f642c1](https://github.com/TomokiMiyauci/me-new/commit/5f642c16c28025de6afc1a4fd5a31b38f7b074ab))
+* add ld json ([b1b34e3](https://github.com/TomokiMiyauci/me-new/commit/b1b34e3eb24bd365adcb708ed326677742da9462))
+* add sanity client ([890b965](https://github.com/TomokiMiyauci/me-new/commit/890b9653123b66d950bffeff9cd456447b31c063))
+* add tailwind as deps ([cef3235](https://github.com/TomokiMiyauci/me-new/commit/cef323519015f3b3cf04cf92148ec932859a055a))
+* add translation link to layout ([ffd5c18](https://github.com/TomokiMiyauci/me-new/commit/ffd5c18a428f34645867bdba9c942b9a9bddf27f))
+* add url field to app props ([28aed64](https://github.com/TomokiMiyauci/me-new/commit/28aed6464ab713b8b17625d5d47814a5e7ee4857))
+* change content data source, change query ([92e932b](https://github.com/TomokiMiyauci/me-new/commit/92e932b0571319d11a353433b593b442c7673acc))
+* query cover image and render it ([2eaf82e](https://github.com/TomokiMiyauci/me-new/commit/2eaf82ef3a5af94ba12373e142f804124af63e03))
+* render ogp meta tags ([34c2c14](https://github.com/TomokiMiyauci/me-new/commit/34c2c1420b36d481b323787f3aa772446cb17c09))
+* **ui:** add footer storybook ([ce54870](https://github.com/TomokiMiyauci/me-new/commit/ce54870f349728370130aeed7345d329b35d8363))
+* use urql instead of graphql-request ([002c999](https://github.com/TomokiMiyauci/me-new/commit/002c999753d8cda16a2269705aaeac4d06947826))
+
 # [1.6.0](https://github.com/TomokiMiyauci/me-new/compare/1.5.0...1.6.0) (2025-12-16)
 
 
