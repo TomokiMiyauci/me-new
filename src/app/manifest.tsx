@@ -33,7 +33,7 @@ export function NotFound(props: AppProps): JSX.Element {
 export function Error(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <ErrorEntry />
+      <ErrorEntry {...props} />
     </LayoutEntry>
   );
 }
