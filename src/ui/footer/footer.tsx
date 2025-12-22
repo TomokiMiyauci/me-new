@@ -29,7 +29,7 @@ export default function Footer(
     <footer
       className={clsx(
         className,
-        "space-y-8 md:space-y-24 bg-base-200 pt-8 md:pt-16",
+        "space-y-8 md:space-y-32 bg-base-200 pt-8 pb-2 md:pt-16",
       )}
       {...restProps}
     >

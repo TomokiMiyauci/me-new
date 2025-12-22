@@ -76,7 +76,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
             },
           ]}
           copyright={t("copyright")}
-          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-16 mb-4"
+          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-16"
         />
       </body>
     </html>
