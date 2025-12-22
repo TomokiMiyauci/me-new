@@ -4,13 +4,9 @@ import { type AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
 import { languages } from "@/language.ts";
+import greet from "./greet.json" with { type: "json" };
 
 export default function Home(props: AppProps): JSX.Element {
-  const { lang } = props;
-  const post = resolver.resolve(Entry.Posts, { lang });
-
-  // const { t } = i18n;
-
   return (
     <Layout
       {...props}
@@ -20,10 +16,14 @@ export default function Home(props: AppProps): JSX.Element {
       }))}
     >
       <main>
-        {/* <title>{t("home.title")}</title> */}
-
-        <div>
-          <a href={post ?? undefined}>Posts</a>
+        <div className="min-h-[90vh] grid place-content-center">
+          <span className="text-rotate text-6xl leading-18 md:text-9xl md:leading-40">
+            <span className="justify-items-center">
+              {Object.entries(greet).map(([key, message]) => {
+                return <span key={key}>{message}</span>;
+              })}
+            </span>
+          </span>
         </div>
       </main>
     </Layout>
