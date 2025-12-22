@@ -27,6 +27,7 @@ export default async function Post(
   const decodedSlug = decodeURIComponent(slug);
   const result = await client.request(PostBySlugDocument, {
     slug: decodedSlug,
+    lang,
   });
 
   const postPage = result.allPost[0];

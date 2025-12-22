@@ -1,5 +1,7 @@
-query PostBySlug($slug: String!) {
-  allPost(where: { slug: { current: { eq: $slug } } }) {
+query PostBySlug($slug: String!, $lang: String!) {
+  allPost(
+    where: { slug: { current: { eq: $slug } }, language: { eq: $lang } }
+  ) {
     ...Post_post_meta
     id: _id
     title
