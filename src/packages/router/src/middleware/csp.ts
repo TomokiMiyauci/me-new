@@ -3,8 +3,8 @@ import { randomBytes } from "node:crypto";
 
 export class Csp implements MiddlewareObject<NonceContext> {
   value: string;
-  constructor(value: CspDerectives) {
-    this.value = this.stringify(value);
+  constructor(value: CspDerectives | string) {
+    this.value = typeof value === "string" ? value : this.stringify(value);
   }
   async handle(
     request: Request,

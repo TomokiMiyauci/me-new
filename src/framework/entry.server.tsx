@@ -6,18 +6,18 @@ import { Csp, NonceContext, NonceProvider } from "router/csp";
 import sentryConfig from "~config/sentry";
 import { App, createAssetMiddleware } from "./utils.ts";
 import Redirect from "@/handlers/redirect/middleware.ts";
+import cspValue from "@/csp.json" with { type: "json" };
+import { DeclarativeCsp } from "@/packages/declarative_csp/src/mod.ts";
+
+const declCsp = new DeclarativeCsp(cspValue);
 
 init(sentryConfig);
 
-const csp = dynamic<NonceContext>((_, { nonce }) => {
-  const manifest = {
-    "default-src": ["'none'"],
-    "script-src": [`'nonce-${nonce}'`, "'unsafe-eval'", "'self'"],
-    "style-src": ["'self'", `'unsafe-inline'`],
-    "img-src": ["https:", "data:"],
-    "report-uri": CSP_ENDPOINT ? [CSP_ENDPOINT] : [],
-    "connect-src": ["ws:", "https:", "http:"],
-  };
+const csp = dynamic<NonceContext>((_, { nonce = "" }) => {
+  const manifest = declCsp.format({
+    nonce,
+    endpoint: CSP_ENDPOINT,
+  });
 
   return new Csp(manifest);
 });
