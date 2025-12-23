@@ -94,7 +94,8 @@
     "src/packages/react_app",
     "src/packages/routekit",
     "src/packages/vite_plugin_deno",
-    "src/packages/react_ogp"
+    "src/packages/react_ogp",
+    "src/packages/declarative_csp"
   ],
   "lint": {
     "rules": {

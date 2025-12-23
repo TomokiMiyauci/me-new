@@ -5101,6 +5101,11 @@
       ]
     },
     "members": {
+      "src/packages/declarative_csp": {
+        "dependencies": [
+          "jsr:@miyauci/format@^1.1.0"
+        ]
+      },
       "src/packages/react_ogp": {
         "dependencies": [
           "npm:@types/react@^19.2.7",
