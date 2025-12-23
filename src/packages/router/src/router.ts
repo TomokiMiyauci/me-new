@@ -5,6 +5,7 @@ import type {
   MiddlewareOrMiddlewareObject,
   Route,
 } from "./types.ts";
+import { normalizeMiddleware } from "./utils.ts";
 
 export class Router<T> {
   #routes: Route[] = [];
@@ -84,12 +85,4 @@ function normalizeHandler(handler: HandlerOrHandlerObject): Handler {
   if (typeof handler === "function") return handler;
 
   return handler.handle.bind(handler);
-}
-
-function normalizeMiddleware(
-  middleware: MiddlewareOrMiddlewareObject,
-): Middleware {
-  if (typeof middleware === "function") return middleware;
-
-  return middleware.handle.bind(middleware);
 }
