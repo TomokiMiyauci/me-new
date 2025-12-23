@@ -6,7 +6,8 @@ export function dynamic<T>(
 ): Middleware<T> {
   return (request, next) => {
     const middlewareOrMiddlewareObject = fn(request, next);
-    const x = normalizeMiddleware<T>(middlewareOrMiddlewareObject);
-    return x(request, next);
+    const middleware = normalizeMiddleware<T>(middlewareOrMiddlewareObject);
+
+    return middleware(request, next);
   };
 }
