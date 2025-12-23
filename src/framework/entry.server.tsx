@@ -7,7 +7,7 @@ import sentryConfig from "~config/sentry";
 import { App, createAssetMiddleware } from "./utils.ts";
 import Redirect from "@/handlers/redirect/middleware.ts";
 import cspValue from "@/csp.json" with { type: "json" };
-import { DeclarativeCsp } from "@/packages/declarative_csp/src/mod.ts";
+import { DeclarativeCsp } from "declarative-csp";
 
 const declCsp = new DeclarativeCsp(cspValue);
 
