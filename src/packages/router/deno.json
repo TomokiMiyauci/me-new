@@ -4,7 +4,8 @@
     ".": "./src/mod.ts",
     "./static": "./src/middleware/static.ts",
     "./vite-rsc": "./src/middleware/vite_rsc_assets.ts",
-    "./csp": "./src/middleware/csp.ts"
+    "./csp": "./src/middleware/csp.ts",
+    "./middleware": "./src/middleware/mod.ts"
   },
   "imports": {
     "@/": "./src/",
