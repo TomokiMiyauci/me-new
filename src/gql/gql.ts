@@ -21,6 +21,7 @@ type Documents = {
     "query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}": typeof types.PrivacyPolicyDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n  coverImage {\n    ...Image_image\n  }\n}": typeof types.Article_ArticleFragmentDoc,
     "fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}": typeof types.Image_ImageFragmentDoc,
+    "query Redirect {\n  allRedirect {\n    from\n    to\n    permanent\n  }\n}": typeof types.RedirectDocument,
 };
 const documents: Documents = {
     "fragment Post_post_meta on Post {\n  title\n  description\n  categories {\n    name\n  }\n  tags {\n    name\n  }\n  createdAt\n  _createdAt\n  updatedAt\n  _updatedAt\n}": types.Post_Post_MetaFragmentDoc,
@@ -30,6 +31,7 @@ const documents: Documents = {
     "query PrivacyPolicy($lang: String!) {\n  allLegalDocument(where: {type: {eq: \"privacy_policy\"}, language: {eq: $lang}}) {\n    bodyRaw\n  }\n}": types.PrivacyPolicyDocument,
     "fragment Article_article on Post {\n  _id\n  title\n  description\n  createdAt\n  _createdAt\n  coverImage {\n    ...Image_image\n  }\n}": types.Article_ArticleFragmentDoc,
     "fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}": types.Image_ImageFragmentDoc,
+    "query Redirect {\n  allRedirect {\n    from\n    to\n    permanent\n  }\n}": types.RedirectDocument,
 };
 
 /**
@@ -74,6 +76,10 @@ export function graphql(source: "fragment Article_article on Post {\n  _id\n  ti
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}"): (typeof documents)["fragment Image_image on Image {\n  asset {\n    _id\n    assetId\n    path\n    url\n    metadata {\n      dimensions {\n        width\n        height\n      }\n      lqip\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Redirect {\n  allRedirect {\n    from\n    to\n    permanent\n  }\n}"): (typeof documents)["query Redirect {\n  allRedirect {\n    from\n    to\n    permanent\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
