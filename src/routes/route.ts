@@ -32,4 +32,10 @@ export default {
     }),
     i18n,
   ),
+  [Entry.PrivacyPolicy]: withLang(
+    route(
+      { pathname: () => `/privacy-policy` },
+    ),
+    i18n,
+  ),
 } satisfies Record<Entry, Route>;

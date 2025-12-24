@@ -1,25 +1,36 @@
 import { Router } from "router";
+import { dynamic } from "router/middleware";
 import { init } from "@sentry/deno";
 import { CSP_ENDPOINT } from "~env";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
 import sentryConfig from "~config/sentry";
 import { App, createAssetMiddleware } from "./utils.ts";
+import Redirect from "@/handlers/redirect/middleware.ts";
+import cspValue from "@/csp.json" with { type: "json" };
+import { DeclarativeCsp } from "declarative-csp";
+import { assert } from "@std/assert/assert";
+
+assert(CSP_ENDPOINT);
+
+const declCsp = new DeclarativeCsp(cspValue);
 
 init(sentryConfig);
+
+const csp = dynamic<NonceContext>((_, { nonce = "" }) => {
+  const manifest = declCsp.format({
+    nonce,
+    // deno-lint-ignore no-non-null-assertion
+    endpoint: CSP_ENDPOINT!,
+  });
+
+  return new Csp(manifest);
+});
 
 const router = new Router<NonceContext>();
 router
   .use(new NonceProvider())
-  .use(
-    new Csp((_, { nonce }) => ({
-      "default-src": ["'none'"],
-      "script-src": [`'nonce-${nonce}'`, "'unsafe-eval'", "'self'"],
-      "style-src": ["'self'", `'unsafe-inline'`],
-      "img-src": ["https:", "data:"],
-      "report-uri": CSP_ENDPOINT ? [CSP_ENDPOINT] : [],
-      "connect-src": ["ws:", "https:", "http:"],
-    })),
-  );
+  .use(new Redirect())
+  .use(csp);
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 

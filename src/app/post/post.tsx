@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
-import client from "~lib/graphql-request";
+import client from "~lib/graphql-client";
 import {
   PostBySlugDocument,
   TranslationBySlugDocument,
@@ -25,8 +25,9 @@ export default async function Post(
   }
 
   const decodedSlug = decodeURIComponent(slug);
-  const result = await client.request(PostBySlugDocument, {
+  const result = await client.query(PostBySlugDocument, {
     slug: decodedSlug,
+    lang,
   });
 
   const postPage = result.allPost[0];
@@ -34,7 +35,7 @@ export default async function Post(
 
   if (!postPage || !id) notFound();
 
-  const translationsQuery = await client.request(TranslationBySlugDocument, {
+  const translationsQuery = await client.query(TranslationBySlugDocument, {
     id,
   });
 
@@ -55,11 +56,25 @@ export default async function Post(
       <PostMeta url={url} fragment={postPage} translations={alternatives} />
 
       <main className="space-y-2 lg:max-w-[65ch] mx-auto">
-        <p>
-          <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
-            {t("action.navigation.blog")}
-          </a>
-        </p>
+        <div className="breadcrumbs text-sm">
+          <ul>
+            <li>
+              <a href={resolver.resolve(Entry.Home, { lang }) ?? undefined}>
+                {t("resource.home")}
+              </a>
+            </li>
+            <li>
+              <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
+                {t("resource.blog")}
+              </a>
+            </li>
+            <li>
+              <a href="">
+                {title}
+              </a>
+            </li>
+          </ul>
+        </div>
 
         <Article
           title={title}

@@ -9,13 +9,17 @@
     "privacy_policy": "プライバシーポリシー"
   },
   "category": {
-    "legal": "法的事項",
+    "legal": "法定事項",
     "resource": "リソース"
   },
   "error": {
     "not_found": {
       "message": "ページが見つかりません",
       "details": "お探しのページが見つかりませんでした。"
+    },
+    "unknown_error": {
+      "message": "問題が発生しました",
+      "details": "しばらくしてからもう一度お試しください。"
     }
   },
   "resource": {

@@ -7,6 +7,7 @@ import PostEntry from "./post/post.tsx";
 import LayoutEntry from "./layout.tsx";
 import NotFoundEntry from "./not_found/not_found.tsx";
 import ErrorEntry from "./error/error.tsx";
+import PrivacyPolicyEntry from "./privacy_policy/privacy_policy.tsx";
 
 export function About(props: AppProps): JSX.Element {
   return (
@@ -22,10 +23,12 @@ export const Posts = PostsEntry;
 
 export const Post = PostEntry;
 
+export const PrivaryPolicy = PrivacyPolicyEntry;
+
 export function NotFound(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <NotFoundEntry />
+      <NotFoundEntry {...props} />
     </LayoutEntry>
   );
 }
@@ -33,7 +36,7 @@ export function NotFound(props: AppProps): JSX.Element {
 export function Error(props: AppProps): JSX.Element {
   return (
     <LayoutEntry {...props}>
-      <ErrorEntry />
+      <ErrorEntry {...props} />
     </LayoutEntry>
   );
 }

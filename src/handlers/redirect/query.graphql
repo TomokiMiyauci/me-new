@@ -1,0 +1,7 @@
+query Redirect {
+  allRedirect {
+    from
+    to
+    permanent
+  }
+}

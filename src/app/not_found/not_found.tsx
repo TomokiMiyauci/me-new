@@ -1,11 +1,35 @@
 import type { JSX } from "react";
+import { AppProps } from "@/lib/app.tsx";
+import resolver from "@/lib/link.ts";
+import Entry from "@/routes/entry.ts";
 
-export default function NotFound(): JSX.Element {
+export default function NotFound(props: AppProps): JSX.Element {
+  const { i18n, lang } = props;
+  const { t } = i18n;
+
   return (
-    <main>
-      <h1>Not Found</h1>
+    <>
+      <meta name="robots" content="noindex" />
 
-      <a href="/">Back to Home</a>
-    </main>
+      <main className="grid min-h-[90dvh] place-items-center px-6 py-24 sm:py-32 lg:px-8">
+        <div className="text-center">
+          <p className="text-base font-semibold">404</p>
+          <h1 className="mt-4 text-5xl font-semibold tracking-tight text-balance sm:text-7xl">
+            {t("error.not_found.message")}
+          </h1>
+          <p className="mt-6 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">
+            {t("error.not_found.details")}
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <a
+              href={resolver.resolve(Entry.Home, { lang }) ?? undefined}
+              className="link"
+            >
+              {t("action.navigation.home")}
+            </a>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

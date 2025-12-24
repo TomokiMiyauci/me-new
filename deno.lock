@@ -5101,6 +5101,17 @@
       ]
     },
     "members": {
+      "src/packages/declarative_csp": {
+        "dependencies": [
+          "jsr:@miyauci/format@^1.1.0"
+        ]
+      },
+      "src/packages/graphql_client": {
+        "dependencies": [
+          "npm:@graphql-typed-document-node/core@^3.2.0",
+          "npm:graphql@^16.12.0"
+        ]
+      },
       "src/packages/react_ogp": {
         "dependencies": [
           "npm:@types/react@^19.2.7",

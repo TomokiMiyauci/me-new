@@ -74,7 +74,8 @@
     "~ui/article": "./src/ui/article/article.tsx",
     "~ui/header": "./src/ui/header/header.tsx",
     "~ui/footer": "./src/ui/footer/footer.tsx",
-    "~lib/graphql-request": "./src/lib/graphql_request.ts"
+    "~lib/graphql-request": "./src/lib/graphql_request.ts",
+    "~lib/graphql-client": "./src/lib/graphql_client.ts"
   },
   "nodeModulesDir": "auto",
   "exclude": [
@@ -94,7 +95,9 @@
     "src/packages/react_app",
     "src/packages/routekit",
     "src/packages/vite_plugin_deno",
-    "src/packages/react_ogp"
+    "src/packages/react_ogp",
+    "src/packages/declarative_csp",
+    "src/packages/graphql_client"
   ],
   "lint": {
     "rules": {

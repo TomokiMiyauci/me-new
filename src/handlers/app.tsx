@@ -83,11 +83,10 @@ export default async function handler(
   // so that new render reflects updated state from server function call
   // to achieve single round trip to mutate and fetch from server.
 
-  let status = 200;
-
   const url = new URL(request.url);
   const resolved = resolver.resolve(url);
   const entry = resolved?.key;
+  let status = entry ? 200 : 404;
   const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
   const params = resolved?.params ?? {};
   const i18n = createInstance({ lng: lang });
