@@ -8,6 +8,9 @@ import { App, createAssetMiddleware } from "./utils.ts";
 import Redirect from "@/handlers/redirect/middleware.ts";
 import cspValue from "@/csp.json" with { type: "json" };
 import { DeclarativeCsp } from "declarative-csp";
+import { assert } from "@std/assert/assert";
+
+assert(CSP_ENDPOINT);
 
 const declCsp = new DeclarativeCsp(cspValue);
 
@@ -16,7 +19,8 @@ init(sentryConfig);
 const csp = dynamic<NonceContext>((_, { nonce = "" }) => {
   const manifest = declCsp.format({
     nonce,
-    endpoint: CSP_ENDPOINT,
+    // deno-lint-ignore no-non-null-assertion
+    endpoint: CSP_ENDPOINT!,
   });
 
   return new Csp(manifest);
