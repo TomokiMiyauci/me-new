@@ -1,11 +1,11 @@
 import { Redirection, RedirectRule } from "router/redirection";
 import { MiddlewareObject, Next } from "router";
-import client from "~lib/graphql-request";
+import client from "~lib/graphql-client";
 import { RedirectDocument, RedirectQuery } from "@/gql/graphql.ts";
 
 export default class Redirect implements MiddlewareObject {
   async handle(request: Request, next: Next): Promise<Response> {
-    const result = await client.request(RedirectDocument);
+    const result = await client.query(RedirectDocument);
     const rules = query2Rules(result, request.url);
 
     const mw = new Redirection(rules);

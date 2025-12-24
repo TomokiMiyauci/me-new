@@ -9,7 +9,7 @@ interface Options {
   middleware: MiddlewareOrMiddlewareObject[];
 }
 
-export class GraphqlClient {
+export class GraphQLClient {
   #url: URL;
   #middleware: [...Middleware[], Middleware];
   constructor(url: URL | string, options?: Options) {

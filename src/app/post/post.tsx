@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
-import client from "~lib/graphql-request";
+import client from "~lib/graphql-client";
 import {
   PostBySlugDocument,
   TranslationBySlugDocument,
@@ -25,7 +25,7 @@ export default async function Post(
   }
 
   const decodedSlug = decodeURIComponent(slug);
-  const result = await client.request(PostBySlugDocument, {
+  const result = await client.query(PostBySlugDocument, {
     slug: decodedSlug,
     lang,
   });
@@ -35,7 +35,7 @@ export default async function Post(
 
   if (!postPage || !id) notFound();
 
-  const translationsQuery = await client.request(TranslationBySlugDocument, {
+  const translationsQuery = await client.query(TranslationBySlugDocument, {
     id,
   });
 
