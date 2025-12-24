@@ -1,0 +1,9 @@
+query Blog($lang: String!) {
+  allBlog(where: { language: { eq: $lang } }) {
+    title
+    description
+    coverImage {
+      ...Image_image
+    }
+  }
+}
