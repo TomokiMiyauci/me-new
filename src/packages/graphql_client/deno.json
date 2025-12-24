@@ -1,0 +1,10 @@
+{
+  "name": "graphql-client",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "imports": {
+    "@graphql-typed-document-node/core": "npm:@graphql-typed-document-node/core@^3.2.0",
+    "graphql": "npm:graphql@^16.12.0"
+  }
+}
