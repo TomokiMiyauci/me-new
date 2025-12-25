@@ -1,6 +1,11 @@
-interface Store extends globalThis.Cache {}
+import type { MiddlewareObject } from "../types.ts";
 
-export class WebCache {
+export interface Store {
+  match(reequest: Request): Promise<Response | undefined>;
+  put(request: Request, resopnse: Response): Promise<unknown>;
+}
+
+export class Cache implements MiddlewareObject {
   constructor(public store: Store) {}
 
   async handle(
@@ -13,7 +18,7 @@ export class WebCache {
 
     const response = await next(request);
 
-    await this.store.put(request, response.clone());
+    await this.store.put(request, response);
 
     return response;
   }

@@ -58,7 +58,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
           logo={<a href={href ?? undefined}>Home</a>}
           navigation={[
             {
-              name: t("category.resource"),
+              name: t("category.contents"),
               items: [
                 {
                   name: t("resource.blog"),

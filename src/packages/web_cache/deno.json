@@ -1,0 +1,10 @@
+{
+  "name": "web-cache",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "imports": {
+    "@types/http-cache-semantics": "npm:@types/http-cache-semantics@^4.0.4",
+    "http-cache-semantics": "npm:http-cache-semantics@^4.2.0"
+  }
+}

@@ -5,6 +5,12 @@ export interface GraphQLParameters {
   operationName?: string;
 }
 
+enum Const {
+  Json = "application/json",
+  ResponseJson = "application/graphql-response+json",
+  Accept = "application/graphql-response+json, application/json;q=0.9",
+}
+
 export class GraphqlRequest extends Request {
   constructor(
     input: URL | string,
@@ -35,7 +41,7 @@ class NormalizerForGet implements ParameterNormalizer {
     init: RequestInit,
   ): [URL, RequestInit] {
     const headers = new Headers(init.headers);
-    headers.append("accept", "application/json");
+    headers.append("accept", Const.Accept);
 
     return [resolveGet(url, params), {
       ...init,
@@ -54,8 +60,8 @@ class NormalizerPost implements ParameterNormalizer {
       init.headers,
     );
 
-    headers.append("accept", "application/json");
-    headers.append("content-type", "application/json");
+    headers.append("accept", Const.Accept);
+    headers.append("content-type", Const.Json);
 
     const body = JSON.stringify(params);
 

@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "query Blog($lang: String!) {\n  allBlog(where: {language: {eq: $lang}}) {\n    title\n    description\n    coverImage {\n      ...Image_image\n    }\n  }\n}": typeof types.BlogDocument,
     "fragment Post_post_meta on Post {\n  title\n  description\n  categories {\n    name\n  }\n  tags {\n    name\n  }\n  createdAt\n  _createdAt\n  updatedAt\n  _updatedAt\n}": typeof types.Post_Post_MetaFragmentDoc,
     "query PostBySlug($slug: String!, $lang: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}, language: {eq: $lang}}) {\n    ...Post_post_meta\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": typeof types.PostBySlugDocument,
     "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": typeof types.TranslationBySlugDocument,
@@ -24,6 +25,7 @@ type Documents = {
     "query Redirect {\n  allRedirect {\n    from\n    to\n    permanent\n  }\n}": typeof types.RedirectDocument,
 };
 const documents: Documents = {
+    "query Blog($lang: String!) {\n  allBlog(where: {language: {eq: $lang}}) {\n    title\n    description\n    coverImage {\n      ...Image_image\n    }\n  }\n}": types.BlogDocument,
     "fragment Post_post_meta on Post {\n  title\n  description\n  categories {\n    name\n  }\n  tags {\n    name\n  }\n  createdAt\n  _createdAt\n  updatedAt\n  _updatedAt\n}": types.Post_Post_MetaFragmentDoc,
     "query PostBySlug($slug: String!, $lang: String!) {\n  allPost(where: {slug: {current: {eq: $slug}}, language: {eq: $lang}}) {\n    ...Post_post_meta\n    id: _id\n    title\n    bodyRaw\n    description\n    categories {\n      name\n    }\n    tags {\n      name\n    }\n    _createdAt\n    _updatedAt\n    createdAt\n    updatedAt\n  }\n}": types.PostBySlugDocument,
     "query TranslationBySlug($id: ID!) {\n  allTranslationMetadata(where: {_: {references: $id}}) {\n    translations {\n      value {\n        __typename\n        ... on Post {\n          slug {\n            current\n          }\n          language\n        }\n      }\n    }\n  }\n}": types.TranslationBySlugDocument,
@@ -48,6 +50,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Blog($lang: String!) {\n  allBlog(where: {language: {eq: $lang}}) {\n    title\n    description\n    coverImage {\n      ...Image_image\n    }\n  }\n}"): (typeof documents)["query Blog($lang: String!) {\n  allBlog(where: {language: {eq: $lang}}) {\n    title\n    description\n    coverImage {\n      ...Image_image\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

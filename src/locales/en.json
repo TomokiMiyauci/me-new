@@ -10,7 +10,7 @@
   },
   "category": {
     "legal": "Legal",
-    "resource": "Resource"
+    "contents": "Contents"
   },
   "error": {
     "not_found": {
