@@ -21,17 +21,22 @@ export default function ArticleSummary(
   const { title, excerpt, date, img } = props;
 
   return (
-    <article className="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none">
-      <div className="p-6 max-sm:pb-0 sm:max-w-48 sm:pe-0">
-        {img}
+    <article className="flex max-w-xl flex-col items-start justify-between">
+      {img && (
+        <div className="mb-4">
+          {img}
+        </div>
+      )}
+
+      <div className="flex items-center gap-x-4 text-xs">
+        {date && <FormmattedDate {...date}></FormmattedDate>}
       </div>
-      <div className="card-body">
-        <h2 className="card-title font-title">{title}</h2>
-        <p className="text-xs opacity-60">{excerpt}</p>
-        <p>
-          <small>
-            {date && <FormmattedDate {...date}></FormmattedDate>}
-          </small>
+
+      <div className="group relative grow">
+        <h2 className="mt-3 text-lg/6 font-semibold">{title}</h2>
+
+        <p className="mt-5 line-clamp-3 text-sm/6">
+          {excerpt}
         </p>
       </div>
     </article>

@@ -1,4 +1,4 @@
-import { GetAllPostDocument } from "@/gql/graphql.ts";
+import { GetAllPostDocument, GetBlogDocument } from "@/gql/graphql.ts";
 import ArticleFragment from "@/components/article/article.tsx";
 import client from "~lib/graphql-client";
 import type { JSX } from "react";
@@ -9,9 +9,14 @@ import { languages } from "@/language.ts";
 import Layout from "@/app/layout.tsx";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
-  const { lang, i18n } = props;
-  const result = await client.query(GetAllPostDocument, { lang });
-  const { t } = i18n;
+  const { lang } = props;
+  const [result, blog] = await Promise.all([
+    client.query(GetAllPostDocument, { lang }),
+    client.query(GetBlogDocument, { lang }),
+  ]);
+
+  const title = blog.allBlog[0]?.title;
+  const description = blog.allBlog[0]?.description;
   return (
     <Layout
       {...props}
@@ -20,15 +25,18 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}
     >
-      <main>
-        <section>
-          <h1 className="text-9xl text-center mt-32 mb-24">
-            {t("resource.blog")}
+      <main className="mt-4 mb-32 sm:mt-24">
+        <section className="mx-auto max-w-2xl lg:mx-0">
+          <h1 className="text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+            {title}
           </h1>
+          <p className="mt-2 text-lg/8">
+            {description}
+          </p>
         </section>
 
-        <section className="max-w-[65ch] mx-auto mt-48 mb-64">
-          <ul className="grid justify-items-stretch gap-6">
+        <section>
+          <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {result.allPost.map((article) => {
               const slug = article.slug?.current ?? "";
               const href = resolver.resolve(Entry.Post, { slug, lang });

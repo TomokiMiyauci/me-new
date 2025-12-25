@@ -7,3 +7,10 @@ query GetAllPost($lang: String!) {
     }
   }
 }
+
+query GetBlog($lang: String!) {
+  allBlog(where: { language: { eq: $lang } }) {
+    title
+    description
+  }
+}
