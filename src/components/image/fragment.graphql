@@ -1,4 +1,4 @@
-fragment Image_image on Image {
+fragment Image on Image {
   asset {
     _id
     assetId

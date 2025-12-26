@@ -3,7 +3,7 @@ query Blog($lang: String!) {
     title
     description
     coverImage {
-      ...Image_image
+      ...Image
     }
   }
 }

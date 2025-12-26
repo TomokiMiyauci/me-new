@@ -1,11 +1,11 @@
 import type { JSX } from "react";
-import type { Image_ImageFragment } from "./fragment.ts";
+import type { ImageFragment } from "./fragment.ts";
 import { Img, SanityImageObject } from "@biggleszx/react-sanity-image";
 import client from "@/lib/sanity_client.ts";
 import { SanityAsset } from "@sanity/image-url";
 
 export interface ImageProps {
-  fragment: Image_ImageFragment;
+  fragment: ImageFragment;
 }
 
 interface ImgImage extends SanityAsset, SanityImageObject {}
@@ -20,7 +20,7 @@ export default function Image(props: ImageProps): JSX.Element {
   return <Img client={client} image={fragment} />;
 }
 
-function validate(value: Image_ImageFragment): value is ImgImage {
+function validate(value: ImageFragment): value is ImgImage {
   if (
     !value.asset ||
     !value.asset.metadata ||
