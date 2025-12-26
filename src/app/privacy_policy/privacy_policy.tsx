@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { AppProps } from "@/lib/app.tsx";
 import Layout from "@/app/layout.tsx";
-import { PrivacyPolicyDocument } from "./query.ts";
+import { PrivacyPolicyDocument } from "./document.ts";
 import client from "~lib/graphql-client";
 import { notFound } from "react-app";
 import { PortableText } from "@portabletext/react";
