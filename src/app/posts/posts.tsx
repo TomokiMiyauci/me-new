@@ -1,5 +1,8 @@
 // TODO(miyauci): use ./query.ts but lint error occurs
-import { GetAllPostDocument, GetBlogDocument } from "@/app/posts/query.ts";
+import {
+  ArticlesByLangDocument,
+  BlogByLangDocument,
+} from "@/app/posts/document.ts";
 import ArticleFragment from "@/components/article/article.tsx";
 import client from "~lib/graphql-client";
 import type { JSX } from "react";
@@ -12,12 +15,12 @@ import Layout from "@/app/layout.tsx";
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
   const { lang } = props;
   const [result, blog] = await Promise.all([
-    client.query(GetAllPostDocument, { lang }),
-    client.query(GetBlogDocument, { lang }),
+    client.query(ArticlesByLangDocument, { lang }),
+    client.query(BlogByLangDocument, { lang }),
   ]);
 
-  const title = blog.allBlog[0]?.title;
-  const description = blog.allBlog[0]?.description;
+  const title = blog.blogs[0]?.title;
+  const description = blog.blogs[0]?.description;
   return (
     <Layout
       {...props}
@@ -38,7 +41,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
 
         <section>
           <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {result.allPost.map((article) => {
+            {result.articles.map((article) => {
               const slug = article.slug?.current ?? "";
               const href = resolver.resolve(Entry.Post, { slug, lang });
 
