@@ -3,7 +3,7 @@ import {
   ArticlesByLangDocument,
   BlogByLangDocument,
 } from "@/app/posts/document.ts";
-import ArticleFragment from "@/components/article/article.tsx";
+import ArticleFragment from "@/fragments/article/article.tsx";
 import client from "~lib/graphql-client";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";

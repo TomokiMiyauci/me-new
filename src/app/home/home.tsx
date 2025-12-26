@@ -7,7 +7,7 @@ import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
 import client from "~lib/graphql-client";
 import { BlogDocument } from "./document.ts";
-import Image from "@/components/image/image.tsx";
+import Image from "@/fragments/image/image.tsx";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
   const { lang, i18n } = props;
