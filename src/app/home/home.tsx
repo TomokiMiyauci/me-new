@@ -6,7 +6,7 @@ import Layout from "../layout.tsx";
 import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
 import client from "~lib/graphql-client";
-import { BlogDocument } from "@/gql/graphql.ts";
+import { BlogDocument } from "./query.ts";
 import Image from "@/components/image/image.tsx";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {

@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
 import { type TechArticle } from "schema-dts";
-import type { Post_Post_MetaFragment } from "@/gql/graphql.ts";
+import type { Post_Post_MetaFragment } from "./fragment.ts";
 
 export interface PostMetaFragmentProps {
   fragment: Post_Post_MetaFragment;

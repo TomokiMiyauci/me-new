@@ -1,4 +1,4 @@
-import type { Article_ArticleFragment } from "@/gql/graphql.ts";
+import type { Article_ArticleFragment } from "./fragment.ts";
 import type { JSX } from "react";
 import ArticleSummary, { type ArticleSummaryProps } from "~ui/article-summary";
 import Image from "../image/image.tsx";

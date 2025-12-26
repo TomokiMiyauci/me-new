@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import type { Image_ImageFragment } from "@/gql/graphql.ts";
+import type { Image_ImageFragment } from "./fragment.ts";
 import { Img, SanityImageObject } from "@biggleszx/react-sanity-image";
 import client from "@/lib/sanity_client.ts";
 import { SanityAsset } from "@sanity/image-url";

@@ -1,0 +1,15 @@
+// deno-lint-ignore-file
+// deno-fmt-ignore-file
+import * as Types from '../../graphql/types.ts';
+
+import type { TypedObject } from "@portabletext/types";
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type BlogQueryVariables = Types.Exact<{
+  lang: Types.Scalars['String']['input'];
+}>;
+
+
+export type BlogQuery = { __typename?: 'RootQuery', allBlog: Array<{ __typename?: 'Blog', title?: string | null, description?: string | null, coverImage?: { __typename?: 'Image', asset?: { __typename?: 'SanityImageAsset', _id?: string | null, assetId?: string | null, path?: string | null, url?: string | null, metadata?: { __typename?: 'SanityImageMetadata', lqip?: string | null, dimensions?: { __typename?: 'SanityImageDimensions', width?: number | null, height?: number | null } | null } | null } | null } | null }> };
+
+
+export const BlogDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Blog"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lang"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allBlog"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lang"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Image_image"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Image_image"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}}]}}]}}]} as unknown as DocumentNode<BlogQuery, BlogQueryVariables>;

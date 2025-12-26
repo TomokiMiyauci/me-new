@@ -1,0 +1,9 @@
+// deno-lint-ignore-file
+// deno-fmt-ignore-file
+import * as Types from '../../graphql/types.ts';
+
+import type { TypedObject } from "@portabletext/types";
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Post_Post_MetaFragment = { __typename?: 'Post', title?: string | null, description?: string | null, createdAt?: string | null, _createdAt?: string | null, updatedAt?: string | null, _updatedAt?: string | null, categories?: Array<{ __typename?: 'Category', name?: string | null } | null> | null, tags?: Array<{ __typename?: 'Tag', name?: string | null } | null> | null };
+
+export const Post_Post_MetaFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Post_post_meta"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"_createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"_updatedAt"}}]}}]} as unknown as DocumentNode<Post_Post_MetaFragment, unknown>;

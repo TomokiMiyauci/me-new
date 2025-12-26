@@ -122,9 +122,9 @@
         "prefer-ascii"
       ]
     },
-    "exclude": ["./src/gql"]
+    "exclude": ["./src/graphql"]
   },
   "fmt": {
-    "exclude": ["./src/gql"]
+    "exclude": ["./src/graphql"]
   }
 }

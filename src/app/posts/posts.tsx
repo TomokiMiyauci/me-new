@@ -1,4 +1,5 @@
-import { GetAllPostDocument, GetBlogDocument } from "@/gql/graphql.ts";
+// TODO(miyauci): use ./query.ts but lint error occurs
+import { GetAllPostDocument, GetBlogDocument } from "@/app/posts/query.ts";
 import ArticleFragment from "@/components/article/article.tsx";
 import client from "~lib/graphql-client";
 import type { JSX } from "react";

@@ -5,7 +5,7 @@ import {
   PostBySlugDocument,
   TranslationBySlugDocument,
   TranslationBySlugQuery,
-} from "@/gql/graphql.ts";
+} from "./query.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
