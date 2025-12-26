@@ -5,7 +5,7 @@ import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import { AppProps } from "@/lib/app.tsx";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import Layout from "@/app/layout.tsx";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
@@ -20,7 +20,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
   return (
     <Layout
       {...props}
-      translations={languages.map((lang) => ({
+      translations={language.languages.map((lang) => ({
         lang,
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}

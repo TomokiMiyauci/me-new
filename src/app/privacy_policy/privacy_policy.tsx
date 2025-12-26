@@ -5,7 +5,7 @@ import { PrivacyPolicyDocument } from "@/gql/graphql.ts";
 import client from "~lib/graphql-client";
 import { notFound } from "react-app";
 import { PortableText } from "@portabletext/react";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 
@@ -23,7 +23,7 @@ export default async function PrivacyPolicy(
   return (
     <Layout
       {...props}
-      translations={languages.map((lang) => ({
+      translations={language.languages.map((lang) => ({
         lang,
         location: resolver.resolve(Entry.PrivacyPolicy, { lang }) ?? "",
       }))}

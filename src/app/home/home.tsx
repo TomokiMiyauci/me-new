@@ -3,7 +3,7 @@ import resolver from "@/lib/link.ts";
 import { type AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
 import client from "~lib/graphql-client";
 import { BlogDocument } from "@/gql/graphql.ts";
@@ -21,7 +21,7 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
   return (
     <Layout
       {...props}
-      translations={languages.map((lang) => ({
+      translations={language.languages.map((lang) => ({
         lang,
         location: resolver.resolve(Entry.Home, { lang }) ?? undefined,
       }))}

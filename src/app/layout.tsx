@@ -5,7 +5,7 @@ import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import Header from "~ui/header";
 import Footer from "~ui/footer";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
   translations?: TranslationItem[];
@@ -21,7 +21,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
   const { t } = i18n;
   const href = resolver.resolve(Entry.Home, { lang });
 
-  const translationItems = languages.map((lang) => {
+  const translationItems = language.languages.map((lang) => {
     const location = translations?.find((item) => item.lang === lang)
       ?.location;
     return {

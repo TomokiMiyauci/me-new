@@ -1,5 +1,5 @@
 import { type InitOptions } from "i18next";
-import { i18n as i } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import enTranslation from "@/locales/en.json" with {
   type: "json",
 };
@@ -8,7 +8,7 @@ import jaTranslation from "@/locales/ja.json" with {
 };
 
 export default {
-  fallbackLng: i.defaultLang,
+  fallbackLng: language.default,
   resources: {
     en: {
       translation: enTranslation,
@@ -25,7 +25,7 @@ declare module "i18next" {
   // Extend CustomTypeOptions
   interface CustomTypeOptions {
     // custom namespace type, if you changed it
-    defaultNS: typeof i["defaultLang"];
+    defaultNS: "en";
     // custom resources type
     resources: {
       en: typeof enTranslation;

@@ -18,7 +18,7 @@ import { isNotFoundErrorLike } from "react-app";
 import { captureException } from "@sentry/deno";
 import { NonceContext } from "router/csp";
 import { URLResolver } from "route-kit";
-import { i18n as langConfig } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import i18nConfig from "@/i18next.config.ts";
 import { createInstance } from "i18next";
 import { injectRSCPayload } from "rsc-html-stream/server";
@@ -87,7 +87,7 @@ export default async function handler(
   const resolved = resolver.resolve(url);
   const entry = resolved?.key;
   let status = entry ? 200 : 404;
-  const lang = resolved?.params["lang"] ?? langConfig.defaultLang;
+  const lang = resolved?.params["lang"] ?? language.default;
   const params = resolved?.params ?? {};
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
