@@ -1,6 +1,8 @@
 import type { ArticleFragment } from "./fragment.ts";
 import type { JSX } from "react";
-import ArticleSummary, { type ArticleSummaryProps } from "~ui/article-summary";
+import ArticleSummary, {
+  type ArticleSummaryProps,
+} from "~component/article-summary";
 import Image from "../image/image.tsx";
 
 export interface ArticleProps {

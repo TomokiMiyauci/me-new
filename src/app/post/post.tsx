@@ -10,7 +10,7 @@ import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
-import Article from "~ui/article";
+import Article from "~component/article";
 import Layout from "@/app/layout.tsx";
 import PostMeta from "./post_meta.tsx";
 
