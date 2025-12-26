@@ -1,18 +1,16 @@
-import type { Article_ArticleFragment } from "./fragment.ts";
+import type { ArticleFragment } from "./fragment.ts";
 import type { JSX } from "react";
 import ArticleSummary, { type ArticleSummaryProps } from "~ui/article-summary";
 import Image from "../image/image.tsx";
 
-export interface ArticleFragmentProps {
+export interface ArticleProps {
   lang: string;
-  fragment: Article_ArticleFragment;
+  fragment: ArticleFragment;
 }
 
-export default function ArticleFragment(
-  props: ArticleFragmentProps,
-): JSX.Element {
+export default function Article(props: ArticleProps): JSX.Element {
   const { fragment, lang } = props;
-  const articleSummaryProps = articleFragmentToArticleSummaryProps(
+  const articleSummaryProps = fragmentToArticleSummaryProps(
     fragment,
     { lang },
   );
@@ -20,8 +18,8 @@ export default function ArticleFragment(
   return <ArticleSummary {...articleSummaryProps} />;
 }
 
-function articleFragmentToArticleSummaryProps(
-  fragment: Article_ArticleFragment,
+function fragmentToArticleSummaryProps(
+  fragment: ArticleFragment,
   ctx: { lang: string },
 ): ArticleSummaryProps {
   const {

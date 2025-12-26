@@ -1,6 +1,6 @@
 query GetAllPost($lang: String!) {
   allPost(where: { language: { eq: $lang } }) {
-    ...Article_article
+    ...Article
     key: _id
     slug {
       current
