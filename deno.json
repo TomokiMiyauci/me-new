@@ -70,12 +70,9 @@
     "@/": "./src/",
     "~config/sentry": "./src/sentry.config.ts",
     "~env": "./src/env.ts",
-    "~component/article-summary": "./src/components/article_summary/article_summary.tsx",
-    "~component/article": "./src/components/article/article.tsx",
-    "~component/header": "./src/components/header/header.tsx",
-    "~component/footer": "./src/components/footer/footer.tsx",
     "~lib/graphql-request": "./src/lib/graphql_request.ts",
-    "~lib/graphql-client": "./src/lib/graphql_client.ts"
+    "~lib/graphql-client": "./src/lib/graphql_client.ts",
+    "~component": "./src/modules/component.ts"
   },
   "nodeModulesDir": "auto",
   "exclude": [

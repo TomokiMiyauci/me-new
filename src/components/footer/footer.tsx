@@ -1,7 +1,7 @@
 import type { DetailedHTMLProps, HTMLAttributes, JSX, ReactNode } from "react";
 import { clsx } from "clsx";
 
-interface FooterProps {
+export interface FooterProps {
   logo: ReactNode;
   navigation?: Navigation[];
   copyright?: string;

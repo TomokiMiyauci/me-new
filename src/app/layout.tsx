@@ -3,8 +3,7 @@ import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-import Header from "~component/header";
-import Footer from "~component/footer";
+import { Footer, Header } from "~component";
 import language from "@/language.json" with { type: "json" };
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
