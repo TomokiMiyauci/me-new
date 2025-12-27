@@ -43,6 +43,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
           translation={{
             title: t("ui.language_menu.label"),
             items: translationItems,
+            usage: t("ui.language_menu.description"),
           }}
           lang={lang}
           className="px-4 md:px-8 lg:px-16"
