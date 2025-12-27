@@ -11,16 +11,23 @@ import Entry from "@/routes/entry.ts";
 import { AppProps } from "@/lib/app.tsx";
 import language from "@/language.json" with { type: "json" };
 import Layout from "@/app/layout.tsx";
+import { notFound } from "react-app";
+import { SeoMeta } from "react-meta";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
   const { lang } = props;
-  const [result, blog] = await Promise.all([
+  const [result, blogByLangQuery] = await Promise.all([
     client.query(ArticlesByLangDocument, { lang }),
     client.query(BlogByLangDocument, { lang }),
   ]);
 
-  const title = blog.blogs[0]?.title;
-  const description = blog.blogs[0]?.description;
+  const blog = blogByLangQuery.blogs[0];
+
+  if (!blog) notFound();
+
+  const title = blog.title;
+  const description = blog.description;
+
   return (
     <Layout
       {...props}
@@ -29,6 +36,10 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}
     >
+      <SeoMeta
+        title={title ?? undefined}
+        description={description ?? undefined}
+      />
       <main className="mt-4 mb-32 sm:mt-24">
         <section className="mx-auto max-w-2xl lg:mx-0">
           <h1 className="text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
