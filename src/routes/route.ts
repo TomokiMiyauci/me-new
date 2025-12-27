@@ -4,13 +4,6 @@ import language from "@/language.json" with { type: "json" };
 import Entry from "./entry.ts";
 
 export default {
-  [Entry.About]: withLang(
-    route({
-      pathname: () => "/about",
-    }),
-    language,
-  ),
-
   [Entry.Home]: withLang(
     route({
       pathname: () => "/",
