@@ -12,7 +12,7 @@ import { PortableText } from "@portabletext/react";
 import { Article } from "~component";
 import Layout from "@/app/layout.tsx";
 import PostMeta from "./post_meta.tsx";
-import client from "@/lib/apollo_client.ts";
+import { apolloClient } from "~lib";
 
 export default async function Post(
   props: AppProps,
@@ -25,7 +25,7 @@ export default async function Post(
   }
 
   const decodedSlug = decodeURIComponent(slug);
-  const result = await client.query({
+  const result = await apolloClient.query({
     query: PostBySlugDocument,
     variables: { slug: decodedSlug, lang },
   });
@@ -39,7 +39,7 @@ export default async function Post(
 
   if (!postPage || !id) notFound();
 
-  const translationsQuery = await client.query({
+  const translationsQuery = await apolloClient.query({
     query: TranslationBySlugDocument,
     variables: { id },
   });

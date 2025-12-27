@@ -12,13 +12,13 @@ import language from "@/language.json" with { type: "json" };
 import Layout from "@/app/layout.tsx";
 import { notFound } from "react-app";
 import { SeoMeta } from "react-meta";
-import client from "@/lib/apollo_client.ts";
+import { apolloClient } from "~lib";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
   const { lang } = props;
   const [result, blogByLangQuery] = await Promise.all([
-    client.query({ query: ArticlesByLangDocument, variables: { lang } }),
-    client.query({ query: BlogByLangDocument, variables: { lang } }),
+    apolloClient.query({ query: ArticlesByLangDocument, variables: { lang } }),
+    apolloClient.query({ query: BlogByLangDocument, variables: { lang } }),
   ]);
 
   if (!blogByLangQuery.data) {

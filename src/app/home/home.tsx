@@ -7,12 +7,12 @@ import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
 import { BlogDocument } from "./document.ts";
 import Picture from "@/fragments/picture/picture.tsx";
-import client from "@/lib/apollo_client.ts";
+import { apolloClient } from "~lib";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
   const { lang, i18n } = props;
 
-  const queryResult = await client.query({
+  const queryResult = await apolloClient.query({
     query: BlogDocument,
     variables: { lang },
   });

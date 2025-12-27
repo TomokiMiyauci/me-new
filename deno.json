@@ -70,9 +70,8 @@
     "@/": "./src/",
     "~config/sentry": "./src/sentry.config.ts",
     "~env": "./src/env.ts",
-    "~lib/graphql-request": "./src/lib/graphql_request.ts",
-    "~lib/graphql-client": "./src/lib/graphql_client.ts",
-    "~component": "./src/modules/component.ts"
+    "~component": "./src/modules/component.ts",
+    "~lib": "./src/modules/lib.ts"
   },
   "nodeModulesDir": "auto",
   "exclude": [

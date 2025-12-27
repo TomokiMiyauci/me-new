@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { AppProps } from "@/lib/app.tsx";
 import Layout from "@/app/layout.tsx";
 import { PrivacyPolicyDocument } from "./document.ts";
-import client from "@/lib/apollo_client.ts";
+import { apolloClient } from "~lib";
 import { notFound } from "react-app";
 import { PortableText } from "@portabletext/react";
 import language from "@/language.json" with { type: "json" };
@@ -14,7 +14,7 @@ export default async function PrivacyPolicy(
 ): Promise<JSX.Element> {
   const { lang, i18n } = props;
 
-  const queryResult = await client.query({
+  const queryResult = await apolloClient.query({
     query: PrivacyPolicyDocument,
     variables: { lang },
   });
