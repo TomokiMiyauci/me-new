@@ -95,7 +95,8 @@
     "src/packages/react_ogp",
     "src/packages/declarative_csp",
     "src/packages/graphql_client",
-    "src/packages/web_cache"
+    "src/packages/web_cache",
+    "src/packages/react_meta"
   ],
   "lint": {
     "rules": {
