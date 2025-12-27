@@ -1,35 +1,62 @@
-import { GetAllPostDocument } from "@/gql/graphql.ts";
-import ArticleFragment from "@/components/article/article.tsx";
-import client from "~lib/graphql-client";
+// TODO(miyauci): use ./query.ts but lint error occurs
+import {
+  ArticlesByLangDocument,
+  BlogByLangDocument,
+} from "@/app/posts/document.ts";
+import ArticleFragment from "@/fragments/article/article.tsx";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import { AppProps } from "@/lib/app.tsx";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import Layout from "@/app/layout.tsx";
+import { notFound } from "react-app";
+import { SeoMeta } from "react-meta";
+import { apolloClient } from "~lib";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
-  const { lang, i18n } = props;
-  const result = await client.query(GetAllPostDocument, { lang });
-  const { t } = i18n;
+  const { lang } = props;
+  const [result, blogByLangQuery] = await Promise.all([
+    apolloClient.query({ query: ArticlesByLangDocument, variables: { lang } }),
+    apolloClient.query({ query: BlogByLangDocument, variables: { lang } }),
+  ]);
+
+  if (!blogByLangQuery.data) {
+    throw new Error(blogByLangQuery.error?.message);
+  }
+
+  const blog = blogByLangQuery.data.blogs[0];
+
+  if (!blog) notFound();
+
+  const title = blog.title;
+  const description = blog.description;
+
   return (
     <Layout
       {...props}
-      translations={languages.map((lang) => ({
+      translations={language.languages.map((lang) => ({
         lang,
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}
     >
-      <main>
-        <section>
-          <h1 className="text-9xl text-center mt-32 mb-24">
-            {t("resource.blog")}
+      <SeoMeta
+        title={title ?? undefined}
+        description={description ?? undefined}
+      />
+      <main className="mt-4 mb-32 sm:mt-24">
+        <section className="mx-auto max-w-2xl lg:mx-0">
+          <h1 className="text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+            {title}
           </h1>
+          <p className="mt-2 text-lg/8">
+            {description}
+          </p>
         </section>
 
-        <section className="max-w-[65ch] mx-auto mt-48 mb-64">
-          <ul className="grid justify-items-stretch gap-6">
-            {result.allPost.map((article) => {
+        <section>
+          <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {result.data?.articles.map((article) => {
               const slug = article.slug?.current ?? "";
               const href = resolver.resolve(Entry.Post, { slug, lang });
 

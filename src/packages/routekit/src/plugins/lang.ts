@@ -3,11 +3,11 @@ import type { Params, Route } from "../types.ts";
 export function withLang<T extends Params>(
   route: Route<T>,
   config: {
-    defaultLang: string;
-    alternatives: readonly string[];
+    default: string;
+    languages: readonly string[];
   },
 ): Route<T & { lang: string }> {
-  const versions = ["default", "alternatives"] as const;
+  const versions = ["default", "languages"] as const;
 
   const entries = versions.flatMap((version) => {
     return route.entries.map((entry) => {
@@ -18,7 +18,7 @@ export function withLang<T extends Params>(
       }
 
       function condition(params: T & { lang: string }): boolean {
-        if (config.alternatives.includes(params.lang)) return false;
+        if (config.languages.includes(params.lang)) return false;
 
         if (!entry.condition) return true;
 
@@ -26,7 +26,7 @@ export function withLang<T extends Params>(
       }
 
       function conditionJs(params: T & { lang: string }): boolean {
-        if (!config.alternatives.includes(params.lang)) return false;
+        if (!config.languages.includes(params.lang)) return false;
         if (!entry.condition) return true;
 
         return entry.condition(params);
@@ -40,7 +40,7 @@ export function withLang<T extends Params>(
           };
         }
 
-        case "alternatives": {
+        case "languages": {
           return {
             condition: conditionJs,
             pathname,

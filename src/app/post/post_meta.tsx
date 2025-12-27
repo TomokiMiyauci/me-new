@@ -2,7 +2,8 @@ import type { JSX } from "react";
 import { Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
 import { type TechArticle } from "schema-dts";
-import type { Post_Post_MetaFragment } from "@/gql/graphql.ts";
+import type { Post_Post_MetaFragment } from "./fragment.ts";
+import { SeoMeta } from "react-meta";
 
 export interface PostMetaFragmentProps {
   fragment: Post_Post_MetaFragment;
@@ -67,23 +68,6 @@ export default function PostMetaFragment(
           />
         );
       })}
-    </>
-  );
-}
-
-interface SeoMetaProps {
-  title?: string;
-  description?: string;
-  canonical?: string;
-}
-
-function SeoMeta(props: SeoMetaProps): JSX.Element {
-  const { title, description, canonical } = props;
-  return (
-    <>
-      {title && <title>{title}</title>}
-      {description && <meta name="description" content={description}></meta>}
-      {canonical && <link rel="canonical" href={canonical} />}
     </>
   );
 }

@@ -3,9 +3,8 @@ import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-import Header from "~ui/header";
-import Footer from "~ui/footer";
-import { languages } from "@/language.ts";
+import { Footer, Header } from "~component";
+import language from "@/language.json" with { type: "json" };
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
   translations?: TranslationItem[];
@@ -21,7 +20,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
   const { t } = i18n;
   const href = resolver.resolve(Entry.Home, { lang });
 
-  const translationItems = languages.map((lang) => {
+  const translationItems = language.languages.map((lang) => {
     const location = translations?.find((item) => item.lang === lang)
       ?.location;
     return {
@@ -44,6 +43,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
           translation={{
             title: t("ui.language_menu.label"),
             items: translationItems,
+            usage: t("ui.language_menu.description"),
           }}
           lang={lang}
           className="px-4 md:px-8 lg:px-16"

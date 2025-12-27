@@ -11,6 +11,7 @@ export interface HeaderProps {
 export interface Translation {
   title: string;
   items: TranslationItem[];
+  usage?: string;
 }
 
 export interface TranslationItem {
@@ -40,6 +41,7 @@ export default function Header(
             className="btn"
             popoverTarget="popover-1"
             style={{ anchorName: "--anchor-1" }}
+            aria-label={translation.usage}
           >
             <MdGTranslate size={24} />
           </button>

@@ -1,61 +1,24 @@
-import type { Article_ArticleFragment } from "@/gql/graphql.ts";
-import type { JSX } from "react";
-import ArticleSummary, { type ArticleSummaryProps } from "~ui/article-summary";
-import Image from "../image/image.tsx";
+import type { JSX, ReactNode } from "react";
+import clsx from "clsx";
 
-export interface ArticleFragmentProps {
-  lang: string;
-  fragment: Article_ArticleFragment;
+export interface ArticleProps {
+  title: string;
+  body?: ReactNode;
 }
 
-export default function ArticleFragment(
-  props: ArticleFragmentProps,
+export default function Article(
+  props:
+    & ArticleProps
+    & JSX.IntrinsicElements["article"],
 ): JSX.Element {
-  const { fragment, lang } = props;
-  const articleSummaryProps = articleFragmentToArticleSummaryProps(
-    fragment,
-    { lang },
+  const { title, body, ...rest } = props;
+  const { className, ...restProps } = rest;
+
+  return (
+    <article className={clsx(className, "prose max-w-none")} {...restProps}>
+      <h1>{title}</h1>
+
+      {body && <section>{body}</section>}
+    </article>
   );
-
-  return <ArticleSummary {...articleSummaryProps} />;
-}
-
-function articleFragmentToArticleSummaryProps(
-  fragment: Article_ArticleFragment,
-  ctx: { lang: string },
-): ArticleSummaryProps {
-  const {
-    title,
-    _createdAt,
-    description,
-    createdAt: specifiedCreatedAt,
-    coverImage,
-  } = fragment;
-  const excerpt = description ?? undefined;
-  const createdAt = (specifiedCreatedAt ?? _createdAt) ?? undefined;
-  const date = createdAt
-    ? {
-      dateTime: new Date(createdAt).toISOString(),
-      label: new Date(createdAt).toLocaleDateString(ctx.lang, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-    }
-    : undefined;
-
-  const props = {
-    title: title ?? "",
-    excerpt,
-    date,
-    img: (
-      coverImage && (
-        <figure>
-          <Image fragment={coverImage} />
-        </figure>
-      )
-    ),
-  } satisfies ArticleSummaryProps;
-
-  return props;
 }

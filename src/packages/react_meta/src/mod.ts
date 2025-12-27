@@ -1,0 +1,1 @@
+export { default as SeoMeta, type SeoMetaProps } from "./seo_meta.tsx";

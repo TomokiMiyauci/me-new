@@ -1,10 +1,10 @@
-fragment Article_article on Post {
+fragment Article on Post {
   _id
   title
   description
   createdAt
   _createdAt
   coverImage {
-    ...Image_image
+    ...Picture
   }
 }

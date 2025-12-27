@@ -13,34 +13,19 @@ import { type JSX, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { init, reactErrorHandler } from "@sentry/react";
 import sentryConfig from "~config/sentry";
-import {
-  Rsc,
-  type RscPayload,
-  RscRequest,
-  type RscRequestInit,
-} from "rsc-protocol";
-import { getRSCStream } from "rsc-protocol/client";
+import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
+import { createCallServer, getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "../app/global_error.tsx";
 
 init(sentryConfig);
 
-setServerCallback(async (id, args) => {
-  const temporaryReferences = createTemporaryReferenceSet();
-  const body = await encodeReply(args, { temporaryReferences });
-  const init = { body, action: { id } } satisfies RscRequestInit;
-  const request = new RscRequest(globalThis.location.href, init);
-  const promiseResponse = fetch(request);
-  const payload = await createFromFetch<RscPayload>(promiseResponse, {
-    temporaryReferences,
-  });
-
-  const { returnValue } = payload;
-  if (returnValue) {
-    if (!returnValue.ok) throw returnValue.error;
-  }
-  root.render(<Root payload={payload} />);
-});
+setServerCallback(createCallServer({
+  createFromFetch,
+  createTemporaryReferenceSet,
+  encodeReply,
+  onRequest: rerender,
+}));
 
 // TODO(miyauci) Use globalThis instead of window.
 // Switch @types/dom-navigation
@@ -79,7 +64,7 @@ if (import.meta.hot) {
   import.meta.hot.on("rsc:update", async () => {
     const payload = await fetchRscPayload(globalThis.location.href);
 
-    root.render(<Root payload={payload} />);
+    rerender(payload);
   });
 }
 
@@ -131,7 +116,11 @@ function handleNavigation(navigateEvent: NavigateEvent): void {
       const dest = navigateEvent.destination.url;
       const payload = await fetchRscPayload(dest);
 
-      root.render(<Root payload={payload} />);
+      rerender(payload);
     },
   });
+}
+
+function rerender(payload: RscPayload): void {
+  root.render(<Root payload={payload} />);
 }

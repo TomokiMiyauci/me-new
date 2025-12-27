@@ -1,12 +1,17 @@
 import { Redirection, RedirectRule } from "router/redirection";
 import { MiddlewareObject, Next } from "router";
-import client from "~lib/graphql-client";
-import { RedirectDocument, RedirectQuery } from "@/gql/graphql.ts";
+import { apolloClient } from "~lib";
+import { RedirectDocument, RedirectQuery } from "./document.ts";
 
 export default class Redirect implements MiddlewareObject {
   async handle(request: Request, next: Next): Promise<Response> {
-    const result = await client.query(RedirectDocument);
-    const rules = query2Rules(result, request.url);
+    const result = await apolloClient.query({ query: RedirectDocument });
+
+    if (!result.data) {
+      throw new Error(result.error?.message);
+    }
+
+    const rules = query2Rules(result.data, request.url);
 
     const mw = new Redirection(rules);
 

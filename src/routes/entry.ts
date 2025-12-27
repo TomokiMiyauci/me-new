@@ -1,5 +1,4 @@
 enum Entry {
-  About,
   Home,
   Posts,
   Post,

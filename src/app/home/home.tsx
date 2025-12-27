@@ -3,17 +3,25 @@ import resolver from "@/lib/link.ts";
 import { type AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
-import { languages } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
-import client from "~lib/graphql-client";
-import { BlogDocument } from "@/gql/graphql.ts";
-import Image from "@/components/image/image.tsx";
+import { BlogDocument } from "./document.ts";
+import Picture from "@/fragments/picture/picture.tsx";
+import { apolloClient } from "~lib";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
   const { lang, i18n } = props;
 
-  const queryResult = await client.query(BlogDocument, { lang });
-  const blog = queryResult.allBlog[0];
+  const queryResult = await apolloClient.query({
+    query: BlogDocument,
+    variables: { lang },
+  });
+
+  if (!queryResult.data) {
+    throw new Error(queryResult.error?.message);
+  }
+
+  const blog = queryResult.data.allBlog[0];
   const title = blog?.title ?? "";
   const description = blog?.description;
   const { t } = i18n;
@@ -21,7 +29,7 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
   return (
     <Layout
       {...props}
-      translations={languages.map((lang) => ({
+      translations={language.languages.map((lang) => ({
         lang,
         location: resolver.resolve(Entry.Home, { lang }) ?? undefined,
       }))}
@@ -47,11 +55,7 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
               <li className="md:col-2 justify-self-center">
                 <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
                   <div className="card bg-base-100 shadow-sm max-w-96">
-                    {blog?.coverImage && (
-                      <figure>
-                        <Image fragment={blog.coverImage} />
-                      </figure>
-                    )}
+                    {blog?.coverImage && <Picture fragment={blog.coverImage} />}
                     <div className="card-body">
                       <h2 className="card-title">{title}</h2>
                       <p>

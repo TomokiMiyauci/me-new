@@ -1,27 +1,20 @@
 import { type Route, route } from "route-kit";
 import { withLang } from "route-kit/lang";
-import { i18n } from "@/language.ts";
+import language from "@/language.json" with { type: "json" };
 import Entry from "./entry.ts";
 
 export default {
-  [Entry.About]: withLang(
-    route({
-      pathname: () => "/about",
-    }),
-    i18n,
-  ),
-
   [Entry.Home]: withLang(
     route({
       pathname: () => "/",
     }),
-    i18n,
+    language,
   ),
   [Entry.Posts]: withLang(
     route({
       pathname: () => "/posts",
     }),
-    i18n,
+    language,
   ),
   [Entry.Post]: withLang(
     route({
@@ -30,12 +23,12 @@ export default {
       },
       pathname: ({ slug }) => `/posts/${slug}`,
     }),
-    i18n,
+    language,
   ),
   [Entry.PrivacyPolicy]: withLang(
     route(
       { pathname: () => `/privacy-policy` },
     ),
-    i18n,
+    language,
   ),
 } satisfies Record<Entry, Route>;

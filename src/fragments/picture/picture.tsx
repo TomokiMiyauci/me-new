@@ -1,28 +1,34 @@
 import type { JSX } from "react";
-import type { Image_ImageFragment } from "@/gql/graphql.ts";
+import type { PictureFragment } from "./fragment.ts";
 import { Img, SanityImageObject } from "@biggleszx/react-sanity-image";
 import client from "@/lib/sanity_client.ts";
 import { SanityAsset } from "@sanity/image-url";
 
-export interface ImageProps {
-  fragment: Image_ImageFragment;
+export interface PictureProps {
+  fragment: PictureFragment;
 }
 
 interface ImgImage extends SanityAsset, SanityImageObject {}
 
-export default function Image(props: ImageProps): JSX.Element {
+export default function Picture(props: PictureProps): JSX.Element {
   const { fragment } = props;
 
-  const result = validate(fragment);
+  const image = fragment.image;
+  const result = validate(image);
+  const description = fragment.description;
 
   if (!result) throw new Error("unreachable");
 
-  return <Img client={client} image={fragment} />;
+  return (
+    <figure>
+      <Img alt={description ?? undefined} client={client} image={image} />
+    </figure>
+  );
 }
 
-function validate(value: Image_ImageFragment): value is ImgImage {
+function validate(value: PictureFragment["image"]): value is ImgImage {
   if (
-    !value.asset ||
+    !value?.asset ||
     !value.asset.metadata ||
     !value.asset.metadata.dimensions ||
     !value.asset.metadata.dimensions.height ||
