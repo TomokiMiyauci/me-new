@@ -1,3 +1,31 @@
+# [1.8.0](https://github.com/TomokiMiyauci/me-new/compare/1.7.0...1.8.0) (2025-12-27)
+
+
+### Bug Fixes
+
+* change default status to 404 if entry is not found ([f966316](https://github.com/TomokiMiyauci/me-new/commit/f96631684266e40d30fcd33599420c3d4db6be53))
+* specify lang as query ([eb511ba](https://github.com/TomokiMiyauci/me-new/commit/eb511baa8e3ce1df4eb01de075335258b0c064a2))
+
+
+### Features
+
+* add breadcrumbs ([5fb06fe](https://github.com/TomokiMiyauci/me-new/commit/5fb06fefbf78d38c55b5f9e0825cd494b09d1e50))
+* add list of contents ([53b0ca1](https://github.com/TomokiMiyauci/me-new/commit/53b0ca15378d399e1a715a101fc46724a9d90e99))
+* add picture fragment, remove image ([b6d64cb](https://github.com/TomokiMiyauci/me-new/commit/b6d64cb061421a0182c8e8d367aa7c6527211d22))
+* add privacy policy page ([fc45188](https://github.com/TomokiMiyauci/me-new/commit/fc45188dff26e540ff3acc3b777c0f7913f605ef))
+* add redirect handler ([8b88078](https://github.com/TomokiMiyauci/me-new/commit/8b8807843ced5b1efb3905bdf4448cc050c015f1))
+* add title and description to posts entry ([ed046b2](https://github.com/TomokiMiyauci/me-new/commit/ed046b20716a62665edf3569330390284dbe3c3f))
+* change article summary design ([961dc29](https://github.com/TomokiMiyauci/me-new/commit/961dc29a90ff231bcbf8ffaffce5f9f92cd5a254))
+* **graphql-client:** add graphql client lib ([3fc8b8f](https://github.com/TomokiMiyauci/me-new/commit/3fc8b8f1b80be62bbe5c5c5b1e3a9acb1c2d91b8))
+* improve error page view ([9378e76](https://github.com/TomokiMiyauci/me-new/commit/9378e76624193f1d7b07b57c9bcab9968fead597))
+* improve not found page style ([3df0f1b](https://github.com/TomokiMiyauci/me-new/commit/3df0f1bb9056fd7cc3cd49213a75c40bd560f5ba))
+* **packages:** add declarative csp package ([25c0e81](https://github.com/TomokiMiyauci/me-new/commit/25c0e8188b53b60100aa9eb2aa5532e3370164f8))
+* **react-meta:** add react meta lib ([f2bb9e3](https://github.com/TomokiMiyauci/me-new/commit/f2bb9e3b36e009e2a2d41190505818ff86973f8d))
+* **router/redirection:** add router middleware for redirection rule ([711c0ab](https://github.com/TomokiMiyauci/me-new/commit/711c0ababc6852935293c68174b626ff4b8805b8))
+* **router:** add router middleware endpoint ([c98a017](https://github.com/TomokiMiyauci/me-new/commit/c98a017914b215d3b5c170e26a0e687b911cd0de))
+* **router:** change csp middleware interface ([2f10b3c](https://github.com/TomokiMiyauci/me-new/commit/2f10b3c63a2d4aa98940e48eb8b85b7128b2670b))
+* **web-cache:** add cache impl for web api ([5e846ce](https://github.com/TomokiMiyauci/me-new/commit/5e846ce7066a756470f2e3efebae3da9340db8cf))
+
 # [1.7.0](https://github.com/TomokiMiyauci/me-new/compare/1.6.0...1.7.0) (2025-12-22)
 
 
