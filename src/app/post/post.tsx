@@ -1,6 +1,5 @@
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
-import client from "~lib/graphql-client";
 import {
   PostBySlugDocument,
   TranslationBySlugDocument,
@@ -13,6 +12,7 @@ import { PortableText } from "@portabletext/react";
 import { Article } from "~component";
 import Layout from "@/app/layout.tsx";
 import PostMeta from "./post_meta.tsx";
+import client from "@/lib/apollo_client.ts";
 
 export default async function Post(
   props: AppProps,
@@ -25,23 +25,32 @@ export default async function Post(
   }
 
   const decodedSlug = decodeURIComponent(slug);
-  const result = await client.query(PostBySlugDocument, {
-    slug: decodedSlug,
-    lang,
+  const result = await client.query({
+    query: PostBySlugDocument,
+    variables: { slug: decodedSlug, lang },
   });
 
-  const postPage = result.allPost[0];
+  if (!result.data) {
+    throw new Error(result.error?.message);
+  }
+
+  const postPage = result.data.allPost[0];
   const id = postPage?.id;
 
   if (!postPage || !id) notFound();
 
-  const translationsQuery = await client.query(TranslationBySlugDocument, {
-    id,
+  const translationsQuery = await client.query({
+    query: TranslationBySlugDocument,
+    variables: { id },
   });
+
+  if (!translationsQuery.data) {
+    throw new Error(translationsQuery.error?.message);
+  }
 
   const title = postPage.title ?? "";
 
-  const normalized = normalizeTranslation(translationsQuery);
+  const normalized = normalizeTranslation(translationsQuery.data);
 
   const alternatives = normalized.map(({ slug, language }) => {
     return {
@@ -69,7 +78,7 @@ export default async function Post(
               </a>
             </li>
             <li>
-              <a href="">
+              <a href="#">
                 {title}
               </a>
             </li>

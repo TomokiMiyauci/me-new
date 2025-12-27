@@ -5,15 +5,23 @@ import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
 import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
-import client from "~lib/graphql-client";
 import { BlogDocument } from "./document.ts";
 import Picture from "@/fragments/picture/picture.tsx";
+import client from "@/lib/apollo_client.ts";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
   const { lang, i18n } = props;
 
-  const queryResult = await client.query(BlogDocument, { lang });
-  const blog = queryResult.allBlog[0];
+  const queryResult = await client.query({
+    query: BlogDocument,
+    variables: { lang },
+  });
+
+  if (!queryResult.data) {
+    throw new Error(queryResult.error?.message);
+  }
+
+  const blog = queryResult.data.allBlog[0];
   const title = blog?.title ?? "";
   const description = blog?.description;
   const { t } = i18n;

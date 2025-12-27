@@ -4,7 +4,6 @@ import {
   BlogByLangDocument,
 } from "@/app/posts/document.ts";
 import ArticleFragment from "@/fragments/article/article.tsx";
-import client from "~lib/graphql-client";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
@@ -13,15 +12,20 @@ import language from "@/language.json" with { type: "json" };
 import Layout from "@/app/layout.tsx";
 import { notFound } from "react-app";
 import { SeoMeta } from "react-meta";
+import client from "@/lib/apollo_client.ts";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
   const { lang } = props;
   const [result, blogByLangQuery] = await Promise.all([
-    client.query(ArticlesByLangDocument, { lang }),
-    client.query(BlogByLangDocument, { lang }),
+    client.query({ query: ArticlesByLangDocument, variables: { lang } }),
+    client.query({ query: BlogByLangDocument, variables: { lang } }),
   ]);
 
-  const blog = blogByLangQuery.blogs[0];
+  if (!blogByLangQuery.data) {
+    throw new Error(blogByLangQuery.error?.message);
+  }
+
+  const blog = blogByLangQuery.data.blogs[0];
 
   if (!blog) notFound();
 
@@ -52,7 +56,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
 
         <section>
           <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {result.articles.map((article) => {
+            {result.data?.articles.map((article) => {
               const slug = article.slug?.current ?? "";
               const href = resolver.resolve(Entry.Post, { slug, lang });
 

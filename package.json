@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@apollo/client": "^4.0.11",
     "@biggleszx/react-sanity-image": "^1.0.0",
     "@graphql-codegen/add": "^6.0.0",
     "@graphql-codegen/cli": "^6.1.0",
