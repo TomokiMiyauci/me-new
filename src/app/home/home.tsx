@@ -7,7 +7,7 @@ import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
 import client from "~lib/graphql-client";
 import { BlogDocument } from "./document.ts";
-import Image from "@/fragments/image/image.tsx";
+import Picture from "@/fragments/picture/picture.tsx";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
   const { lang, i18n } = props;
@@ -47,11 +47,7 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
               <li className="md:col-2 justify-self-center">
                 <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
                   <div className="card bg-base-100 shadow-sm max-w-96">
-                    {blog?.coverImage && (
-                      <figure>
-                        <Image fragment={blog.coverImage} />
-                      </figure>
-                    )}
+                    {blog?.coverImage && <Picture fragment={blog.coverImage} />}
                     <div className="card-body">
                       <h2 className="card-title">{title}</h2>
                       <p>

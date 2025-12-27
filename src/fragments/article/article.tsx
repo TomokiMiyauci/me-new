@@ -1,7 +1,7 @@
 import type { ArticleFragment } from "./fragment.ts";
 import type { JSX } from "react";
 import { ArticleSummary, type ArticleSummaryProps } from "~component";
-import Image from "../image/image.tsx";
+import Picture from "@/fragments/picture/picture.tsx";
 
 export interface ArticleProps {
   lang: string;
@@ -46,13 +46,8 @@ function fragmentToArticleSummaryProps(
     title: title ?? "",
     excerpt,
     date,
-    img: (
-      coverImage && (
-        <figure>
-          <Image fragment={coverImage} />
-        </figure>
-      )
-    ),
+    img: coverImage &&
+      <Picture fragment={coverImage} />,
   } satisfies ArticleSummaryProps;
 
   return props;

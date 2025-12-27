@@ -5,6 +5,6 @@ fragment Article on Post {
   createdAt
   _createdAt
   coverImage {
-    ...Image
+    ...Picture
   }
 }

@@ -31,7 +31,7 @@ export type Author = Document & {
   _type?: Maybe<Scalars['String']['output']>;
   /** Date the document was last modified */
   _updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  image?: Maybe<Image>;
+  image?: Maybe<Picture>;
   name?: Maybe<Array<Maybe<InternationalizedArrayStringValue>>>;
 };
 
@@ -44,7 +44,7 @@ export type AuthorFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
-  image?: InputMaybe<ImageFilter>;
+  image?: InputMaybe<PictureFilter>;
 };
 
 export type AuthorSorting = {
@@ -54,7 +54,7 @@ export type AuthorSorting = {
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
-  image?: InputMaybe<ImageSorting>;
+  image?: InputMaybe<PictureSorting>;
 };
 
 export type Block = {
@@ -82,7 +82,7 @@ export type Blog = Document & {
   _type?: Maybe<Scalars['String']['output']>;
   /** Date the document was last modified */
   _updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  coverImage?: Maybe<Image>;
+  coverImage?: Maybe<Picture>;
   description?: Maybe<Scalars['String']['output']>;
   language?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
@@ -97,7 +97,7 @@ export type BlogFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
-  coverImage?: InputMaybe<ImageFilter>;
+  coverImage?: InputMaybe<PictureFilter>;
   description?: InputMaybe<StringFilter>;
   language?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
@@ -112,7 +112,7 @@ export type BlogSorting = {
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
-  coverImage?: InputMaybe<ImageSorting>;
+  coverImage?: InputMaybe<PictureSorting>;
   description?: InputMaybe<SortOrder>;
   language?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
@@ -532,6 +532,47 @@ export type LegalDocumentSorting = {
   type?: InputMaybe<SortOrder>;
 };
 
+export type Picture = Document & {
+  __typename?: 'Picture';
+  /** Date the document was created */
+  _createdAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Document ID */
+  _id?: Maybe<Scalars['ID']['output']>;
+  _key?: Maybe<Scalars['String']['output']>;
+  /** Current document revision */
+  _rev?: Maybe<Scalars['String']['output']>;
+  /** Document type */
+  _type?: Maybe<Scalars['String']['output']>;
+  /** Date the document was last modified */
+  _updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Image>;
+};
+
+export type PictureFilter = {
+  /** Apply filters on document level */
+  _?: InputMaybe<Sanity_DocumentFilter>;
+  _createdAt?: InputMaybe<DatetimeFilter>;
+  _id?: InputMaybe<IdFilter>;
+  _key?: InputMaybe<StringFilter>;
+  _rev?: InputMaybe<StringFilter>;
+  _type?: InputMaybe<StringFilter>;
+  _updatedAt?: InputMaybe<DatetimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
+};
+
+export type PictureSorting = {
+  _createdAt?: InputMaybe<SortOrder>;
+  _id?: InputMaybe<SortOrder>;
+  _key?: InputMaybe<SortOrder>;
+  _rev?: InputMaybe<SortOrder>;
+  _type?: InputMaybe<SortOrder>;
+  _updatedAt?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  image?: InputMaybe<ImageSorting>;
+};
+
 export type Post = Document & {
   __typename?: 'Post';
   /** Date the document was created */
@@ -548,7 +589,7 @@ export type Post = Document & {
   authors?: Maybe<Array<Maybe<Author>>>;
   bodyRaw?: Maybe<Scalars['JSON']['output']>;
   categories?: Maybe<Array<Maybe<Category>>>;
-  coverImage?: Maybe<Image>;
+  coverImage?: Maybe<Picture>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   language?: Maybe<Scalars['String']['output']>;
@@ -567,7 +608,7 @@ export type PostFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
-  coverImage?: InputMaybe<ImageFilter>;
+  coverImage?: InputMaybe<PictureFilter>;
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   language?: InputMaybe<StringFilter>;
@@ -583,7 +624,7 @@ export type PostSorting = {
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
-  coverImage?: InputMaybe<ImageSorting>;
+  coverImage?: InputMaybe<PictureSorting>;
   createdAt?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   language?: InputMaybe<SortOrder>;
@@ -643,6 +684,7 @@ export type RootQuery = {
   Category?: Maybe<Category>;
   Document?: Maybe<Document>;
   LegalDocument?: Maybe<LegalDocument>;
+  Picture?: Maybe<Picture>;
   Post?: Maybe<Post>;
   Redirect?: Maybe<Redirect>;
   SanityFileAsset?: Maybe<SanityFileAsset>;
@@ -654,6 +696,7 @@ export type RootQuery = {
   allCategory: Array<Category>;
   allDocument: Array<Document>;
   allLegalDocument: Array<LegalDocument>;
+  allPicture: Array<Picture>;
   allPost: Array<Post>;
   allRedirect: Array<Redirect>;
   allSanityFileAsset: Array<SanityFileAsset>;
@@ -684,6 +727,11 @@ export type RootQueryDocumentArgs = {
 
 
 export type RootQueryLegalDocumentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootQueryPictureArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -755,6 +803,14 @@ export type RootQueryAllLegalDocumentArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Array<LegalDocumentSorting>>;
   where?: InputMaybe<LegalDocumentFilter>;
+};
+
+
+export type RootQueryAllPictureArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Array<PictureSorting>>;
+  where?: InputMaybe<PictureFilter>;
 };
 
 
