@@ -1,5 +1,6 @@
 import { Router } from "router";
 import { dynamic } from "router/middleware";
+import { TrailingSlash } from "router/trailing-slash";
 import { init } from "@sentry/deno";
 import { CSP_ENDPOINT } from "~env";
 import { Csp, NonceContext, NonceProvider } from "router/csp";
@@ -27,10 +28,11 @@ const csp = dynamic<NonceContext>((_, { nonce }) => {
 
 const router = new Router<NonceContext>();
 router
-  .get("/robots.txt", robotsHandler)
-  .get("/sitemap.xml", sitemapHander)
+  .use(new TrailingSlash("never"))
   .use(new NonceProvider())
   .use(new Redirect())
+  .get("/robots.txt", robotsHandler)
+  .get("/sitemap.xml", sitemapHander)
   .use(csp);
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
