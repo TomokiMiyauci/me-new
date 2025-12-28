@@ -4,7 +4,8 @@ import { randomBytes } from "node:crypto";
 export class Csp implements MiddlewareObject<NonceContext> {
   value: string;
   constructor(value: CspDerectives | string) {
-    this.value = typeof value === "string" ? value : this.stringify(value);
+    const raw = typeof value === "string" ? value : this.stringify(value);
+    this.value = escapeHeaderValue(raw);
   }
   async handle(
     request: Request,
@@ -56,4 +57,8 @@ export class NonceProvider implements MiddlewareObject<NonceContext> {
 
     return await next(request, { nonce });
   }
+}
+
+function escapeHeaderValue(value: string): string {
+  return value.replaceAll("\n", "");
 }
