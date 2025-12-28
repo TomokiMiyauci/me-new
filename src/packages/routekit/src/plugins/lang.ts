@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import type { Params, Route } from "../types.ts";
 
 export function withLang<T extends Params>(
@@ -14,7 +15,11 @@ export function withLang<T extends Params>(
       function pathname(params: T & { lang: string }): string {
         const { lang } = params;
 
-        return `/${lang}` + entry.pathname(params);
+        const base = entry.pathname(params);
+
+        if (base === "/") return `/${lang}`;
+
+        return join(`/${lang}`, base);
       }
 
       function condition(params: T & { lang: string }): boolean {
