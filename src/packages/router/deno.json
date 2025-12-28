@@ -2,7 +2,6 @@
   "name": "router",
   "exports": {
     ".": "./src/mod.ts",
-    "./static": "./src/middleware/static.ts",
     "./vite-rsc": "./src/middleware/vite_rsc_assets.ts",
     "./csp": "./src/middleware/csp.ts",
     "./redirection": "./src/middleware/redirection.ts",
