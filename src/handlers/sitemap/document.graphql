@@ -1,0 +1,8 @@
+query PostSlugs {
+  posts: allPost {
+    slug {
+      current
+    }
+    lang: language
+  }
+}
