@@ -19,6 +19,14 @@ assert(CSP_ENDPOINT);
 
 init(sentryConfig);
 
+const router = new Router<NonceContext>()
+  .use(new TrailingSlash("never"))
+  .use(new Redirect())
+  .get("/robots.txt", robotsHandler)
+  .get("/sitemap.xml", sitemapHander);
+
+if (import.meta.env.PROD) router.use(await createAssetMiddleware());
+
 const csp = dynamic<NonceContext>((_, { nonce }) => {
   const manifest = mastache.render(cspTemplate, {
     nonce,
@@ -28,27 +36,19 @@ const csp = dynamic<NonceContext>((_, { nonce }) => {
   return new Csp(manifest);
 });
 
-const router = new Router<NonceContext>();
-router
-  .use(new TrailingSlash("never"))
-  .use(new NonceProvider())
-  .use(
-    dynamic<NonceContext>(({ url }) =>
+router.use(
+  new Router<NonceContext>()
+    .use(dynamic<NonceContext>(({ url }) =>
       new Redirection([{
         from: new URLPattern({ pathname: "/" }),
         to: new URL("/" + language.default, url),
         status: 302,
       }])
-    ),
-  )
-  .use(new Redirect())
-  .get("/robots.txt", robotsHandler)
-  .get("/sitemap.xml", sitemapHander)
-  .use(csp);
-
-if (import.meta.env.PROD) router.use(await createAssetMiddleware());
-
-router.use(new App());
+    ))
+    .use(new NonceProvider())
+    .use(csp)
+    .use(new App()),
+);
 
 export default {
   fetch: router.fetch.bind(router),

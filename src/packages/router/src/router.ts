@@ -2,12 +2,13 @@ import type {
   Handler,
   HandlerOrHandlerObject,
   Middleware,
+  MiddlewareObject,
   MiddlewareOrMiddlewareObject,
   Route,
 } from "./types.ts";
 import { normalizeMiddleware } from "./utils.ts";
 
-export class Router<T> {
+export class Router<T> implements MiddlewareObject {
   #routes: Route[] = [];
 
   get(
@@ -43,6 +44,10 @@ export class Router<T> {
 
   fetch(request: Request): Promise<Response> {
     return exec(request, this.#routes, new Response(), undefined);
+  }
+
+  handle(request: Request): Promise<Response> {
+    return this.fetch(request);
   }
 }
 function exec(
