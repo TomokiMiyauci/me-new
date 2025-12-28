@@ -1,5 +1,5 @@
 import template from "./robots.txt?raw";
-import { format } from "@miyauci/format";
+import mustache from "mustache";
 
 export default function robots(request: Request): Response {
   const sitemapURL = new URL("sitemap.xml", request.url);
@@ -13,7 +13,7 @@ export default function robots(request: Request): Response {
 }
 
 function formatRobots(url: URL | string): string {
-  const contents = format<"SITEMAP_URL">(template, {
+  const contents = mustache.render(template, {
     SITEMAP_URL: url.toString(),
   });
 
