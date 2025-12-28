@@ -10,6 +10,7 @@ import cspValue from "@/csp.json" with { type: "json" };
 import { DeclarativeCsp } from "declarative-csp";
 import { assert } from "@std/assert/assert";
 import sitemapHander from "@/handlers/sitemap/handler.ts";
+import robotsHandler from "@/handlers/robots/handler.ts";
 
 assert(CSP_ENDPOINT);
 
@@ -29,6 +30,7 @@ const csp = dynamic<NonceContext>((_, { nonce = "" }) => {
 
 const router = new Router<NonceContext>();
 router
+  .get("/robots.txt", robotsHandler)
   .get("/sitemap.xml", sitemapHander)
   .use(new NonceProvider())
   .use(new Redirect())

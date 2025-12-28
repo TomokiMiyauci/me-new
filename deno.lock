@@ -5139,6 +5139,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@miyauci/format@^1.1.0",
       "jsr:@miyauci/material-react@^1.0.0-beta.24",
       "jsr:@std/assert@^1.0.16",
       "jsr:@std/path@^1.1.3"
