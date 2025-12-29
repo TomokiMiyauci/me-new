@@ -14,7 +14,7 @@ export const Posts = PostsEntry;
 
 export const Post = PostEntry;
 
-export const PrivaryPolicy = PrivacyPolicyEntry;
+export const PrivacyPolicy = PrivacyPolicyEntry;
 
 export function NotFound(props: AppProps): JSX.Element {
   return (
