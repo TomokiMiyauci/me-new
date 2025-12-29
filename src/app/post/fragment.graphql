@@ -11,4 +11,19 @@ fragment Post_post_meta on Post {
   _createdAt
   updatedAt
   _updatedAt
+  coverImage {
+    description
+    image {
+      asset {
+        url
+        metadata {
+          dimensions {
+            width
+            height
+          }
+        }
+        mimeType
+      }
+    }
+  }
 }

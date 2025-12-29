@@ -1,41 +1,35 @@
-import { Router } from "router";
-import { dynamic } from "router/middleware";
 import { init } from "@sentry/deno";
 import { CSP_ENDPOINT } from "~env";
-import { Csp, NonceContext, NonceProvider } from "router/csp";
 import sentryConfig from "~config/sentry";
-import { App, createAssetMiddleware } from "./utils.ts";
-import Redirect from "@/handlers/redirect/middleware.ts";
 import { assert } from "@std/assert/assert";
-import sitemapHander from "@/handlers/sitemap/handler.ts";
-import robotsHandler from "@/handlers/robots/handler.ts";
-import cspTemplate from "../csp.mustache?raw";
-import mastache from "mustache";
+import HtmlRouter from "@/routers/html.ts";
+import type * as ssr from "./entry.ssr.tsx";
+import resourceRouter from "@/routers/resource.ts";
+import { Router } from "router";
+import { type MiddlewareObject } from "router";
+import { fromFileUrl } from "@std/path";
+import { ViteRscAssets } from "router/vite-rsc";
+import { TrailingSlash } from "router/trailing-slash";
+import Redirect from "@/handlers/redirect/middleware.ts";
 
 assert(CSP_ENDPOINT);
 
 init(sentryConfig);
 
-const csp = dynamic<NonceContext>((_, { nonce }) => {
-  const manifest = mastache.render(cspTemplate, {
-    nonce,
-    endpoint: CSP_ENDPOINT,
-  });
-
-  return new Csp(manifest);
-});
-
-const router = new Router<NonceContext>();
-router
-  .get("/robots.txt", robotsHandler)
-  .get("/sitemap.xml", sitemapHander)
-  .use(new NonceProvider())
+const router = new Router()
+  .use(new TrailingSlash("never"))
   .use(new Redirect())
-  .use(csp);
+  .use(resourceRouter);
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 
-router.use(new App());
+const { renderHtmlStream } = await import.meta.viteRsc.loadModule<
+  typeof ssr
+>("ssr", "index");
+const bootstrapScriptContent = await import.meta.viteRsc
+  .loadBootstrapScriptContent("index");
+
+router.use(new HtmlRouter(bootstrapScriptContent, renderHtmlStream));
 
 export default {
   fetch: router.fetch.bind(router),
@@ -43,4 +37,15 @@ export default {
 
 if (import.meta.hot) {
   import.meta.hot.accept();
+}
+
+async function createAssetMiddleware(): Promise<MiddlewareObject> {
+  const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
+  const clientManifest = await import.meta.vite.loadManifest(
+    "client",
+  );
+  const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
+  const middleware = new ViteRscAssets(clientManifest, rscManifest, distRoot);
+
+  return middleware;
 }

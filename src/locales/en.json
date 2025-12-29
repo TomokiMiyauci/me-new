@@ -45,5 +45,8 @@
   "locale": {
     "en": "English",
     "ja": "日本語"
+  },
+  "site": {
+    "name": "miyauchi.dev"
   }
 }
