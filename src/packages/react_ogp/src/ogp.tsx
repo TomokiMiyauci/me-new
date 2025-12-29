@@ -76,10 +76,10 @@ export default function Ogp(props: OgpProps): JSX.Element {
       ))}
       {siteName && <meta property="og:site_name" content={siteName} />}
       {determiner && <meta property="og:determiner" content={determiner} />}
-      <meta property="og:type" content={type} />
       {image && (typeof image === "string"
         ? <meta property="og:image" content={image} />
         : <OgImage {...image} />)}
+      {type && <meta property="og:type" content={type} />}
       <ObjectType {...props} />
     </>
   );
