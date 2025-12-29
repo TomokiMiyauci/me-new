@@ -4,12 +4,28 @@ import type {
   Middleware,
   MiddlewareObject,
   MiddlewareOrMiddlewareObject,
+  Next,
   Route,
 } from "./types.ts";
 import { normalizeMiddleware } from "./utils.ts";
 
-export class Router<T> implements MiddlewareObject {
+function defaultFallback(): Response {
+  return new Response(null, { status: 404 });
+}
+
+interface RouterOptions {
+  fallback: Handler;
+}
+
+export class Router<T> implements MiddlewareObject<T> {
   #routes: Route[] = [];
+  #fallback: Handler;
+
+  constructor(options?: RouterOptions) {
+    const { fallback = defaultFallback } = options ?? {};
+
+    this.#fallback = fallback;
+  }
 
   get(
     pathname: string,
@@ -43,39 +59,54 @@ export class Router<T> implements MiddlewareObject {
   }
 
   fetch(request: Request): Promise<Response> {
-    return exec(request, this.#routes, new Response(), undefined);
+    const middlewares = this.#routes.filter((route) =>
+      route.pattern.test(request.url)
+    ).map((route) => route.middleware);
+    return exec(
+      request,
+      middlewares,
+      this.#fallback,
+      {},
+    );
   }
 
-  handle(request: Request): Promise<Response> {
-    return this.fetch(request);
+  handle(request: Request, next: Next<T>): Promise<Response> {
+    const middlewares = this.#routes.filter((route) =>
+      route.pattern.test(request.url)
+    ).map((route) => route.middleware);
+
+    function fallback(request: Request): Promise<Response> {
+      return next(request);
+    }
+    return exec(
+      request,
+      middlewares,
+      fallback,
+      next,
+    );
   }
 }
-function exec(
+
+async function exec(
   request: Request,
-  routes: readonly Route[],
-  fallback: Response,
-  context: object | undefined,
+  middlewares: readonly Middleware[],
+  fallback: Handler,
+  context: object,
 ): Promise<Response> {
-  const [route, ...rest] = routes;
+  const [middleware, ...rest] = middlewares;
 
-  if (!route) return Promise.resolve(fallback);
-
-  const result = route.pattern.test(request.url);
+  if (!middleware) return await fallback(request);
 
   function next(request: Request, ctx: object | undefined): Promise<Response> {
     const merged = { ...context, ...ctx };
     return exec(request, rest, fallback, merged);
   }
 
-  Object.entries(context ?? {}).forEach(([key, value]) => {
+  Object.entries(context).forEach(([key, value]) => {
     Object.defineProperty(next, key, { value });
   });
 
-  if (result) {
-    return Promise.resolve(route.middleware(request, next));
-  }
-
-  return next(request, context);
+  return await middleware(request, next);
 }
 
 function toMiddleware(handler: HandlerOrHandlerObject): Middleware {
