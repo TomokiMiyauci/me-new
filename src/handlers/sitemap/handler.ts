@@ -8,7 +8,7 @@ import { apolloClient } from "~lib";
 import language from "@/language.json" with { type: "json" };
 import Entry from "@/routes/entry.ts";
 import resolver from "@/lib/link.ts";
-import { PostSlugsDocument } from "./document.ts";
+import { PostSlugsDocument } from "./handler.graphql.ts";
 
 export default async function sitemap(request: Request): Promise<Response> {
   const url = new URL(request.url);

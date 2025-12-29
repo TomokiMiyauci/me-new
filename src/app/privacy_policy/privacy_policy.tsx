@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { AppProps } from "@/lib/app.tsx";
 import Layout from "@/app/layout.tsx";
-import { PrivacyPolicyDocument } from "./document.ts";
+import { PrivacyPolicyDocument } from "./privacy_policy.graphql.ts";
 import { apolloClient } from "~lib";
 import { notFound } from "react-app";
 import { PortableText } from "@portabletext/react";

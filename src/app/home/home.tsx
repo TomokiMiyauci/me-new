@@ -5,7 +5,7 @@ import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
 import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
-import { BlogDocument } from "./document.ts";
+import { BlogDocument } from "./home.graphql.ts";
 import Picture from "@/fragments/picture/picture.tsx";
 import { apolloClient } from "~lib";
 

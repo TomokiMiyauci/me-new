@@ -1,8 +1,4 @@
-// TODO(miyauci): use ./query.ts but lint error occurs
-import {
-  ArticlesByLangDocument,
-  BlogByLangDocument,
-} from "@/app/posts/document.ts";
+import { ArticlesByLangDocument, BlogByLangDocument } from "./posts.graphql.ts";
 import ArticleFragment from "@/fragments/article/article.tsx";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
