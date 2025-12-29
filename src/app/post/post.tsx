@@ -62,7 +62,13 @@ export default async function Post(
   const { t } = i18n;
   return (
     <Layout translations={alternatives} {...props}>
-      <PostMeta url={url} fragment={postPage} translations={alternatives} />
+      <PostMeta
+        lang={lang}
+        slug={slug}
+        url={url}
+        fragment={postPage}
+        translations={alternatives}
+      />
 
       <main className="space-y-2 lg:max-w-[65ch] mx-auto">
         <div className="breadcrumbs text-sm">

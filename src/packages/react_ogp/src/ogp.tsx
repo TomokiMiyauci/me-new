@@ -56,6 +56,7 @@ export default function Ogp(props: OgpProps): JSX.Element {
     locale,
     localeAlternate,
     siteName,
+    url,
     determiner,
   } = props;
   const localeAlternates = Array.isArray(localeAlternate)
@@ -68,6 +69,7 @@ export default function Ogp(props: OgpProps): JSX.Element {
     <>
       {title && <meta property="og:title" content={title} />}
       {description && <meta property="og:description" content={description} />}
+      {url && <meta property="og:url" content={url} />}
       {locale && <meta property="og:locale" content={locale} />}
       {localeAlternates.map((locale) => (
         <meta key={locale} property="og:locale:alternate" content={locale} />
