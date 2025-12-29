@@ -1,13 +1,13 @@
 import { JSX } from "react";
 import { NotFoundBoundary } from "react-app";
 import Entry from "./entry.ts";
-import c from "./component.ts";
+import component from "./component.ts";
 import { NotFound } from "@/app/manifest.tsx";
 import { type AppProps } from "@/lib/app.tsx";
 
 export interface RouterProps {
   entry: Entry | undefined;
-  map: typeof c;
+  map: typeof component;
   app: AppProps;
 }
 
