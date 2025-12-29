@@ -2,7 +2,7 @@ query PostBySlug($slug: String!, $lang: String!) {
   allPost(
     where: { slug: { current: { eq: $slug } }, language: { eq: $lang } }
   ) {
-    ...Post_post_meta
+    ...PostMeta
     id: _id
     title
     bodyRaw
