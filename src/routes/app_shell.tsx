@@ -6,6 +6,7 @@ import Entry from "./entry.ts";
 import Router from "./router.tsx";
 import component from "./component.ts";
 import { type AppProps } from "@/lib/app.tsx";
+import Html from "@/app/html.tsx";
 
 export interface AppShellProps {
   app: AppProps;
@@ -19,13 +20,15 @@ export default function AppShell(
 
   return (
     <ErrorBoundary fallback={<GlobalError />}>
-      <ErrorBoundary fallback={<Error {...app} />}>
-        <Router
-          entry={entry}
-          app={app}
-          map={component}
-        />
-      </ErrorBoundary>
+      <Html {...app}>
+        <ErrorBoundary fallback={<Error {...app} />}>
+          <Router
+            entry={entry}
+            app={app}
+            map={component}
+          />
+        </ErrorBoundary>
+      </Html>
     </ErrorBoundary>
   );
 }
