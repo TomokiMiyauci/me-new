@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { Ogp } from "react-ogp";
+import { type OgImage, Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
 import { type TechArticle } from "schema-dts";
 import type { Post_Post_MetaFragment } from "./fragment.ts";
@@ -27,6 +27,7 @@ export default function PostMetaFragment(
   const updatedAt = fragment.updatedAt ?? fragment._updatedAt;
   const createdDate = createdAt ? new Date(createdAt) : undefined;
   const updatedDate = updatedAt ? new Date(updatedAt) : undefined;
+  const image = toImage(fragment.coverImage);
 
   return (
     <>
@@ -45,6 +46,7 @@ export default function PostMetaFragment(
           publishedTime: createdDate?.toISOString(),
           modifiedTime: updatedDate?.toISOString(),
         }}
+        image={image}
       />
       <JsonLd<TechArticle>
         item={{
@@ -70,6 +72,24 @@ export default function PostMetaFragment(
       })}
     </>
   );
+}
+
+function toImage(
+  fragment: Post_Post_MetaFragment["coverImage"],
+): undefined | OgImage {
+  if (!fragment) return;
+
+  const { image, description } = fragment;
+
+  return {
+    url: image?.asset?.url ?? undefined,
+    type: image?.asset?.mimeType ?? undefined,
+    width: image?.asset?.metadata?.dimensions?.width?.toString() ??
+      undefined,
+    height: image?.asset?.metadata?.dimensions?.height?.toString() ??
+      undefined,
+    alt: description ?? undefined,
+  };
 }
 
 function isNonNullable<T>(value: T | null | undefined): value is T {
