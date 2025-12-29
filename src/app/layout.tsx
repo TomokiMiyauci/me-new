@@ -1,4 +1,3 @@
-import "./index.css";
 import { JSX, PropsWithChildren } from "react";
 import { type AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
@@ -32,54 +31,48 @@ export default function Layout(props: LayoutProps): JSX.Element {
   });
 
   return (
-    <html lang={lang}>
-      <head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
-      <body>
-        <Header
-          logo={<a href={href ?? undefined}>Home</a>}
-          translation={{
-            title: t("ui.language_menu.label"),
-            items: translationItems,
-            usage: t("ui.language_menu.description"),
-          }}
-          lang={lang}
-          className="px-4 md:px-8 lg:px-16"
-        />
+    <body>
+      <Header
+        logo={<a href={href ?? undefined}>Home</a>}
+        translation={{
+          title: t("ui.language_menu.label"),
+          items: translationItems,
+          usage: t("ui.language_menu.description"),
+        }}
+        lang={lang}
+        className="px-4 md:px-8 lg:px-16"
+      />
 
-        <div className="px-4 md:px-8 lg:px-16">
-          {children}
-        </div>
+      <div className="px-4 md:px-8 lg:px-16">
+        {children}
+      </div>
 
-        <Footer
-          className="px-4 md:px-8 lg:px-16 mt-16 md:mt-40"
-          logo={<a href={href ?? undefined}>Home</a>}
-          navigation={[
-            {
-              name: t("category.contents"),
-              items: [
-                {
-                  name: t("resource.blog"),
-                  location: resolver.resolve(Entry.Posts, { lang }) ?? "",
-                },
-              ],
-            },
-            {
-              name: t("category.legal"),
-              items: [
-                {
-                  name: t("document.privacy_policy"),
-                  location: resolver.resolve(Entry.PrivacyPolicy, { lang }) ??
-                    "",
-                },
-              ],
-            },
-          ]}
-          copyright={t("copyright")}
-        />
-      </body>
-    </html>
+      <Footer
+        className="px-4 md:px-8 lg:px-16 mt-16 md:mt-40"
+        logo={<a href={href ?? undefined}>Home</a>}
+        navigation={[
+          {
+            name: t("category.contents"),
+            items: [
+              {
+                name: t("resource.blog"),
+                location: resolver.resolve(Entry.Posts, { lang }) ?? "",
+              },
+            ],
+          },
+          {
+            name: t("category.legal"),
+            items: [
+              {
+                name: t("document.privacy_policy"),
+                location: resolver.resolve(Entry.PrivacyPolicy, { lang }) ??
+                  "",
+              },
+            ],
+          },
+        ]}
+        copyright={t("copyright")}
+      />
+    </body>
   );
 }
