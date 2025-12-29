@@ -11,7 +11,7 @@ import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import { Article } from "~component";
 import Layout from "@/app/layout.tsx";
-import PostMeta from "./post_meta.tsx";
+import PostMeta from "./meta.tsx";
 import { apolloClient } from "~lib";
 
 export default async function Post(
