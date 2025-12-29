@@ -2,7 +2,6 @@
 /// <reference types="@types/dom-navigation" />
 // deno-lint-ignore-file no-window
 
-import "./polyfills/init.ts";
 import {
   createFromFetch,
   createFromReadableStream,
