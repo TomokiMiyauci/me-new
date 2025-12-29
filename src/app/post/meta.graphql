@@ -1,4 +1,4 @@
-fragment Post_post_meta on Post {
+fragment PostMeta on Post {
   title
   description
   categories {

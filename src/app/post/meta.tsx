@@ -2,13 +2,13 @@ import type { JSX } from "react";
 import { type OgImage, Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
 import { type TechArticle } from "schema-dts";
-import type { Post_Post_MetaFragment } from "./fragment.ts";
+import type { PostMetaFragment } from "./meta.graphql.ts";
 import { SeoMeta } from "react-meta";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 
-export interface PostMetaFragmentProps {
-  fragment: Post_Post_MetaFragment;
+export interface PostMetaProps {
+  fragment: PostMetaFragment;
   url: URL;
   translations: TranslationAlternation[];
   lang: string;
@@ -20,9 +20,7 @@ interface TranslationAlternation {
   lang: string;
 }
 
-export default function PostMetaFragment(
-  props: PostMetaFragmentProps,
-): JSX.Element {
+export default function PostMeta(props: PostMetaProps): JSX.Element {
   const { fragment, url, translations, lang, slug } = props;
 
   const { categories, tags } = fragment;
@@ -84,7 +82,7 @@ export default function PostMetaFragment(
 }
 
 function toImage(
-  fragment: Post_Post_MetaFragment["coverImage"],
+  fragment: PostMetaFragment["coverImage"],
 ): undefined | OgImage {
   if (!fragment) return;
 
