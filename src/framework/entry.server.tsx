@@ -4,22 +4,18 @@ import sentryConfig from "~config/sentry";
 import { assert } from "@std/assert/assert";
 import HtmlRouter from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
-import resourceRouter from "@/routers/resource.ts";
-import { Router } from "router";
+import ResourceRouter from "@/routers/resource.ts";
+import BaseRouter from "@/routers/base.ts";
 import { type MiddlewareObject } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
-import { TrailingSlash } from "router/trailing-slash";
-import Redirect from "@/handlers/redirect/middleware.ts";
 
 assert(CSP_ENDPOINT);
 
 init(sentryConfig);
 
-const router = new Router()
-  .use(new TrailingSlash("never"))
-  .use(new Redirect())
-  .use(resourceRouter);
+const router = new BaseRouter()
+  .use(new ResourceRouter());
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 
