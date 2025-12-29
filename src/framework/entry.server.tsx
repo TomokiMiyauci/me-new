@@ -1,54 +1,30 @@
-import { Router } from "router";
-import { dynamic } from "router/middleware";
-import { TrailingSlash } from "router/trailing-slash";
-import { Redirection } from "router/redirection";
 import { init } from "@sentry/deno";
 import { CSP_ENDPOINT } from "~env";
-import { Csp, NonceContext, NonceProvider } from "router/csp";
 import sentryConfig from "~config/sentry";
-import { App, createAssetMiddleware } from "./utils.ts";
-import Redirect from "@/handlers/redirect/middleware.ts";
 import { assert } from "@std/assert/assert";
-import sitemapHander from "@/handlers/sitemap/handler.ts";
-import robotsHandler from "@/handlers/robots/handler.ts";
-import cspTemplate from "../csp.mustache?raw";
-import mastache from "mustache";
-import language from "@/language.json" with { type: "json" };
+import HtmlRouter from "@/routers/html.ts";
+import type * as ssr from "./entry.ssr.tsx";
+import resourceRouter from "@/routers/resource.ts";
+import router from "@/routers/global.ts";
+import { type MiddlewareObject } from "router";
+import { fromFileUrl } from "@std/path";
+import { ViteRscAssets } from "router/vite-rsc";
 
 assert(CSP_ENDPOINT);
 
 init(sentryConfig);
 
-const router = new Router<NonceContext>()
-  .use(new TrailingSlash("never"))
-  .use(new Redirect())
-  .get("/robots.txt", robotsHandler)
-  .get("/sitemap.xml", sitemapHander);
+router.use(resourceRouter);
 
 if (import.meta.env.PROD) router.use(await createAssetMiddleware());
 
-const csp = dynamic<NonceContext>((_, { nonce }) => {
-  const manifest = mastache.render(cspTemplate, {
-    nonce,
-    endpoint: CSP_ENDPOINT,
-  });
+const { renderHtmlStream } = await import.meta.viteRsc.loadModule<
+  typeof ssr
+>("ssr", "index");
+const bootstrapScriptContent = await import.meta.viteRsc
+  .loadBootstrapScriptContent("index");
 
-  return new Csp(manifest);
-});
-
-router.use(
-  new Router<NonceContext>()
-    .use(dynamic<NonceContext>(({ url }) =>
-      new Redirection([{
-        from: new URLPattern({ pathname: "/" }),
-        to: new URL("/" + language.default, url),
-        status: 302,
-      }])
-    ))
-    .use(new NonceProvider())
-    .use(csp)
-    .use(new App()),
-);
+router.use(new HtmlRouter(bootstrapScriptContent, renderHtmlStream));
 
 export default {
   fetch: router.fetch.bind(router),
@@ -56,4 +32,15 @@ export default {
 
 if (import.meta.hot) {
   import.meta.hot.accept();
+}
+
+async function createAssetMiddleware(): Promise<MiddlewareObject> {
+  const rscManifest = await import.meta.vite.rsc.loadManifest("rsc");
+  const clientManifest = await import.meta.vite.loadManifest(
+    "client",
+  );
+  const distRoot = fromFileUrl(import.meta.vite.outDir.resolve("client"));
+  const middleware = new ViteRscAssets(clientManifest, rscManifest, distRoot);
+
+  return middleware;
 }
