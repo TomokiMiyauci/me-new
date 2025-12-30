@@ -119,10 +119,6 @@
         "prefer-ascii",
         "verbatim-module-syntax"
       ]
-    },
-    "exclude": ["./src/graphql/types.ts"]
-  },
-  "fmt": {
-    "exclude": ["./src/graphql/types.ts"]
+    }
   }
 }

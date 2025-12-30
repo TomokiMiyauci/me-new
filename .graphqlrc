@@ -6,6 +6,8 @@
       "plugins": ["typescript", {
         "add": {
           "content": [
+            "// deno-lint-ignore-file",
+            "// deno-fmt-ignore-file",
             "import type { TypedObject } from \"@portabletext/types\";"
           ]
         }
@@ -15,7 +17,7 @@
       "preset": "near-operation-file",
       "presetConfig": {
         "extension": ".graphql.ts",
-        "baseTypesPath": "graphql/types.ts"
+        "baseTypesPath": "~@/graphql/types.ts"
       },
       "plugins": ["typescript-operations", "typed-document-node", {
         "add": {
