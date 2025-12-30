@@ -12,18 +12,6 @@ fragment PostMeta on Post {
   updatedAt
   _updatedAt
   coverImage {
-    description
-    image {
-      asset {
-        url
-        metadata {
-          dimensions {
-            width
-            height
-          }
-        }
-        mimeType
-      }
-    }
+    ...OgImage
   }
 }

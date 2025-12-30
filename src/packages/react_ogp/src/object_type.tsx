@@ -1,4 +1,4 @@
-import { Fragment, type JSX, type ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import OgArticle, { type OgArticleProps } from "./og_article.tsx";
 
 export interface Article {
@@ -6,7 +6,7 @@ export interface Article {
   article?: OgArticleProps;
 }
 
-interface Website {
+export interface Website {
   type?: "website";
 }
 
@@ -20,8 +20,6 @@ export default function ObjectType(props: ObjectTypeProps): JSX.Element {
       case "article": {
         return <OgArticle {...props.article} />;
       }
-      case "website":
-        return <Fragment />;
     }
   }
 
