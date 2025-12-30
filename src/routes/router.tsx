@@ -1,9 +1,9 @@
-import { JSX } from "react";
+import type { JSX } from "react";
 import { NotFoundBoundary } from "react-app";
-import Entry from "./entry.ts";
-import component from "./component.ts";
+import type Entry from "./entry.ts";
+import type component from "./component.ts";
 import { NotFound } from "@/pages/manifest.tsx";
-import { type AppProps } from "@/lib/app.tsx";
+import type { AppProps } from "@/lib/app.tsx";
 
 export interface RouterProps {
   entry: Entry | undefined;

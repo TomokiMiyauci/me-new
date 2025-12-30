@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { AppProps } from "@/lib/app.tsx";
+import type { AppProps } from "@/lib/app.tsx";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 

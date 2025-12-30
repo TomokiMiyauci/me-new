@@ -1,7 +1,7 @@
-import { Redirection, RedirectRule } from "router/redirection";
-import { MiddlewareObject, Next } from "router";
+import { Redirection, type RedirectRule } from "router/redirection";
+import type { MiddlewareObject, Next } from "router";
 import { apolloClient } from "~lib";
-import { RedirectDocument, RedirectQuery } from "./middleware.graphql.ts";
+import { RedirectDocument, type RedirectQuery } from "./middleware.graphql.ts";
 
 export default class Redirect implements MiddlewareObject {
   async handle(request: Request, next: Next): Promise<Response> {

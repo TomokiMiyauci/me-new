@@ -6,7 +6,7 @@ import HtmlRouter from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
 import ResourceRouter from "@/routers/resource.ts";
 import BaseRouter from "@/routers/base.ts";
-import { type MiddlewareObject } from "router";
+import type { MiddlewareObject } from "router";
 import { fromFileUrl } from "@std/path";
 import { ViteRscAssets } from "router/vite-rsc";
 

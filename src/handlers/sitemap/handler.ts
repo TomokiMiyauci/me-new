@@ -1,6 +1,6 @@
 import {
   EnumChangefreq,
-  SitemapItemLoose,
+  type SitemapItemLoose,
   SitemapStream,
   streamToPromise,
 } from "sitemap";

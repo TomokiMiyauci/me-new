@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { type OgImage, Ogp } from "react-ogp";
 import { JsonLd } from "react-schemaorg";
-import { type TechArticle } from "schema-dts";
+import type { TechArticle } from "schema-dts";
 import type { PostMetaFragment } from "./meta.graphql.ts";
 import { SeoMeta } from "react-meta";
 import resolver from "@/lib/link.ts";

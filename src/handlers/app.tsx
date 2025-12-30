@@ -16,7 +16,7 @@ import {
 } from "rsc-protocol";
 import { isNotFoundErrorLike } from "react-app";
 import { captureException } from "@sentry/deno";
-import { NonceContext } from "router/csp";
+import type { NonceContext } from "router/csp";
 import { URLResolver } from "route-kit";
 import language from "@/language.json" with { type: "json" };
 import { i18n as i18nConfig } from "~config";

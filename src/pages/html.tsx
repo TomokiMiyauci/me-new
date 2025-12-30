@@ -1,6 +1,6 @@
 import "./index.css";
-import { JSX, PropsWithChildren } from "react";
-import { type AppProps } from "@/lib/app.tsx";
+import type { JSX, PropsWithChildren } from "react";
+import type { AppProps } from "@/lib/app.tsx";
 import { Ogp } from "react-ogp";
 
 export default function Html(props: PropsWithChildren<AppProps>): JSX.Element {

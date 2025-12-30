@@ -1,6 +1,6 @@
-import { type JSX } from "react";
+import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
-import { type AppProps } from "@/lib/app.tsx";
+import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
 import language from "@/language.json" with { type: "json" };

@@ -6,7 +6,7 @@ import {
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
-import { AppProps } from "@/lib/app.tsx";
+import type { AppProps } from "@/lib/app.tsx";
 import language from "@/language.json" with { type: "json" };
 import Layout from "@/pages/layout.tsx";
 import { notFound } from "react-app";

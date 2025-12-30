@@ -3,7 +3,7 @@ import resolver from "@/lib/link.ts";
 import {
   PostBySlugDocument,
   TranslationBySlugDocument,
-  TranslationBySlugQuery,
+  type TranslationBySlugQuery,
 } from "./post.graphql.ts";
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";

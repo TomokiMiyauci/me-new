@@ -115,7 +115,8 @@
         "no-sync-fn-in-async-fn",
         "no-throw-literal",
         "no-useless-rename",
-        "prefer-ascii"
+        "prefer-ascii",
+        "verbatim-module-syntax"
       ]
     },
     "exclude": ["./src/graphql"]

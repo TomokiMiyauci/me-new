@@ -1,4 +1,4 @@
-import { type Options } from "@sentry/core";
+import type { Options } from "@sentry/core";
 import { SENTRY_DSN, SENTRY_ENV } from "~env";
 
 export default {

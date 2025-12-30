@@ -1,4 +1,4 @@
-import { type InitOptions } from "i18next";
+import type { InitOptions } from "i18next";
 import language from "@/language.json" with { type: "json" };
 import enTranslation from "@/locales/en.json" with {
   type: "json",
