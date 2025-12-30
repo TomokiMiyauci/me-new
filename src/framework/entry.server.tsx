@@ -1,6 +1,6 @@
 import { init } from "@sentry/deno";
 import { CSP_ENDPOINT } from "~env";
-import sentryConfig from "~config/sentry";
+import { sentry } from "~config";
 import { assert } from "@std/assert/assert";
 import HtmlRouter from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
@@ -12,7 +12,7 @@ import { ViteRscAssets } from "router/vite-rsc";
 
 assert(CSP_ENDPOINT);
 
-init(sentryConfig);
+init(sentry);
 
 const router = new BaseRouter()
   .use(new ResourceRouter());

@@ -19,7 +19,7 @@ import { captureException } from "@sentry/deno";
 import { NonceContext } from "router/csp";
 import { URLResolver } from "route-kit";
 import language from "@/language.json" with { type: "json" };
-import i18nConfig from "@/i18next.config.ts";
+import { i18n as i18nConfig } from "~config";
 import { createInstance } from "i18next";
 import { injectRSCPayload } from "rsc-html-stream/server";
 import { HTMLInjectionStream } from "html-stream";
