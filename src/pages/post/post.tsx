@@ -17,7 +17,7 @@ import { apolloClient } from "~lib";
 export default async function Post(
   props: AppProps,
 ): Promise<JSX.Element> {
-  const { lang, params, url, i18n } = props;
+  const { lang, params, origin, i18n } = props;
   const slug = params["slug"];
 
   if (!slug) {
@@ -65,7 +65,7 @@ export default async function Post(
       <PostMeta
         lang={lang}
         slug={slug}
-        url={url}
+        origin={origin}
         fragment={postPage}
         translations={alternatives}
       />

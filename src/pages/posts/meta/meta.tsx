@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { type Alternate, SeoMeta } from "react-meta";
-import type { PostsMetaFragment } from "./meta.graphql.ts";
+import type { PostsMetaFragment } from "@/pages/posts/meta/meta.graphql.ts";
 import OgImage from "@/graphql/components/og_image/og_image.tsx";
 import { Ogp } from "react-ogp";
 import resolver from "@/lib/link.ts";

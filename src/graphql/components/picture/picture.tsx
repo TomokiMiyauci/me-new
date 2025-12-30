@@ -1,8 +1,8 @@
 import type { JSX } from "react";
 import type { PictureFragment } from "./picture.graphql.ts";
-import { Img, SanityImageObject } from "@biggleszx/react-sanity-image";
+import { Img, type SanityImageObject } from "@biggleszx/react-sanity-image";
 import client from "@/lib/sanity_client.ts";
-import { SanityAsset } from "@sanity/image-url";
+import type { SanityAsset } from "@sanity/image-url";
 
 export interface PictureProps {
   fragment: PictureFragment;

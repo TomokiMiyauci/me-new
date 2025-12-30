@@ -14,7 +14,7 @@ import { apolloClient } from "~lib";
 import PostsMeta from "./meta/meta.tsx";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
-  const { lang, url } = props;
+  const { lang, origin } = props;
   const [result, blogByLangQuery] = await Promise.all([
     apolloClient.query({ query: ArticlesByLangDocument, variables: { lang } }),
     apolloClient.query({ query: BlogByLangDocument, variables: { lang } }),
@@ -39,7 +39,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}
     >
-      <PostsMeta fragment={blog} lang={lang} origin={url.origin} />
+      <PostsMeta fragment={blog} lang={lang} origin={origin} />
       <main className="mt-4 mb-32 sm:mt-24">
         <section className="mx-auto max-w-2xl lg:mx-0">
           <h1 className="text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">

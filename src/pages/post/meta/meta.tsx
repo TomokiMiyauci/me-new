@@ -11,7 +11,7 @@ import { isNonNullable } from "isx";
 
 export interface PostMetaProps {
   fragment: PostMetaFragment;
-  url: URL;
+  origin: string;
   translations: TranslationAlternation[];
   lang: string;
   slug: string;
@@ -23,7 +23,7 @@ interface TranslationAlternation {
 }
 
 export default function PostMeta(props: PostMetaProps): JSX.Element {
-  const { fragment, url, translations, lang, slug } = props;
+  const { fragment, origin, translations, lang, slug } = props;
 
   const { categories, tags, coverImage } = fragment;
   const title = fragment.title ?? undefined;
@@ -33,11 +33,13 @@ export default function PostMeta(props: PostMetaProps): JSX.Element {
   const createdDate = createdAt ? new Date(createdAt) : undefined;
   const updatedDate = updatedAt ? new Date(updatedAt) : undefined;
   const pathname = resolver.resolve(Entry.Post, { slug, lang });
-  const canonicalURL = pathname ? new URL(pathname, url).toString() : undefined;
+  const canonicalURL = pathname
+    ? new URL(pathname, origin).toString()
+    : undefined;
   const alternates = translations.map(({ lang, location }) => {
     return {
       hrefLang: lang,
-      href: new URL(location, url).toString(),
+      href: new URL(location, origin).toString(),
     };
   });
 
