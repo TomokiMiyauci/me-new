@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
-import "@/app/index.css";
+import "@/pages/index.css";
 
 export default {
   parameters: {

@@ -2,13 +2,13 @@ import ArticleFragment from "@/graphql/components/article/article.tsx";
 import {
   ArticlesByLangDocument,
   BlogByLangDocument,
-} from "@/app/posts/posts.graphql.ts";
+} from "@/pages/posts/posts.graphql.ts";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import { AppProps } from "@/lib/app.tsx";
 import language from "@/language.json" with { type: "json" };
-import Layout from "@/app/layout.tsx";
+import Layout from "@/pages/layout.tsx";
 import { notFound } from "react-app";
 import { SeoMeta } from "react-meta";
 import { apolloClient } from "~lib";

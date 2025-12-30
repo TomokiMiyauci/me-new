@@ -10,7 +10,7 @@ import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
 import { PortableText } from "@portabletext/react";
 import { Article } from "~component";
-import Layout from "@/app/layout.tsx";
+import Layout from "@/pages/layout.tsx";
 import PostMeta from "./meta/meta.tsx";
 import { apolloClient } from "~lib";
 

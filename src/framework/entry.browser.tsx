@@ -16,7 +16,7 @@ import { sentry } from "~config";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { createCallServer, getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
-import GlobalError from "../app/global_error.tsx";
+import GlobalError from "../pages/global_error.tsx";
 
 init(sentry);
 
