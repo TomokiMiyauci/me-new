@@ -119,9 +119,9 @@
         "verbatim-module-syntax"
       ]
     },
-    "exclude": ["./src/graphql"]
+    "exclude": ["./src/graphql/types.ts"]
   },
   "fmt": {
-    "exclude": ["./src/graphql"]
+    "exclude": ["./src/graphql/types.ts"]
   }
 }

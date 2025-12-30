@@ -1,0 +1,15 @@
+fragment OgImage on Picture {
+  description
+  image {
+    asset {
+      url
+      metadata {
+        dimensions {
+          width
+          height
+        }
+      }
+      mimeType
+    }
+  }
+}
