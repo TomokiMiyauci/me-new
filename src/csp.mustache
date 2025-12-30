@@ -1,6 +1,7 @@
 default-src 'none';
 script-src 'nonce-{{{nonce}}}' 'unsafe-eval' 'self';
-style-src 'self' 'unsafe-inline';
-img-src https: data:;
+style-src 'self' 'unsafe-inline' https:;
+img-src https: data: 'self';
 report-uri {{{endpoint}}};
 connect-src ws: https: http:;
+font-src https:;
