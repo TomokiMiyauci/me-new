@@ -4,6 +4,7 @@ import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import { Footer, Header } from "~component";
 import language from "@/language.json" with { type: "json" };
+import Logo from "@/components/logo/logo.tsx";
 
 interface LayoutProps extends PropsWithChildren<AppProps> {
   translations?: TranslationItem[];
@@ -31,9 +32,16 @@ export default function Layout(props: LayoutProps): JSX.Element {
   });
 
   return (
-    <body>
+    <body className="font-roboto">
       <Header
-        logo={<a href={href ?? undefined}>Home</a>}
+        logo={
+          <a
+            className="inline-flex gap-4 justify-center items-center"
+            href={href ?? undefined}
+          >
+            <Logo />
+          </a>
+        }
         translation={{
           title: t("ui.language_menu.label"),
           items: translationItems,
@@ -49,7 +57,11 @@ export default function Layout(props: LayoutProps): JSX.Element {
 
       <Footer
         className="px-4 md:px-8 lg:px-16 mt-16 md:mt-40"
-        logo={<a href={href ?? undefined}>Home</a>}
+        logo={
+          <a href={href ?? undefined}>
+            <Logo />
+          </a>
+        }
         navigation={[
           {
             name: t("category.contents"),
