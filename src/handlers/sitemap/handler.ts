@@ -9,6 +9,7 @@ import language from "@/language.json" with { type: "json" };
 import Entry from "@/routes/entry.ts";
 import resolver from "@/lib/link.ts";
 import { PostSlugsDocument } from "./handler.graphql.ts";
+import { isNonNullable } from "isx";
 
 export default async function sitemap(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -70,8 +71,4 @@ async function* getPathnames(): AsyncIterable<string> {
       if (pathname) yield pathname;
     }
   }
-}
-
-function isNonNullable<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined;
 }

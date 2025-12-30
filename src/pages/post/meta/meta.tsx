@@ -7,6 +7,7 @@ import { SeoMeta } from "react-meta";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
 import OgImgage from "@/graphql/components/og_image/og_image.tsx";
+import { isNonNullable } from "isx";
 
 export interface PostMetaProps {
   fragment: PostMetaFragment;
@@ -33,6 +34,12 @@ export default function PostMeta(props: PostMetaProps): JSX.Element {
   const updatedDate = updatedAt ? new Date(updatedAt) : undefined;
   const pathname = resolver.resolve(Entry.Post, { slug, lang });
   const canonicalURL = pathname ? new URL(pathname, url).toString() : undefined;
+  const alternates = translations.map(({ lang, location }) => {
+    return {
+      hrefLang: lang,
+      href: new URL(location, url).toString(),
+    };
+  });
 
   return (
     <>
@@ -40,6 +47,7 @@ export default function PostMeta(props: PostMetaProps): JSX.Element {
         title={title}
         description={description}
         canonical={canonicalURL}
+        alternates={alternates}
       />
       <Ogp
         title={title}
@@ -66,21 +74,6 @@ export default function PostMeta(props: PostMetaProps): JSX.Element {
         }}
       >
       </JsonLd>
-
-      {translations.map(({ location, lang }) => {
-        return (
-          <link
-            key={lang}
-            rel="alternate"
-            hrefLang={lang}
-            href={new URL(location, url).toString()}
-          />
-        );
-      })}
     </>
   );
-}
-
-function isNonNullable<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined;
 }
