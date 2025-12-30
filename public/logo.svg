@@ -2,55 +2,63 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="299.23724mm"
-   height="345.52951mm"
-   viewBox="0 0 299.23724 345.52951"
-   version="1.1"
-   id="svg1"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+  width="299.23724mm"
+  height="345.52951mm"
+  viewBox="0 0 299.23724 345.52951"
+  version="1.1"
+  id="svg1"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:svg="http://www.w3.org/2000/svg"
+>
   <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#505050"
-     bordercolor="#eeeeee"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm">
+    id="namedview1"
+    pagecolor="#505050"
+    bordercolor="#eeeeee"
+    borderopacity="1"
+    inkscape:showpageshadow="0"
+    inkscape:pageopacity="0"
+    inkscape:pagecheckerboard="0"
+    inkscape:deskcolor="#d1d1d1"
+    inkscape:document-units="mm"
+  >
     <inkscape:page
-       x="1.8862289e-14"
-       y="0"
-       width="299.23721"
-       height="345.52951"
-       id="page2"
-       margin="0"
-       bleed="0" />
+      x="1.8862289e-14"
+      y="0"
+      width="299.23721"
+      height="345.52951"
+      id="page2"
+      margin="0"
+      bleed="0"
+    />
   </sodipodi:namedview>
   <defs
-     id="defs1" />
+    id="defs1"
+  />
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-81.989826,-360.53822)">
+    inkscape:label="Layer 1"
+    inkscape:groupmode="layer"
+    id="layer1"
+    transform="translate(-81.989826,-360.53822)"
+  >
     <g
-       id="g6"
-       inkscape:export-filename="g6.svg"
-       inkscape:export-xdpi="25.464746"
-       inkscape:export-ydpi="25.464746">
+      id="g6"
+      inkscape:export-filename="g6.svg"
+      inkscape:export-xdpi="25.464746"
+      inkscape:export-ydpi="25.464746"
+    >
       <path
-         id="path1-0"
-         style="fill:#535743;fill-opacity:1;stroke:#9286f7;stroke-width:0;stroke-dasharray:none;paint-order:markers stroke fill"
-         d="M 231.6086,360.5382 81.989827,446.92052 V 619.68517 L 231.6086,706.0675 V 533.30285 l 149.61826,-86.38233 z"
-         sodipodi:nodetypes="ccccccc" />
+        id="path1-0"
+        style="fill: #535743; fill-opacity: 1; stroke: #9286f7; stroke-width: 0; stroke-dasharray: none; paint-order: markers stroke fill"
+        d="M 231.6086,360.5382 81.989827,446.92052 V 619.68517 L 231.6086,706.0675 V 533.30285 l 149.61826,-86.38233 z"
+        sodipodi:nodetypes="ccccccc"
+      />
       <path
-         id="use2-4"
-         style="fill:#676c53;stroke:#9286f7;stroke-width:0;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-         d="M 381.22705,446.92073 231.60828,533.30305 V 706.0677 l 29.64419,-17.11524 V 573.41843 l 29.64315,-17.11472 v 115.53455 l 31.04461,-17.92345 V 538.38026 l 29.64316,-17.11472 v 115.53455 l 29.64366,-17.11472 z" />
+        id="use2-4"
+        style="fill: #676c53; stroke: #9286f7; stroke-width: 0; stroke-dasharray: none; stroke-opacity: 1; paint-order: markers stroke fill"
+        d="M 381.22705,446.92073 231.60828,533.30305 V 706.0677 l 29.64419,-17.11524 V 573.41843 l 29.64315,-17.11472 v 115.53455 l 31.04461,-17.92345 V 538.38026 l 29.64316,-17.11472 v 115.53455 l 29.64366,-17.11472 z"
+      />
     </g>
   </g>
 </svg>
