@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 // deno-fmt-ignore-file
-import * as Types from '../../graphql/types.ts';
+import * as Types from "../../graphql/types.ts";
 
 import type { TypedObject } from "@portabletext/types";
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';

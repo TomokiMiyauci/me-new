@@ -1,7 +1,7 @@
 import type { ArticleFragment } from "./article.graphql.ts";
 import type { JSX } from "react";
 import { ArticleSummary, type ArticleSummaryProps } from "~component";
-import Picture from "@/fragments/picture/picture.tsx";
+import Picture from "@/graphql/components/picture/picture.tsx";
 
 export interface ArticleProps {
   lang: string;

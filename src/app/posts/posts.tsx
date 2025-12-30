@@ -1,5 +1,8 @@
-import { ArticlesByLangDocument, BlogByLangDocument } from "./posts.graphql.ts";
-import ArticleFragment from "@/fragments/article/article.tsx";
+import ArticleFragment from "@/graphql/components/article/article.tsx";
+import {
+  ArticlesByLangDocument,
+  BlogByLangDocument,
+} from "@/app/posts/posts.graphql.ts";
 import type { JSX } from "react";
 import resolver from "@/lib/link.ts";
 import Entry from "@/routes/entry.ts";
