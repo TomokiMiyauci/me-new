@@ -3,3 +3,7 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+}

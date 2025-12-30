@@ -32,14 +32,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
   });
 
   return (
-    <body>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
-        rel="stylesheet"
-      />
-
+    <body className="font-roboto">
       <Header
         logo={
           <a
