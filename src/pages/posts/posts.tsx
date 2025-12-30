@@ -10,11 +10,11 @@ import type { AppProps } from "@/lib/app.tsx";
 import language from "@/language.json" with { type: "json" };
 import Layout from "@/pages/layout.tsx";
 import { notFound } from "react-app";
-import { SeoMeta } from "react-meta";
 import { apolloClient } from "~lib";
+import PostsMeta from "./meta/meta.tsx";
 
 export default async function Posts(props: AppProps): Promise<JSX.Element> {
-  const { lang } = props;
+  const { lang, url } = props;
   const [result, blogByLangQuery] = await Promise.all([
     apolloClient.query({ query: ArticlesByLangDocument, variables: { lang } }),
     apolloClient.query({ query: BlogByLangDocument, variables: { lang } }),
@@ -39,10 +39,7 @@ export default async function Posts(props: AppProps): Promise<JSX.Element> {
         location: resolver.resolve(Entry.Posts, { lang }) ?? undefined,
       }))}
     >
-      <SeoMeta
-        title={title ?? undefined}
-        description={description ?? undefined}
-      />
+      <PostsMeta fragment={blog} lang={lang} origin={url.origin} />
       <main className="mt-4 mb-32 sm:mt-24">
         <section className="mx-auto max-w-2xl lg:mx-0">
           <h1 className="text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
