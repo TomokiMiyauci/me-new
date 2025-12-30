@@ -1,3 +1,30 @@
+# [1.9.0](https://github.com/TomokiMiyauci/me-new/compare/1.8.0...1.9.0) (2025-12-30)
+
+
+### Bug Fixes
+
+* instantiate the router at the entry point ([8d950c0](https://github.com/TomokiMiyauci/me-new/commit/8d950c096694161f7319b91436da5611a560ecfe))
+
+
+### Features
+
+* add global site name ([4dec758](https://github.com/TomokiMiyauci/me-new/commit/4dec7581ce74707c90e9a9695c0ef83f4422d2c7))
+* add handler for robots.txt ([bff3b4e](https://github.com/TomokiMiyauci/me-new/commit/bff3b4ea3726f4a4bac32c6c0a36ed7fb404eb6b))
+* add logo icon ([14405a2](https://github.com/TomokiMiyauci/me-new/commit/14405a2ead2d2db8affd254ccdea14b46750a946))
+* add meta renderer for posts ([2c22d88](https://github.com/TomokiMiyauci/me-new/commit/2c22d8867331eccae7f928f5673531ff648d8ccf))
+* add og url to post meta ([fe10540](https://github.com/TomokiMiyauci/me-new/commit/fe1054090e7ec5f3c819b6edb85695121a6708f1))
+* add popover ponyfill ([daf440d](https://github.com/TomokiMiyauci/me-new/commit/daf440deffc3fef86409db4663fbefea4889f503))
+* add sitemap handler ([ac378d1](https://github.com/TomokiMiyauci/me-new/commit/ac378d103d14d3ca7e20a38be179efc504dd58c3))
+* change i18n storategy ([bb004c0](https://github.com/TomokiMiyauci/me-new/commit/bb004c007e5c4a19811020c3cd41e2a405c57c6d))
+* change url to origin field in app props ([e4f5956](https://github.com/TomokiMiyauci/me-new/commit/e4f5956f2694e4ccda543b947426712c3d551fdd))
+* **isx:** add is collection module ([435487e](https://github.com/TomokiMiyauci/me-new/commit/435487eeaf7ed58af36e51d3ab4e57c9f95a6287))
+* **react-meta:** add alternates field ([5e63895](https://github.com/TomokiMiyauci/me-new/commit/5e63895d7e094285e52dc7623633f95866c0d319))
+* **react-ogp:** add locale and site name field ([7ec16ec](https://github.com/TomokiMiyauci/me-new/commit/7ec16ecdb677359a5a9f9c3597030a1dba12f5b6))
+* **react-ogp:** add structured og image ([8bd7a99](https://github.com/TomokiMiyauci/me-new/commit/8bd7a99250ff03e9aa5e1252013c9530c7e35b49))
+* render og image on post ([330a06b](https://github.com/TomokiMiyauci/me-new/commit/330a06b340b224cf2f5a0b77ba89162ce9b4a25c))
+* **router:** add router fallback option ([92e8c14](https://github.com/TomokiMiyauci/me-new/commit/92e8c1467721379cc24b77ed4bf33a23af2bd2be))
+* **router:** add trailing slash middleware ([ebac4d5](https://github.com/TomokiMiyauci/me-new/commit/ebac4d5223bd5b571ed412b1a67576933a86976a))
+
 # [1.8.0](https://github.com/TomokiMiyauci/me-new/compare/1.7.0...1.8.0) (2025-12-27)
 
 
