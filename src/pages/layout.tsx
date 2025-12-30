@@ -32,7 +32,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
   });
 
   return (
-    <body className="font-roboto">
+    <body className="font-sans">
       <Header
         logo={
           <a

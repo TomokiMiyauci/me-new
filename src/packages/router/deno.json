@@ -6,10 +6,12 @@
     "./csp": "./src/middleware/csp.ts",
     "./redirection": "./src/middleware/redirection.ts",
     "./middleware": "./src/middleware/mod.ts",
-    "./trailing-slash": "./src/middleware/trailing_slash.ts"
+    "./trailing-slash": "./src/middleware/trailing_slash.ts",
+    "./static-dir": "./src/middleware/static_dir.ts"
   },
   "imports": {
     "@/": "./src/",
+    "@std/fs": "jsr:@std/fs@^1.0.21",
     "@std/http": "jsr:@std/http@^1.0.22"
   }
 }
