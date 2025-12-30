@@ -1,9 +1,10 @@
 import type { JSX } from "react";
 import OgImage, { type OgImageProps } from "./og_image.tsx";
-import ObjectType, { type Article } from "./object_type.tsx";
+import ObjectType, { type ObjectTypeProps } from "./object_type.tsx";
 
-interface OgpProps extends BasicMetadata, Article {
-}
+type OgpProps =
+  & BasicMetadata
+  & ObjectTypeProps;
 
 interface BasicMetadata {
   /**
@@ -51,7 +52,6 @@ export default function Ogp(props: OgpProps): JSX.Element {
   const {
     title,
     description,
-    type,
     image,
     locale,
     localeAlternate,
@@ -79,7 +79,6 @@ export default function Ogp(props: OgpProps): JSX.Element {
       {image && (typeof image === "string"
         ? <meta property="og:image" content={image} />
         : <OgImage {...image} />)}
-      {type && <meta property="og:type" content={type} />}
       <ObjectType {...props} />
     </>
   );

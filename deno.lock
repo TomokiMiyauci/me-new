@@ -29,6 +29,7 @@
     "npm:@graphql-codegen/near-operation-file-preset@4": "4.0.0_graphql@16.12.0",
     "npm:@graphql-typed-document-node/core@^3.2.0": "3.2.0_graphql@16.12.0",
     "npm:@lingual/i18n-check@~0.8.16": "0.8.16",
+    "npm:@oddbird/popover-polyfill@~0.6.1": "0.6.1",
     "npm:@portabletext/react@6": "6.0.0_react@19.2.3",
     "npm:@portabletext/types@4": "4.0.0",
     "npm:@rollup/plugin-inject@^5.0.5": "5.0.5_rollup@4.53.3",
@@ -1597,6 +1598,9 @@
         "@nodelib/fs.scandir",
         "fastq"
       ]
+    },
+    "@oddbird/popover-polyfill@0.6.1": {
+      "integrity": "sha512-Papau51NPG+NajXvoEHCNT1CBJv4WIyvIGfH5gpJPLL8MZJt/4giC0jJ/mNZRtJmdzRuXWpUFB6QxkJa1RvMAQ=="
     },
     "@opentelemetry/api@1.9.0": {
       "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg=="
@@ -5165,6 +5169,7 @@
         "npm:@graphql-codegen/near-operation-file-preset@4",
         "npm:@graphql-typed-document-node/core@^3.2.0",
         "npm:@lingual/i18n-check@~0.8.16",
+        "npm:@oddbird/popover-polyfill@~0.6.1",
         "npm:@portabletext/react@6",
         "npm:@portabletext/types@4",
         "npm:@rollup/plugin-inject@^5.0.5",

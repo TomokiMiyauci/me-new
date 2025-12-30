@@ -17,7 +17,7 @@ interface RouterOptions {
   fallback: Handler;
 }
 
-export class Router<T> implements MiddlewareObject<T> {
+export class Router<T = unknown> implements MiddlewareObject<T> {
   #routes: Route[] = [];
   #fallback: Handler;
 

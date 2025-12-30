@@ -1,7 +1,7 @@
-import { type FunctionComponent } from "react";
-import { type AppProps } from "@/lib/app.tsx";
+import type { FunctionComponent } from "react";
+import type { AppProps } from "@/lib/app.tsx";
 import Entry from "./entry.ts";
-import { Home, Post, Posts, PrivacyPolicy } from "@/app/manifest.tsx";
+import { Home, Post, Posts, PrivacyPolicy } from "@/pages/manifest.tsx";
 
 export default {
   [Entry.Home]: Home,

@@ -16,10 +16,10 @@ import {
 } from "rsc-protocol";
 import { isNotFoundErrorLike } from "react-app";
 import { captureException } from "@sentry/deno";
-import { NonceContext } from "router/csp";
+import type { NonceContext } from "router/csp";
 import { URLResolver } from "route-kit";
 import language from "@/language.json" with { type: "json" };
-import i18nConfig from "@/i18next.config.ts";
+import { i18n as i18nConfig } from "~config";
 import { createInstance } from "i18next";
 import { injectRSCPayload } from "rsc-html-stream/server";
 import { HTMLInjectionStream } from "html-stream";
@@ -92,7 +92,12 @@ export default async function handler(
   const i18n = createInstance({ lng: lang });
   await i18n.init(i18nConfig);
   const rscPayload = {
-    root: <AppShell entry={entry} app={{ lang, params, url, i18n }} />,
+    root: (
+      <AppShell
+        entry={entry}
+        app={{ lang, params, origin: url.origin, i18n }}
+      />
+    ),
     formState,
     returnValue,
   } satisfies RscPayload;

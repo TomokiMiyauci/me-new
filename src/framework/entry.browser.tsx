@@ -12,13 +12,13 @@ import {
 import { type JSX, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { init, reactErrorHandler } from "@sentry/react";
-import sentryConfig from "~config/sentry";
+import { sentry } from "~config";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { createCallServer, getRSCStream } from "rsc-protocol/client";
 import { ErrorBoundary } from "react-error-boundary";
-import GlobalError from "../app/global_error.tsx";
+import GlobalError from "../pages/global_error.tsx";
 
-init(sentryConfig);
+init(sentry);
 
 setServerCallback(createCallServer({
   createFromFetch,

@@ -1,0 +1,15 @@
+query ArticlesByLang($lang: String!) {
+  articles: allPost(where: { language: { eq: $lang } }) {
+    ...Article
+    key: _id
+    slug {
+      current
+    }
+  }
+}
+
+query BlogByLang($lang: String!) {
+  blogs: allBlog(where: { language: { eq: $lang } }) {
+    ...PostsMeta
+  }
+}

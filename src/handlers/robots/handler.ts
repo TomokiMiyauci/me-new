@@ -1,4 +1,4 @@
-import template from "./robots.txt?raw";
+import template from "./robots.mustache?raw";
 import mustache from "mustache";
 
 export default function robots(request: Request): Response {

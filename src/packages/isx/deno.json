@@ -1,0 +1,6 @@
+{
+  "name": "isx",
+  "exports": {
+    ".": "./src/mod.ts"
+  }
+}

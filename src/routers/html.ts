@@ -1,12 +1,12 @@
 import { type MiddlewareObject, Router } from "router";
 import { dynamic } from "router/middleware";
-import { Csp, NonceContext, NonceProvider } from "router/csp";
+import { Csp, type NonceContext, NonceProvider } from "router/csp";
 import mastache from "mustache";
 import cspTemplate from "../csp.mustache?raw";
 import { CSP_ENDPOINT } from "~env";
 import { Redirection } from "router/redirection";
 import language from "@/language.json" with { type: "json" };
-import appHandler, { HanderContext } from "@/handlers/app.tsx";
+import appHandler, { type HanderContext } from "@/handlers/app.tsx";
 
 class App implements MiddlewareObject<NonceContext> {
   constructor(

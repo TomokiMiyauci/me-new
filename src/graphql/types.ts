@@ -1,3 +1,5 @@
+// deno-lint-ignore-file
+// deno-fmt-ignore-file
 import type { TypedObject } from "@portabletext/types";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
