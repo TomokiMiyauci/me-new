@@ -4,7 +4,6 @@ import { Csp, type NonceContext, NonceProvider } from "router/csp";
 import mastache from "mustache";
 import cspTemplate from "../csp.mustache?raw";
 import { CSP_ENDPOINT } from "~env";
-import { Redirection } from "router/redirection";
 import language from "@/language.json" with { type: "json" };
 import appHandler, { type HanderContext } from "@/handlers/app.tsx";
 
@@ -46,13 +45,25 @@ export default class HtmlRouter extends Router<NonceContext> {
   ) {
     super();
 
-    this.use(dynamic<NonceContext>(({ url }) =>
-      new Redirection([{
-        from: new URLPattern({ pathname: "/" }),
-        to: new URL("/" + language.default, url),
-        status: 302,
-      }])
-    ))
+    this
+      .use({
+        handle(req, next): Promise<Response> | Response {
+          const url = new URL(req.url);
+
+          const prefixies = language.languages.map((lang) => "/" + lang);
+
+          if (!prefixies.some((prefix) => url.pathname.startsWith(prefix))) {
+            const fallback = "/" + language.default + url.pathname;
+            const newURL = new URL(fallback, url);
+
+            newURL.search = url.search;
+
+            return Response.redirect(newURL);
+          }
+
+          return next(req);
+        },
+      })
       .use(new NonceProvider())
       .use(csp)
       .use(new App(bootstrapScriptContent, render));
