@@ -68,6 +68,7 @@ export default defineConfig({
 
   build: {
     license: true,
+    assetsInlineLimit: 0,
   },
   // specify entry point for each environment.
   // (currently the plugin assumes `rollupOptions.input.index` for some features.)
