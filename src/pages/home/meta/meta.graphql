@@ -1,0 +1,7 @@
+fragment HomeMeta on Home {
+  title
+  description
+  coverImage {
+    ...OgImage
+  }
+}

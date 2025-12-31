@@ -20,6 +20,7 @@ export type TranslationBySlugQueryVariables = Types.Exact<{
 export type TranslationBySlugQuery = { __typename?: 'RootQuery', allTranslationMetadata: Array<{ __typename?: 'TranslationMetadata', translations?: Array<{ __typename?: 'InternationalizedArrayReferenceValue', value?:
         | { __typename: 'Blog' }
         | { __typename: 'Category' }
+        | { __typename: 'Home' }
         | { __typename: 'LegalDocument' }
         | { __typename: 'Post', language?: string | null, slug?: { __typename?: 'Slug', current?: string | null } | null }
         | { __typename: 'Tag' }

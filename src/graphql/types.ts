@@ -105,7 +105,7 @@ export type BlogFilter = {
   title?: InputMaybe<StringFilter>;
 };
 
-export type BlogOrCategoryOrLegalDocumentOrPostOrTag = Blog | Category | LegalDocument | Post | Tag;
+export type BlogOrCategoryOrHomeOrLegalDocumentOrPostOrTag = Blog | Category | Home | LegalDocument | Post | Tag;
 
 export type BlogSorting = {
   _createdAt?: InputMaybe<SortOrder>;
@@ -381,6 +381,53 @@ export type GlobalDocumentReferenceSorting = {
   _weak?: InputMaybe<SortOrder>;
 };
 
+export type Home = Document & {
+  __typename?: 'Home';
+  /** Date the document was created */
+  _createdAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Document ID */
+  _id?: Maybe<Scalars['ID']['output']>;
+  _key?: Maybe<Scalars['String']['output']>;
+  /** Current document revision */
+  _rev?: Maybe<Scalars['String']['output']>;
+  /** Document type */
+  _type?: Maybe<Scalars['String']['output']>;
+  /** Date the document was last modified */
+  _updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  coverImage?: Maybe<Picture>;
+  description?: Maybe<Scalars['String']['output']>;
+  language?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeFilter = {
+  /** Apply filters on document level */
+  _?: InputMaybe<Sanity_DocumentFilter>;
+  _createdAt?: InputMaybe<DatetimeFilter>;
+  _id?: InputMaybe<IdFilter>;
+  _key?: InputMaybe<StringFilter>;
+  _rev?: InputMaybe<StringFilter>;
+  _type?: InputMaybe<StringFilter>;
+  _updatedAt?: InputMaybe<DatetimeFilter>;
+  coverImage?: InputMaybe<PictureFilter>;
+  description?: InputMaybe<StringFilter>;
+  language?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type HomeSorting = {
+  _createdAt?: InputMaybe<SortOrder>;
+  _id?: InputMaybe<SortOrder>;
+  _key?: InputMaybe<SortOrder>;
+  _rev?: InputMaybe<SortOrder>;
+  _type?: InputMaybe<SortOrder>;
+  _updatedAt?: InputMaybe<SortOrder>;
+  coverImage?: InputMaybe<PictureSorting>;
+  description?: InputMaybe<SortOrder>;
+  language?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+};
+
 export type IdFilter = {
   /** Checks if the value is equal to the given input. */
   eq?: InputMaybe<Scalars['ID']['input']>;
@@ -457,7 +504,7 @@ export type InternationalizedArrayReferenceValue = {
   __typename?: 'InternationalizedArrayReferenceValue';
   _key?: Maybe<Scalars['String']['output']>;
   _type?: Maybe<Scalars['String']['output']>;
-  value?: Maybe<BlogOrCategoryOrLegalDocumentOrPostOrTag>;
+  value?: Maybe<BlogOrCategoryOrHomeOrLegalDocumentOrPostOrTag>;
 };
 
 export type InternationalizedArrayReferenceValueFilter = {
@@ -685,6 +732,7 @@ export type RootQuery = {
   Blog?: Maybe<Blog>;
   Category?: Maybe<Category>;
   Document?: Maybe<Document>;
+  Home?: Maybe<Home>;
   LegalDocument?: Maybe<LegalDocument>;
   Picture?: Maybe<Picture>;
   Post?: Maybe<Post>;
@@ -697,6 +745,7 @@ export type RootQuery = {
   allBlog: Array<Blog>;
   allCategory: Array<Category>;
   allDocument: Array<Document>;
+  allHome: Array<Home>;
   allLegalDocument: Array<LegalDocument>;
   allPicture: Array<Picture>;
   allPost: Array<Post>;
@@ -724,6 +773,11 @@ export type RootQueryCategoryArgs = {
 
 
 export type RootQueryDocumentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootQueryHomeArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -797,6 +851,14 @@ export type RootQueryAllDocumentArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Array<DocumentSorting>>;
   where?: InputMaybe<DocumentFilter>;
+};
+
+
+export type RootQueryAllHomeArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Array<HomeSorting>>;
+  where?: InputMaybe<HomeFilter>;
 };
 
 

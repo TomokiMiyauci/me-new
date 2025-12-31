@@ -5,21 +5,34 @@ import Entry from "@/routes/entry.ts";
 import Layout from "../layout.tsx";
 import language from "@/language.json" with { type: "json" };
 import greet from "./greet.json" with { type: "json" };
-import { BlogDocument } from "./home.graphql.ts";
+import { BlogDocument, HomeByLangDocument } from "./home.graphql.ts";
 import Picture from "@/graphql/components/picture/picture.tsx";
 import { apolloClient } from "~lib";
+import { notFound } from "react-app";
+import HomeMeta from "./meta/meta.tsx";
 
 export default async function Home(props: AppProps): Promise<JSX.Element> {
-  const { lang, i18n } = props;
+  const { lang, i18n, origin } = props;
 
-  const queryResult = await apolloClient.query({
-    query: BlogDocument,
-    variables: { lang },
-  });
+  const [queryResult, homeByLang] = await Promise.all([
+    apolloClient.query({
+      query: BlogDocument,
+      variables: { lang },
+    }),
+    apolloClient.query({ query: HomeByLangDocument, variables: { lang } }),
+  ]);
 
   if (!queryResult.data) {
     throw new Error(queryResult.error?.message);
   }
+
+  if (!homeByLang.data) {
+    throw new Error(homeByLang.error?.message);
+  }
+
+  const home = homeByLang.data.home[0];
+
+  if (!home) notFound();
 
   const blog = queryResult.data.allBlog[0];
   const title = blog?.title ?? "";
@@ -34,6 +47,7 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
         location: resolver.resolve(Entry.Home, { lang }) ?? undefined,
       }))}
     >
+      <HomeMeta fragment={home} lang={lang} origin={origin} />
       <main>
         <div className="min-h-[90vh] grid place-content-center">
           <span className="text-rotate text-6xl leading-18 md:text-9xl md:leading-40">

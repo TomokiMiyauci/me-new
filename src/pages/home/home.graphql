@@ -7,3 +7,9 @@ query Blog($lang: String!) {
     }
   }
 }
+
+query HomeByLang($lang: String!) {
+  home: allHome(where: { language: { eq: $lang } }) {
+    ...HomeMeta
+  }
+}
