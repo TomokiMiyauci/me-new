@@ -14,6 +14,7 @@ import Layout from "@/pages/layout.tsx";
 import PostMeta from "./meta/meta.tsx";
 import { apolloClient } from "~lib";
 import component from "@/graphql/components/body_content/body_content.tsx";
+import Picture from "../../graphql/components/picture/picture.tsx";
 
 export default async function Post(
   props: AppProps,
@@ -96,6 +97,11 @@ export default async function Post(
           title={title}
           body={postPage.bodyRaw && (
             <PortableText components={component} value={postPage.bodyRaw} />
+          )}
+          image={postPage.coverImage && (
+            <figure>
+              <Picture clasName="w-full" fragment={postPage.coverImage} />
+            </figure>
           )}
         />
       </main>

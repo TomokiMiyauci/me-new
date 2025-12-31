@@ -13,6 +13,9 @@ query PostBySlug($slug: String!, $lang: String!) {
     tags {
       name
     }
+    coverImage {
+      ...Picture
+    }
     _createdAt
     _updatedAt
     createdAt: publishedAt
