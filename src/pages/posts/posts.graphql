@@ -1,5 +1,8 @@
 query ArticlesByLang($lang: String!) {
-  articles: allPost(where: { language: { eq: $lang } }) {
+  articles: allPost(
+    where: { language: { eq: $lang } }
+    sort: [{ publishedAt: DESC }]
+  ) {
     ...Article
     key: _id
     slug {

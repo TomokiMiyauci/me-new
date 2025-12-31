@@ -1,12 +1,11 @@
 import type { JSX } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "@/pages/manifest.tsx";
-import GlobalError from "../pages/global_error.tsx";
 import type Entry from "./entry.ts";
 import Router from "./router.tsx";
 import component from "./component.ts";
 import type { AppProps } from "@/lib/app.tsx";
 import Html from "@/pages/html.tsx";
+import { ErrorBoundary, GlobalError } from "react-app";
 
 export interface AppShellProps {
   app: AppProps;

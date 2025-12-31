@@ -2,6 +2,13 @@
 /// <reference types="@types/dom-navigation" />
 // deno-lint-ignore-file no-window
 
+/**
+ * Regarding client-side navigation.
+ * This is implemented using the Navigation API. The Navigation API is limited availability.
+ *
+ * If the Navigation API is not implemented, server-side navigation will be performed.
+ */
+
 import {
   createFromFetch,
   createFromReadableStream,
@@ -15,8 +22,6 @@ import { init, reactErrorHandler } from "@sentry/react";
 import { sentry } from "~config";
 import { Rsc, type RscPayload, RscRequest } from "rsc-protocol";
 import { createCallServer, getRSCStream } from "rsc-protocol/client";
-import { ErrorBoundary } from "react-error-boundary";
-import GlobalError from "../pages/global_error.tsx";
 
 init(sentry);
 
@@ -76,11 +81,7 @@ export function Root(props: RootProps): JSX.Element {
   const { payload } = props;
   return (
     <StrictMode>
-      <ErrorBoundary
-        fallback={<GlobalError />}
-      >
-        <Rsc payload={payload} />
-      </ErrorBoundary>
+      <Rsc payload={payload} />
     </StrictMode>
   );
 }

@@ -13,3 +13,5 @@ export {
   type NotFoundShellProps,
 } from "./not_found/not_found_shell.tsx";
 export { default as HtmlShell } from "./html_shell.tsx";
+export { default as GlobalError } from "./global_error.tsx";
+export { ErrorBoundary } from "./error_boundary.ts";

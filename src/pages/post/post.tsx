@@ -13,6 +13,7 @@ import { Article } from "~component";
 import Layout from "@/pages/layout.tsx";
 import PostMeta from "./meta/meta.tsx";
 import { apolloClient } from "~lib";
+import component from "@/graphql/components/body_content/body_content.tsx";
 
 export default async function Post(
   props: AppProps,
@@ -93,7 +94,9 @@ export default async function Post(
 
         <Article
           title={title}
-          body={postPage.bodyRaw && <PortableText value={postPage.bodyRaw} />}
+          body={postPage.bodyRaw && (
+            <PortableText components={component} value={postPage.bodyRaw} />
+          )}
         />
       </main>
     </Layout>
