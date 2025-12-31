@@ -4,6 +4,7 @@ import clsx from "clsx";
 export interface ArticleProps {
   title: string;
   body?: ReactNode;
+  image?: ReactNode;
 }
 
 export default function Article(
@@ -11,13 +12,14 @@ export default function Article(
     & ArticleProps
     & JSX.IntrinsicElements["article"],
 ): JSX.Element {
-  const { title, body, ...rest } = props;
+  const { title, body, image, ...rest } = props;
   const { className, ...restProps } = rest;
 
   return (
     <article className={clsx(className, "prose max-w-none")} {...restProps}>
       <h1>{title}</h1>
 
+      {image}
       {body && <section>{body}</section>}
     </article>
   );

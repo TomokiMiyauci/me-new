@@ -36,7 +36,7 @@ export default function OgImage(props: OgImageProps): JSX.Element {
   const { url, secureUrl, type, width, height, alt } = props;
   return (
     <>
-      {url && <meta property="og:image:url" content={url} />}
+      {url && <meta property="og:image" content={url} />}
       {secureUrl && <meta property="og:image:secure_url" content={secureUrl} />}
       {type && <meta property="og:image:type" content={type} />}
       {width && <meta property="og:image:width" content={width} />}
