@@ -21,7 +21,12 @@ export default function Picture(props: PictureProps): JSX.Element {
 
   return (
     <figure>
-      <Img alt={description ?? undefined} client={client} image={image} />
+      <Img
+        className="aspect-video object-cover"
+        alt={description ?? undefined}
+        client={client}
+        image={image}
+      />
     </figure>
   );
 }
