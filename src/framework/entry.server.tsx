@@ -1,15 +1,11 @@
 import { init } from "@sentry/deno";
-import { CSP_ENDPOINT } from "~env";
 import { sentry } from "~config";
-import { assert } from "@std/assert/assert";
 import HtmlRouter from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
 import ResourceRouter from "@/routers/resource.ts";
 import BaseRouter from "@/routers/base.ts";
 import { fromFileUrl } from "@std/path";
 import StaticDir from "router/static-dir";
-
-assert(CSP_ENDPOINT);
 
 init(sentry);
 

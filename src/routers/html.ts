@@ -33,7 +33,7 @@ class App implements MiddlewareObject<NonceContext> {
 const csp = dynamic<NonceContext>((_, { nonce }) => {
   const manifest = mastache.render(cspTemplate, {
     nonce,
-    endpoint: CSP_ENDPOINT,
+    endpoint: CSP_ENDPOINT ?? "",
   });
 
   return new Csp(manifest);
