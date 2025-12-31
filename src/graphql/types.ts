@@ -639,13 +639,13 @@ export type Post = Document & {
   bodyRaw?: Maybe<Scalars['JSON']['output']>;
   categories?: Maybe<Array<Maybe<Category>>>;
   coverImage?: Maybe<Picture>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   language?: Maybe<Scalars['String']['output']>;
+  modifiedAt?: Maybe<Scalars['DateTime']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Slug>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type PostFilter = {
@@ -658,12 +658,12 @@ export type PostFilter = {
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
   coverImage?: InputMaybe<PictureFilter>;
-  createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   language?: InputMaybe<StringFilter>;
+  modifiedAt?: InputMaybe<DatetimeFilter>;
+  publishedAt?: InputMaybe<DatetimeFilter>;
   slug?: InputMaybe<SlugFilter>;
   title?: InputMaybe<StringFilter>;
-  updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
 export type PostSorting = {
@@ -674,12 +674,12 @@ export type PostSorting = {
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
   coverImage?: InputMaybe<PictureSorting>;
-  createdAt?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   language?: InputMaybe<SortOrder>;
+  modifiedAt?: InputMaybe<SortOrder>;
+  publishedAt?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SlugSorting>;
   title?: InputMaybe<SortOrder>;
-  updatedAt?: InputMaybe<SortOrder>;
 };
 
 export type Redirect = Document & {

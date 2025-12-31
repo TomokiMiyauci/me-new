@@ -7,9 +7,9 @@ fragment PostMeta on Post {
   tags {
     name
   }
-  createdAt
+  createdAt: publishedAt
   _createdAt
-  updatedAt
+  updatedAt: modifiedAt
   _updatedAt
   coverImage {
     ...OgImage
