@@ -74,4 +74,4 @@ See [.env.example](./.env.example) for required environment variables.
 
 ## License
 
-[MIT](./license)
+[MIT](./License)
