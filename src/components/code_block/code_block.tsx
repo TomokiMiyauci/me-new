@@ -1,4 +1,4 @@
-// deno-lint-ignore-file prefer-ascii
+// deno-lint-ignore-file prefer-ascii no-explicit-any
 import type { ReactNode } from "react";
 import { type BundledLanguage, bundledLanguages } from "shiki";
 import { transformerNotationHighlight } from "@shikijs/transformers";
