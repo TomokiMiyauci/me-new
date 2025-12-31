@@ -47,7 +47,11 @@ function fragmentToArticleSummaryProps(
     excerpt,
     date,
     img: coverImage &&
-      <Picture fragment={coverImage} />,
+      (
+        <figure>
+          <Picture clasName="w-full" fragment={coverImage} />
+        </figure>
+      ),
   } satisfies ArticleSummaryProps;
 
   return props;
