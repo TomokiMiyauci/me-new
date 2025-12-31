@@ -1,3 +1,25 @@
+# [1.10.0](https://github.com/TomokiMiyauci/me-new/compare/1.9.0...1.10.0) (2025-12-31)
+
+
+### Bug Fixes
+
+* fix robots template ([c4cb868](https://github.com/TomokiMiyauci/me-new/commit/c4cb868062a75e069be41b6db36807668e0cb3dc))
+* fix to relative path ([9c0756b](https://github.com/TomokiMiyauci/me-new/commit/9c0756bf8a7b058758897a696def5b95cbd0ef4a))
+
+
+### Features
+
+* add code block renderer and syntax highlighter ([6a66cfa](https://github.com/TomokiMiyauci/me-new/commit/6a66cfa0492ceef40addff2b33d5f1979ddca30a))
+* add home metadata ([da4aa99](https://github.com/TomokiMiyauci/me-new/commit/da4aa99dd73ef493f1960e207a65b40d25d56e1c))
+* add redirection for non prefix url ([7b8386a](https://github.com/TomokiMiyauci/me-new/commit/7b8386a4296b054b2d30bc89a57360cd6742561f))
+* add sort condition ([0571945](https://github.com/TomokiMiyauci/me-new/commit/057194557832063e24f0a5e4ad5dd5715c9d8afc))
+* change font family ([d7d2d99](https://github.com/TomokiMiyauci/me-new/commit/d7d2d9973456cfe379b8bb849243284f3c09909e))
+* change graphql field names ([96ea800](https://github.com/TomokiMiyauci/me-new/commit/96ea800a6a9c07a10ab9e7990f0c79c4d4153be1))
+* **react-app:** add global error page ([bdc842d](https://github.com/TomokiMiyauci/me-new/commit/bdc842d0a4c41cf81df4737ee5300b041ad4e786))
+* render cover image on post page ([e57022a](https://github.com/TomokiMiyauci/me-new/commit/e57022aff1e607572cfe35d139a9166ae83d0c0b))
+* **router/static-dir:** add static dir middleware ([94594f3](https://github.com/TomokiMiyauci/me-new/commit/94594f37e06d85991eabbc67e82edfb6fd03a30b))
+* use static directory middleware instead of rsc asset middleware ([0fdf3e9](https://github.com/TomokiMiyauci/me-new/commit/0fdf3e96d5eff1e22781551303f4737d1d4e500b))
+
 # [1.9.0](https://github.com/TomokiMiyauci/me-new/compare/1.8.0...1.9.0) (2025-12-30)
 
 
