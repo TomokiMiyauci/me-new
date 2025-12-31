@@ -47,6 +47,7 @@ export default class HtmlRouter extends Router<NonceContext> {
 
     this
       .use({
+        // TODO
         handle(req, next): Promise<Response> | Response {
           const url = new URL(req.url);
 
