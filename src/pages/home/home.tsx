@@ -69,10 +69,14 @@ export default async function Home(props: AppProps): Promise<JSX.Element> {
               <li className="md:col-2 justify-self-center">
                 <a href={resolver.resolve(Entry.Posts, { lang }) ?? undefined}>
                   <div className="card bg-base-100 shadow-sm max-w-96">
-                    {blog?.coverImage && <Picture fragment={blog.coverImage} />}
+                    {blog?.coverImage && (
+                      <figure>
+                        <Picture clasName="w-full" fragment={blog.coverImage} />
+                      </figure>
+                    )}
                     <div className="card-body">
                       <h2 className="card-title">{title}</h2>
-                      <p>
+                      <p className="line-clamp-3">
                         {description}
                       </p>
                     </div>
