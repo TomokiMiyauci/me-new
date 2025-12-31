@@ -66,7 +66,8 @@
     "npm:mustache@^4.2.0": "4.2.0",
     "npm:prop-types@^15.8.1": "15.8.1",
     "npm:react-dom@^19.2.3": "19.2.3_react@19.2.3",
-    "npm:react-error-boundary@6": "6.0.0_react@19.2.3",
+    "npm:react-error-boundary@6": "6.0.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
+    "npm:react-error-boundary@^6.0.1": "6.0.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:react-icons@^5.5.0": "5.5.0_react@19.2.3",
     "npm:react-schemaorg@2": "2.0.0_react@19.2.3_schema-dts@1.1.5_typescript@5.9.3",
     "npm:react@^19.1.1": "19.2.3",
@@ -4332,11 +4333,11 @@
         "scheduler"
       ]
     },
-    "react-error-boundary@6.0.0_react@19.2.3": {
-      "integrity": "sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==",
+    "react-error-boundary@6.0.1_react@19.2.3_react-dom@19.2.3__react@19.2.3": {
+      "integrity": "sha512-zArgQpjJUN1ZLMEKWtifxQweW3yfvwL5j2nh3Pesze1qG6r5oCDMy/TA97bUF01wy4xCeeL4/pd8GHmvEsP3Bg==",
       "dependencies": [
-        "@babel/runtime",
-        "react"
+        "react",
+        "react-dom"
       ]
     },
     "react-icons@5.5.0_react@19.2.3": {
@@ -5064,7 +5065,8 @@
       "integrity": "sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==",
       "dependencies": [
         "iconv-lite@0.6.3"
-      ]
+      ],
+      "deprecated": true
     },
     "whatwg-mimetype@4.0.0": {
       "integrity": "sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg=="
@@ -5232,6 +5234,11 @@
         "dependencies": [
           "npm:@graphql-typed-document-node/core@^3.2.0",
           "npm:graphql@^16.12.0"
+        ]
+      },
+      "src/packages/react_app": {
+        "dependencies": [
+          "npm:react-error-boundary@^6.0.1"
         ]
       },
       "src/packages/react_meta": {

@@ -2,5 +2,8 @@
   "name": "react-app",
   "exports": {
     ".": "./src/mod.ts"
+  },
+  "imports": {
+    "react-error-boundary": "npm:react-error-boundary@^6.0.1"
   }
 }
