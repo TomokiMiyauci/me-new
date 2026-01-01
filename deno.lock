@@ -5514,6 +5514,13 @@
           "npm:react@^19.2.3"
         ]
       },
+      "src/packages/react_shiki": {
+        "dependencies": [
+          "npm:@types/react@^19.2.7",
+          "npm:react@^19.2.3",
+          "npm:shiki@^3.20.0"
+        ]
+      },
       "src/packages/routekit": {
         "dependencies": [
           "jsr:@std/collections@^1.1.3"
