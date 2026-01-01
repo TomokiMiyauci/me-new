@@ -1,33 +1,16 @@
-// deno-lint-ignore-file prefer-ascii no-explicit-any
 import type { ReactNode } from "react";
 import { type BundledLanguage, bundledLanguages } from "shiki";
 import { transformerNotationHighlight } from "@shikijs/transformers";
-
-import { type JSX, use } from "react";
-import type {
-  BundledTheme,
-  CodeOptionsSingleTheme,
-  CodeToHastOptionsCommon,
-} from "shiki";
-import { codeToHtml } from "shiki";
-
-export interface ShikiProps
-  extends
-    CodeToHastOptionsCommon<BundledLanguage>,
-    CodeOptionsSingleTheme<BundledTheme> {
-  children: string;
-}
-
-export function Shiki(props: ShikiProps): JSX.Element {
-  const { children, ...options } = props;
-
-  const html = use(codeToHtml(children, options));
-
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
-}
+import { Shiki } from "react-shiki";
 
 export interface CodeBlockProps {
-  fragment: any;
+  fragment: CodeBlockFragment;
+}
+
+interface CodeBlockFragment {
+  code?: string;
+  language?: string;
+  highlightedLines?: number[];
 }
 
 export default function CodeBlock(
@@ -37,7 +20,7 @@ export default function CodeBlock(
 
   if (!code) return;
 
-  const lang = toBundledLanguage(language);
+  const lang = toBundledLanguage(language) ?? "text";
   const content = convertHighlightedContent(code, highlightedLines);
 
   return (
@@ -51,11 +34,11 @@ export default function CodeBlock(
   );
 }
 
-function toBundledLanguage(language: string | undefined): BundledLanguage {
-  if (!language) return "文言";
+function toBundledLanguage(
+  language: string | undefined,
+): BundledLanguage | undefined {
+  if (!language) return;
   if (language in bundledLanguages) return language as BundledLanguage;
-
-  return "文言";
 }
 
 function convertHighlightedContent(
