@@ -1,0 +1,11 @@
+{
+  "name": "react-shiki",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "imports": {
+    "@types/react": "npm:@types/react@^19.2.7",
+    "react": "npm:react@^19.2.3",
+    "shiki": "npm:shiki@^3.20.0"
+  }
+}
