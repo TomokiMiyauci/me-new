@@ -7,7 +7,7 @@ export interface CodeBlockProps {
   fragment: CodeBlockFragment;
 }
 
-interface CodeBlockFragment {
+export interface CodeBlockFragment {
   code?: string;
   language?: string;
   highlightedLines?: number[];

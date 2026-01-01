@@ -8,13 +8,12 @@ import {
 import { notFound } from "react-app";
 import type { AppProps } from "@/lib/app.tsx";
 import Entry from "@/routes/entry.ts";
-import { PortableText } from "@portabletext/react";
 import { Article } from "~component";
 import Layout from "@/pages/layout.tsx";
 import PostMeta from "./meta/meta.tsx";
 import { apolloClient } from "~lib";
-import component from "@/graphql/components/body_content/body_content.tsx";
-import Picture from "../../graphql/components/picture/picture.tsx";
+import BodyRaw from "@/graphql/components/body_raw//body_raw.tsx";
+import Picture from "@/graphql/components/picture/picture.tsx";
 
 export default async function Post(
   props: AppProps,
@@ -95,9 +94,7 @@ export default async function Post(
 
         <Article
           title={title}
-          body={postPage.bodyRaw && (
-            <PortableText components={component} value={postPage.bodyRaw} />
-          )}
+          body={postPage.bodyRaw && <BodyRaw fragment={postPage.bodyRaw} />}
           image={postPage.coverImage && (
             <figure>
               <Picture clasName="w-full" fragment={postPage.coverImage} />
