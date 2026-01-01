@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/TomokiMiyauci/me-new/compare/1.10.0...1.11.0) (2026-01-01)
+
+
+### Features
+
+* **react-shiki:** add module for shiki with react component ([8a59387](https://github.com/TomokiMiyauci/me-new/commit/8a593873116979e2293382337dca404da93fa2e5))
+
 # [1.10.0](https://github.com/TomokiMiyauci/me-new/compare/1.9.0...1.10.0) (2025-12-31)
 
 
