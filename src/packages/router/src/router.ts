@@ -75,13 +75,17 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
       route.pattern.test(request.url)
     ).map((route) => route.middleware);
 
-    function fallback(request: Request): Promise<Response> {
-      return next(request);
-    }
+    const middleware: Middleware = (
+      request: Request,
+      ctx: object,
+    ): Promise<Response> => {
+      return next(request, ctx as T);
+    };
+
     return exec(
       request,
-      middlewares,
-      fallback,
+      middlewares.concat(middleware),
+      this.#fallback,
       next,
     );
   }
