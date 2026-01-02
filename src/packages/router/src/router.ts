@@ -18,14 +18,12 @@ export interface RouterOptions {
 }
 
 export class Router<T = unknown> implements MiddlewareObject<T> {
-  #routes: Route[];
   #fallback: Handler;
 
-  constructor(routes: Route[] = [], options?: RouterOptions) {
+  constructor(public routes: readonly Route[] = [], options?: RouterOptions) {
     const { fallback = defaultFallback } = options ?? {};
 
     this.#fallback = fallback;
-    this.#routes = routes;
   }
 
   get(
@@ -38,9 +36,9 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
       pattern,
       middleware,
     } satisfies Route;
-    const routes = this.#routes.concat(route);
+    const newRoutes = this.routes.concat(route);
 
-    return new Router(routes, { fallback: this.#fallback });
+    return new Router(newRoutes, { fallback: this.#fallback });
   }
 
   use(middleware: MiddlewareOrMiddlewareObject<T>): Router<T> {
@@ -52,13 +50,13 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
       pattern,
       middleware: normalizedMiddleware,
     } satisfies Route;
-    const routes = this.#routes.concat(route);
+    const newRoutes = this.routes.concat(route);
 
-    return new Router(routes, { fallback: this.#fallback });
+    return new Router(newRoutes, { fallback: this.#fallback });
   }
 
   fetch(request: Request): Promise<Response> {
-    const middlewares = this.#routes.filter((route) =>
+    const middlewares = this.routes.filter((route) =>
       route.pattern.test(request.url)
     ).map((route) => route.middleware);
     return exec(
@@ -70,7 +68,7 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
   }
 
   handle(request: Request, next: Next<T>): Promise<Response> {
-    const middlewares = this.#routes.filter((route) =>
+    const middlewares = this.routes.filter((route) =>
       route.pattern.test(request.url)
     ).map((route) => route.middleware);
 
