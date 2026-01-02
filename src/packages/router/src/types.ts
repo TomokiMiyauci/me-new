@@ -4,18 +4,20 @@ export interface Route {
 }
 
 export interface MiddlewareObject<T = object> {
-  handle(request: Request, next: Next<T>): Response | Promise<Response>;
+  handle(
+    request: Request,
+    ctx: CallableContext<T>,
+  ): Response | Promise<Response>;
 }
 
-export type Next<T = object> = {
+export interface Next<T = object> {
   (request: Request, ctx?: T): Promise<Response>;
-} & Readonly<Partial<T>>;
+}
+
+export type CallableContext<T> = Next<T> & Readonly<Partial<T>>;
 
 export interface Middleware<T = object> {
-  (
-    request: Request,
-    next: Next<T>,
-  ): Response | Promise<Response>;
+  (request: Request, ctx: CallableContext<T>): Response | Promise<Response>;
 }
 
 export interface Handler {
