@@ -1,11 +1,12 @@
 import { init } from "@sentry/deno";
 import { sentry } from "~config";
-import htmlRouter, { App } from "@/routers/html.ts";
+import htmlRouter from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
 import resourceRouter from "@/routers/resource.ts";
 import baseRouter from "@/routers/base.ts";
 import { fromFileUrl } from "@std/path";
 import StaticDir from "router/static-dir";
+import { App } from "@/handlers/app.tsx";
 
 init(sentry);
 

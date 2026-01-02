@@ -1,33 +1,10 @@
-import { type MiddlewareObject, Router } from "router";
+import { Router } from "router";
 import { dynamic } from "router/middleware";
 import { Csp, type NonceContext, NonceProvider } from "router/csp";
 import mastache from "mustache";
 import cspTemplate from "../csp.mustache?raw";
 import { CSP_ENDPOINT } from "~env";
 import language from "@/language.json" with { type: "json" };
-import appHandler, { type HanderContext } from "@/handlers/app.tsx";
-
-export class App implements MiddlewareObject<NonceContext> {
-  constructor(
-    public bootstrapScriptContent: string,
-    public renderHtmlStream: HanderContext["renderHtmlStream"],
-  ) {
-  }
-
-  handle(
-    request: Request,
-    ctx: Partial<NonceContext>,
-  ): Response | Promise<Response> {
-    const context = {
-      nonce: ctx.nonce,
-      bootstrapScriptContent: this.bootstrapScriptContent,
-      renderHtmlStream: this.renderHtmlStream,
-      noJs: import.meta.env.DEV,
-    } satisfies HanderContext;
-
-    return appHandler(request, context);
-  }
-}
 
 const csp = dynamic<NonceContext>((_, { nonce }) => {
   const manifest = mastache.render(cspTemplate, {

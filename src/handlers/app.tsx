@@ -27,6 +27,7 @@ import { source } from "@/lib/source.ts";
 import { PUBLIC } from "~env";
 import AppShell from "../routes/app_shell.tsx";
 import routes from "../routes/route.ts";
+import type { MiddlewareObject } from "router";
 
 const resolver = /* /@__PURE__/ */ new URLResolver(routes);
 
@@ -36,7 +37,7 @@ export interface HanderContext extends Partial<NonceContext> {
   bootstrapScriptContent: string;
 }
 
-export default async function handler(
+export async function handler(
   request: Request,
   context: HanderContext,
 ): Promise<Response> {
@@ -157,4 +158,26 @@ export default async function handler(
     .pipeThrough(injectRSCPayload(rscStream2, { nonce }));
 
   return new Response(finalStream, { status, headers });
+}
+
+export class App implements MiddlewareObject<NonceContext> {
+  constructor(
+    public bootstrapScriptContent: string,
+    public renderHtmlStream: HanderContext["renderHtmlStream"],
+  ) {
+  }
+
+  handle(
+    request: Request,
+    ctx: Partial<NonceContext>,
+  ): Response | Promise<Response> {
+    const context = {
+      nonce: ctx.nonce,
+      bootstrapScriptContent: this.bootstrapScriptContent,
+      renderHtmlStream: this.renderHtmlStream,
+      noJs: import.meta.env.DEV,
+    } satisfies HanderContext;
+
+    return handler(request, context);
+  }
 }
