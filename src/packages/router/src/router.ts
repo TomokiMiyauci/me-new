@@ -13,7 +13,7 @@ function defaultFallback(): Response {
   return new Response(null, { status: 404 });
 }
 
-interface RouterOptions {
+export interface RouterOptions {
   fallback?: Handler;
 }
 

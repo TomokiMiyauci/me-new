@@ -1,2 +1,2 @@
-export { Router } from "./router.ts";
+export { Router, type RouterOptions } from "./router.ts";
 export type * from "./types.ts";
