@@ -1,5 +1,6 @@
 import type {
   Handler,
+  HandlerObject,
   HandlerOrHandlerObject,
   Middleware,
   MiddlewareObject,
@@ -13,15 +14,14 @@ function defaultFallback(): Response {
   return new Response(null, { status: 404 });
 }
 
-interface RouterOptions {
-  fallback: Handler;
+export interface RouterOptions {
+  fallback?: Handler;
 }
 
-export class Router<T = unknown> implements MiddlewareObject<T> {
-  #routes: Route[] = [];
+export class Router<T = unknown> implements MiddlewareObject<T>, HandlerObject {
   #fallback: Handler;
 
-  constructor(options?: RouterOptions) {
+  constructor(public routes: readonly Route[] = [], options?: RouterOptions) {
     const { fallback = defaultFallback } = options ?? {};
 
     this.#fallback = fallback;
@@ -30,20 +30,19 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
   get(
     pathname: string,
     handler: HandlerOrHandlerObject,
-  ): this {
+  ): Router<T> {
     const pattern = new URLPattern({ pathname });
     const middleware = toMiddleware(handler);
     const route = {
       pattern,
       middleware,
     } satisfies Route;
+    const newRoutes = this.routes.concat(route);
 
-    this.#routes.push(route);
-
-    return this;
+    return new Router(newRoutes, { fallback: this.#fallback });
   }
 
-  use(middleware: MiddlewareOrMiddlewareObject<T>): this {
+  use(middleware: MiddlewareOrMiddlewareObject<T>): Router<T> {
     const pattern = new URLPattern({});
     const normalizedMiddleware = normalizeMiddleware(
       middleware as MiddlewareOrMiddlewareObject,
@@ -52,14 +51,13 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
       pattern,
       middleware: normalizedMiddleware,
     } satisfies Route;
+    const newRoutes = this.routes.concat(route);
 
-    this.#routes.push(route);
-
-    return this;
+    return new Router(newRoutes, { fallback: this.#fallback });
   }
 
   fetch(request: Request): Promise<Response> {
-    const middlewares = this.#routes.filter((route) =>
+    const middlewares = this.routes.filter((route) =>
       route.pattern.test(request.url)
     ).map((route) => route.middleware);
     return exec(
@@ -71,17 +69,21 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
   }
 
   handle(request: Request, next: Next<T>): Promise<Response> {
-    const middlewares = this.#routes.filter((route) =>
+    const middlewares = this.routes.filter((route) =>
       route.pattern.test(request.url)
     ).map((route) => route.middleware);
 
-    function fallback(request: Request): Promise<Response> {
-      return next(request);
-    }
+    const middleware: Middleware = (
+      request: Request,
+      ctx: object,
+    ): Promise<Response> => {
+      return next(request, ctx as T);
+    };
+
     return exec(
       request,
-      middlewares,
-      fallback,
+      middlewares.concat(middleware),
+      this.#fallback,
       next,
     );
   }
@@ -120,5 +122,5 @@ function toMiddleware(handler: HandlerOrHandlerObject): Middleware {
 function normalizeHandler(handler: HandlerOrHandlerObject): Handler {
   if (typeof handler === "function") return handler;
 
-  return handler.handle.bind(handler);
+  return handler.fetch.bind(handler);
 }

@@ -1,4 +1,4 @@
-import type { MiddlewareObject, Next } from "@/types.ts";
+import type { CallableContext, MiddlewareObject, Next } from "@/types.ts";
 import { randomBytes } from "node:crypto";
 
 export class Csp implements MiddlewareObject<NonceContext> {
@@ -9,7 +9,7 @@ export class Csp implements MiddlewareObject<NonceContext> {
   }
   async handle(
     request: Request,
-    next: Next<NonceContext>,
+    next: CallableContext<NonceContext>,
   ): Promise<Response> {
     const nonce = next.nonce;
     const response = await next(request);
