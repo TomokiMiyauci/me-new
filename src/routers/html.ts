@@ -7,7 +7,7 @@ import { CSP_ENDPOINT } from "~env";
 import language from "@/language.json" with { type: "json" };
 import appHandler, { type HanderContext } from "@/handlers/app.tsx";
 
-class App implements MiddlewareObject<NonceContext> {
+export class App implements MiddlewareObject<NonceContext> {
   constructor(
     public bootstrapScriptContent: string,
     public renderHtmlStream: HanderContext["renderHtmlStream"],
@@ -38,35 +38,25 @@ const csp = dynamic<NonceContext>((_, { nonce }) => {
   return new Csp(manifest);
 });
 
-export default class HtmlRouter extends Router<NonceContext> {
-  constructor(
-    bootstrapScriptContent: string,
-    render: HanderContext["renderHtmlStream"],
-  ) {
-    super();
+export default new Router<NonceContext>()
+  .use({
+    // TODO
+    handle(req, next): Promise<Response> | Response {
+      const url = new URL(req.url);
 
-    this
-      .use({
-        // TODO
-        handle(req, next): Promise<Response> | Response {
-          const url = new URL(req.url);
+      const prefixies = language.languages.map((lang) => "/" + lang);
 
-          const prefixies = language.languages.map((lang) => "/" + lang);
+      if (!prefixies.some((prefix) => url.pathname.startsWith(prefix))) {
+        const fallback = "/" + language.default + url.pathname;
+        const newURL = new URL(fallback, url);
 
-          if (!prefixies.some((prefix) => url.pathname.startsWith(prefix))) {
-            const fallback = "/" + language.default + url.pathname;
-            const newURL = new URL(fallback, url);
+        newURL.search = url.search;
 
-            newURL.search = url.search;
+        return Response.redirect(newURL);
+      }
 
-            return Response.redirect(newURL);
-          }
-
-          return next(req);
-        },
-      })
-      .use(new NonceProvider())
-      .use(csp)
-      .use(new App(bootstrapScriptContent, render));
-  }
-}
+      return next(req);
+    },
+  })
+  .use(new NonceProvider())
+  .use(csp);

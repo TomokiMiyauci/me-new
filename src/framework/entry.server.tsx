@@ -1,21 +1,21 @@
 import { init } from "@sentry/deno";
 import { sentry } from "~config";
-import HtmlRouter from "@/routers/html.ts";
+import htmlRouter, { App } from "@/routers/html.ts";
 import type * as ssr from "./entry.ssr.tsx";
-import ResourceRouter from "@/routers/resource.ts";
-import BaseRouter from "@/routers/base.ts";
+import resourceRouter from "@/routers/resource.ts";
+import baseRouter from "@/routers/base.ts";
 import { fromFileUrl } from "@std/path";
 import StaticDir from "router/static-dir";
 
 init(sentry);
 
-const router = new BaseRouter()
-  .use(new ResourceRouter());
+let router = baseRouter
+  .use(resourceRouter);
 
 if (import.meta.env.PROD) {
   const clientDir = fromFileUrl(import.meta.vite.outDir.resolve("client"));
 
-  router.use(new StaticDir(clientDir));
+  router = router.use(new StaticDir(clientDir));
 }
 
 const { renderHtmlStream } = await import.meta.viteRsc.loadModule<
@@ -24,7 +24,9 @@ const { renderHtmlStream } = await import.meta.viteRsc.loadModule<
 const bootstrapScriptContent = await import.meta.viteRsc
   .loadBootstrapScriptContent("index");
 
-router.use(new HtmlRouter(bootstrapScriptContent, renderHtmlStream));
+router = router.use(
+  htmlRouter.use(new App(bootstrapScriptContent, renderHtmlStream)),
+);
 
 export default {
   fetch: router.fetch.bind(router),

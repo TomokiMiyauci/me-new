@@ -31,20 +31,19 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
   get(
     pathname: string,
     handler: HandlerOrHandlerObject,
-  ): this {
+  ): Router<T> {
     const pattern = new URLPattern({ pathname });
     const middleware = toMiddleware(handler);
     const route = {
       pattern,
       middleware,
     } satisfies Route;
+    const routes = this.#routes.concat(route);
 
-    this.#routes.push(route);
-
-    return this;
+    return new Router(routes, { fallback: this.#fallback });
   }
 
-  use(middleware: MiddlewareOrMiddlewareObject<T>): this {
+  use(middleware: MiddlewareOrMiddlewareObject<T>): Router<T> {
     const pattern = new URLPattern({});
     const normalizedMiddleware = normalizeMiddleware(
       middleware as MiddlewareOrMiddlewareObject,
@@ -53,10 +52,9 @@ export class Router<T = unknown> implements MiddlewareObject<T> {
       pattern,
       middleware: normalizedMiddleware,
     } satisfies Route;
+    const routes = this.#routes.concat(route);
 
-    this.#routes.push(route);
-
-    return this;
+    return new Router(routes, { fallback: this.#fallback });
   }
 
   fetch(request: Request): Promise<Response> {
