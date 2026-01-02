@@ -1,5 +1,6 @@
 import type {
   Handler,
+  HandlerObject,
   HandlerOrHandlerObject,
   Middleware,
   MiddlewareObject,
@@ -17,7 +18,7 @@ export interface RouterOptions {
   fallback?: Handler;
 }
 
-export class Router<T = unknown> implements MiddlewareObject<T> {
+export class Router<T = unknown> implements MiddlewareObject<T>, HandlerObject {
   #fallback: Handler;
 
   constructor(public routes: readonly Route[] = [], options?: RouterOptions) {
@@ -121,5 +122,5 @@ function toMiddleware(handler: HandlerOrHandlerObject): Middleware {
 function normalizeHandler(handler: HandlerOrHandlerObject): Handler {
   if (typeof handler === "function") return handler;
 
-  return handler.handle.bind(handler);
+  return handler.fetch.bind(handler);
 }

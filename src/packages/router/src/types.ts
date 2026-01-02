@@ -25,7 +25,7 @@ export interface Handler {
 }
 
 export interface HandlerObject {
-  handle(request: Request): Response | Promise<Response>;
+  fetch(request: Request): Response | Promise<Response>;
 }
 
 export type HandlerOrHandlerObject = Handler | HandlerObject;
