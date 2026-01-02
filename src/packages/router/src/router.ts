@@ -14,17 +14,18 @@ function defaultFallback(): Response {
 }
 
 interface RouterOptions {
-  fallback: Handler;
+  fallback?: Handler;
 }
 
 export class Router<T = unknown> implements MiddlewareObject<T> {
-  #routes: Route[] = [];
+  #routes: Route[];
   #fallback: Handler;
 
-  constructor(options?: RouterOptions) {
+  constructor(routes: Route[] = [], options?: RouterOptions) {
     const { fallback = defaultFallback } = options ?? {};
 
     this.#fallback = fallback;
+    this.#routes = routes;
   }
 
   get(
